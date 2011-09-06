@@ -1,0 +1,13 @@
+###############
+### Android ###
++++ Twitter +++
+- historie spustenych melodii (treba max pocet a max dni)
+- favorites - seznam oblibenych (prednastavene i mozne vybrat ze seznamu fronta a historie)
+- about
+- v queue aktivite zobrazit cas posledniho zobrazni a cas nacteni z twitteru
+
++++ ADK ++
+
+###############
+### Arduino ###
+

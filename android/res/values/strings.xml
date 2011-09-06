@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+  - @author Ondrej Kosatka
+  - @todo Odstranit nepotrebne hodnotu, napr. username, password
+  -->
 <resources>
-	<string name="app_name">PumpMeUp</string>
-	<string name="titleStatus">Status Update</string>
-	<string name="hintText">Please enter your 140-character status</string>
-	<string name="buttonUpdate">Update</string>
+	<string name="app_name">LaPardon</string>
+
+	<string name="hashtag">Hashtag</string>
+	<string name="hashtagSummary">Twitter hashtag (ie. #android)</string>
+	<string name="interval">Interval</string>
+	<string name="intervalSummary">Twitter search interval [s]</string>
+<!--
+	<string name="username">Username</string>
+	<string name="usernameSummary">Twitter account username</string>
+	<string name="password">Password</string>
+	<string name="passwordSummary">Twitter account password</string>
+-->
+
+	<!-- queue activity option menu -->
+	<string name="refresh">Refresh</string>
+	<string name="removeAll">Remove all</string>
+	<string name="preferences">Preferences</string>
+	<string name="about">About</string>
+
+	<!-- tweet context menu -->
+	<string name="remove">Remove</string>
+<!-- TODO: replace by Prioritize
+	<string name="moveFirst">Move up</string>
+-->
+	<string name="prioritize">Prioritize</string>
+	<string name="execute">Execute</string>
 </resources>

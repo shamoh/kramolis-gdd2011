@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  - @author Ondrej Kosatka
+  -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/refresh"
+		  android:icon="@drawable/ic_menu_refresh"
+		  android:title="@string/refresh"/>
+	<item android:id="@+id/removeAll"
+		  android:icon="@drawable/ic_remove_all"
+		  android:title="@string/removeAll"/>
+	<item android:id="@+id/preferences"
+		  android:icon="@drawable/ic_menu_preferences"
+		  android:title="@string/preferences"/>
+	<item android:id="@+id/about"
+		  android:icon="@drawable/ic_menu_about"
+		  android:title="@string/about"/>
+</menu>

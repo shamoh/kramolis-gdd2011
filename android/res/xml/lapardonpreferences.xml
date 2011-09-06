@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  - @author Ondrej Kosatka
+  -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<EditTextPreference android:key="hashtag"
+						android:title="@string/hashtag"
+						android:summary="@string/hashtagSummary"
+						android:defaultValue="#android"/>
+	<EditTextPreference android:key="interval"
+						android:title="@string/interval"
+						android:summary="@string/intervalSummary"
+						android:inputType="number"
+						android:defaultValue="30"/>
+</PreferenceScreen>

@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  - @author Ondrej Kosatka
+  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		  package="cz.kramolis.gdd2011.android"
-		  android:versionCode="1"
-		  android:versionName="1.0">
-	<application android:label="@string/app_name" android:icon="@drawable/icon">
-		<activity android:name="StatusActivity"
-				  android:label="@string/app_name">
+		  android:versionCode="1" android:versionName="1.0">
+	<uses-sdk android:minSdkVersion="10"/>
+
+	<uses-permission android:name="android.permission.INTERNET"/>
+
+	<application android:name=".LaPardonApplication" android:icon="@drawable/icon" android:label="@string/app_name">
+		<activity android:name=".QueueActivity" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
+		<activity android:name=".LaPardonPreferencesActivity" android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</activity>
+		<activity android:name=".LaPardonAboutActivity" android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</activity>
+		<service android:name=".TwitterService"/>
 	</application>
-</manifest> 
+
+</manifest>

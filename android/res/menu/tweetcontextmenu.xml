@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  - @author Ondrej Kosatka
+  -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--
+	<item android:id="@+id/moveFirst"
+		  android:icon="@drawable/ic_menu_upload"
+		  android:title="@string/moveFirst"/>
+-->
+	<item android:id="@+id/prioritize"
+		  android:icon="@drawable/ic_menu_close_clear_cancel"
+		  android:title="@string/prioritize"/>
+	<item android:id="@+id/remove"
+		  android:icon="@drawable/ic_menu_close_clear_cancel"
+		  android:title="@string/remove"/>
+	<item android:id="@+id/execute"
+		  android:icon="@drawable/ic_menu_close_clear_cancel"
+		  android:title="@string/execute"/>
+</menu>
