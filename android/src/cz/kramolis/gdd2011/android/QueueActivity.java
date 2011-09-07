@@ -17,16 +17,18 @@ import java.util.List;
  */
 public class QueueActivity extends ListActivity {
 
+	private static final String TAG = "QueueActivity";
+
 	private QueueAdapter adapter;
 
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Log.d(LaPardonApplication.TAG, "QueueActivity.onCreate");
+		Log.d(TAG, "onCreate");
 
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.queueactivity);
+		setContentView(R.layout.queue);
 		registerForContextMenu(getListView());
 
 		adapter = new QueueAdapter(this, R.layout.queuerow, getLastTweets());
@@ -116,7 +118,7 @@ public class QueueActivity extends ListActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Log.d(LaPardonApplication.TAG, "onOptionsItemSelected - " + item.getItemId());
+		Log.d(TAG, "onOptionsItemSelected - " + item.getItemId());
 		// Handle item selection
 		switch (item.getItemId()) {
 			case R.id.refresh:

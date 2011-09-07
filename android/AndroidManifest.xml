@@ -9,6 +9,7 @@
 	<uses-sdk android:minSdkVersion="10"/>
 
 	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> <!-- TODO: snad na overeni dostupnosti site-->
 
 	<application android:name=".LaPardonApplication" android:icon="@drawable/icon" android:label="@string/app_name">
 		<activity android:name=".QueueActivity" android:label="@string/app_name">
@@ -20,13 +21,13 @@
 		<activity android:name=".LaPardonPreferencesActivity" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
+				<category android:name="android.intent.category.DEFAULT"/> <!-- ??? Neni toto default value? -->
 			</intent-filter>
 		</activity>
 		<activity android:name=".LaPardonAboutActivity" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
+				<category android:name="android.intent.category.DEFAULT"/> <!-- ??? Neni toto default value? -->
 			</intent-filter>
 		</activity>
 		<service android:name=".TwitterService"/>

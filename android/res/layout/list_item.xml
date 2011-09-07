@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  - @author Libor Kramolis
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:layout_width="fill_parent"
+			  android:layout_height="wrap_content"
+			  android:orientation="vertical" android:background="#ffff" android:padding="7dp">
+
+	<TextView android:textSize="16sp"
+			  android:textStyle="bold"
+			  android:layout_width="fill_parent"
+			  android:layout_height="wrap_content" android:text="Title" android:textColor="#000"
+			  android:id="@+id/text1"/>
+	<TextView android:layout_height="wrap_content" android:text="Description" android:autoLink="web|email"
+			  android:textColor="#000" android:layout_width="wrap_content" android:id="@+id/text2"
+			  android:textSize="12sp"/>
+	<TextView android:layout_height="wrap_content" android:text="Link" android:layout_width="fill_parent"
+			  android:id="@+id/text3" android:autoLink="all" android:textSize="12sp" android:textColor="#000"
+			  android:typeface="serif"/>
+
+</LinearLayout>

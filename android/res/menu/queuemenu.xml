@@ -4,16 +4,17 @@
   - @author Ondrej Kosatka
   -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
 	<item android:id="@+id/refresh"
-		  android:icon="@drawable/ic_menu_refresh"
-		  android:title="@string/refresh"/>
+		  android:icon="@android:drawable/ic_menu_rotate"
+		  android:title="@string/refresh"/> <!-- ic_menu_refresh NENI public :-( Zatim davam rotate! -->
 	<item android:id="@+id/removeAll"
-		  android:icon="@drawable/ic_remove_all"
+		  android:icon="@android:drawable/ic_notification_clear_all"
 		  android:title="@string/removeAll"/>
 	<item android:id="@+id/preferences"
-		  android:icon="@drawable/ic_menu_preferences"
+		  android:icon="@android:drawable/ic_menu_preferences"
 		  android:title="@string/preferences"/>
 	<item android:id="@+id/about"
-		  android:icon="@drawable/ic_menu_about"
+		  android:icon="@android:drawable/ic_menu_info_details"
 		  android:title="@string/about"/>
 </menu>

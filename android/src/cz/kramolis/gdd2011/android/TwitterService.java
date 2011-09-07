@@ -9,14 +9,16 @@ import android.util.Log;
  */
 public class TwitterService extends IntentService {
 
+	private static final String TAG = "TwitterService";
+
 	public TwitterService() {
 		super("TwitterService");
-		Log.d(LaPardonApplication.TAG, "TwitterService constructor");
+		Log.d(TAG, "TwitterService constructor");
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		Log.d(LaPardonApplication.TAG, "onHandleIntent");
+		Log.d(TAG, "onHandleIntent");
 		LaPardonApplication app = (LaPardonApplication) getApplication();
 		app.fetchStatuses();
 	}

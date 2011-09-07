@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class LaPardonApplication extends Application implements OnSharedPreferenceChangeListener {
 
-	public static final String TAG = "LaPardon";
+	private static final String TAG = "LaPardonApplication";
 
 	private TwitterAdapter twitter = new TwitterAdapter();
 
@@ -82,10 +82,12 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 	public void fetchStatuses() {
 		Log.d(TAG, String.format("searching for tag %s", hashtag));
 		List<Tweet> tweets = getTwitter().search(hashtag);
-		Collections.reverse(tweets);
-		for (Tweet tweet : tweets) {
-			Log.d(LaPardonApplication.TAG, "@" + tweet.getFromUser() + " - " + tweet.getText());
-			q.add(tweet);
+		if ( tweets != null ) {
+			Collections.reverse(tweets);
+			for (Tweet tweet : tweets) {
+				Log.d(TAG, "@" + tweet.getFromUser() + " - " + tweet.getText());
+				q.add(tweet);
+			}
 		}
 	}
 

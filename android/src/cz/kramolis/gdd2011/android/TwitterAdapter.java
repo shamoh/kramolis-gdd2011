@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class TwitterAdapter {
 
+	private static final String TAG = "TwitterAdapter";
+
 //	private static final String PROTECTED_RESOURCE_URL = "http://api.twitter.com/1/account/verify_credentials.xml";
 //	private static final String API_KEY = "Y4t32ApId1x1eLJHLMkng";
 //	private static final String API_SECRET = "IttsA332uUZaSsnGrpf7QyAXSHd35FdfxyLuvydbM8";
@@ -29,7 +31,7 @@ public class TwitterAdapter {
 			List<Tweet> tweets = result.getTweets();
 			return tweets;
 		} catch (TwitterException te) {
-			Log.d(LaPardonApplication.TAG, "ERROR", te);
+			Log.d(TAG, "ERROR", te);
 		}
 		return null;
 	}
