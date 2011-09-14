@@ -13,15 +13,16 @@ import java.util.Map;
  * @author Libor Kramolis
  * @todo
  */
-public class LaPardonAboutActivity extends ListActivity {
+public class AboutActivity extends ListActivity {
 
 	private List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+
 		setContentView(R.layout.about);
-		setTitle("About LaPardon");
+		setTitle(R.string.about);
 
 		addItems();
 		SimpleAdapter notes = new SimpleAdapter(this, list, R.layout.list_item,

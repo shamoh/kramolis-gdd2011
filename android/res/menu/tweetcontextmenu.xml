@@ -4,7 +4,6 @@
   - @author Ondrej Kosatka
   -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
 <!--
 	<item android:id="@+id/moveFirst"
 		  android:icon="@android:drawable/ic_menu_upload"

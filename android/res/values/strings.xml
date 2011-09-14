@@ -7,6 +7,26 @@
 <resources>
 	<string name="app_name">LaPardon</string>
 
+	<!-- Menu -->
+	<string name="about">About</string>
+
+	<!-- Main -->
+	<string name="main">Main</string>
+
+	<!-- Simulate -->
+	<string name="simulate">Simulate</string>
+
+	<!-- Queue -->
+	<string name="queue">Queue</string>
+	<string name="refresh">Refresh</string>
+	<string name="removeAll">Remove all</string>
+	<!-- tweet context menu -->
+	<string name="remove">Remove</string>
+	<string name="prioritize">Prioritize</string>
+	<string name="execute">Execute</string>
+
+	<!-- Preferences -->
+	<string name="preferences">Preferences</string>
 	<string name="hashtag">Hashtag</string>
 	<string name="hashtagSummary">Twitter hashtag (ie. #android)</string>
 	<string name="interval">Interval</string>
@@ -18,17 +38,4 @@
 	<string name="passwordSummary">Twitter account password</string>
 -->
 
-	<!-- queue activity option menu -->
-	<string name="refresh">Refresh</string>
-	<string name="removeAll">Remove all</string>
-	<string name="preferences">Preferences</string>
-	<string name="about">About</string>
-
-	<!-- tweet context menu -->
-	<string name="remove">Remove</string>
-<!-- TODO: replace by Prioritize
-	<string name="moveFirst">Move up</string>
--->
-	<string name="prioritize">Prioritize</string>
-	<string name="execute">Execute</string>
 </resources>

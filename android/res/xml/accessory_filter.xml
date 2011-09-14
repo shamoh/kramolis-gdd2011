@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  - @author Libor Kramolis
+  -->
+<resources>
+	<usb-accessory manufacturer="ShamohSoft" model="LaPardon" version="1.0" />
+</resources>

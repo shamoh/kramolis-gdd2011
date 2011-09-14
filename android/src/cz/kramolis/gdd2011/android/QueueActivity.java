@@ -29,6 +29,8 @@ public class QueueActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.queue);
+		setTitle(R.string.queue);
+
 		registerForContextMenu(getListView());
 
 		adapter = new QueueAdapter(this, R.layout.queuerow, getLastTweets());
@@ -43,23 +45,8 @@ public class QueueActivity extends ListActivity {
 		app.cancelAlarmManager();
 	}
 
-	private void openPreferences() {
-		Intent i = new Intent(this, LaPardonPreferencesActivity.class);
-		i.setAction(Intent.ACTION_VIEW);
-		i.addCategory(Intent.CATEGORY_DEFAULT);
-		this.startActivity(i);
-	}
-
-	private void about() {
-		Intent i = new Intent(this, LaPardonAboutActivity.class);
-		i.setAction(Intent.ACTION_VIEW);
-		i.addCategory(Intent.CATEGORY_DEFAULT);
-		this.startActivity(i);
-	}
-
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-									ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.tweetcontextmenu, menu);
@@ -67,8 +54,7 @@ public class QueueActivity extends ListActivity {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
-				.getMenuInfo();
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 		switch (item.getItemId()) {
 /*
 			case R.id.moveFirst:
@@ -127,16 +113,9 @@ public class QueueActivity extends ListActivity {
 			case R.id.removeAll:
 				removeAll();
 				return true;
-			case R.id.preferences:
-				openPreferences();
-				return true;
-			case R.id.about:
-				about();
-				return true;
 			default:
-				return super.onOptionsItemSelected(item);
+				return ActivityUtils.onOptionsItemSelected(this, item);
 		}
 	}
-
 
 }

@@ -3,6 +3,7 @@ package cz.kramolis.gdd2011.android;
 import android.util.Log;
 import twitter4j.*;
 
+import java.net.UnknownHostException;
 import java.util.List;
 
 /**
