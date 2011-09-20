@@ -28,7 +28,7 @@
 	<!-- Preferences -->
 	<string name="preferences">Preferences</string>
 	<string name="hashtag">Hashtag</string>
-	<string name="hashtagSummary">Twitter hashtag (ie. #android)</string>
+	<string name="hashtagSummary">Twitter hashtag (ie. #lapardon)</string>
 	<string name="interval">Interval</string>
 	<string name="intervalSummary">Twitter search interval [s]</string>
 <!--

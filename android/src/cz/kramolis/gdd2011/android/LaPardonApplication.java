@@ -53,7 +53,7 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 	private void startAlarmManager() {
 
 		interval = Integer.parseInt(prefs.getString("interval", "30"));
-		hashtag = prefs.getString("hashtag", "#android");
+		hashtag = prefs.getString("hashtag", "#lapardon");
 
 		Log.d(TAG, "AlarmManager is starting... " + interval);
 

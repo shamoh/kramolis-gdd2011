@@ -11,27 +11,34 @@ import java.util.ArrayList;
 
 /**
  * @author Ondrej Kosatka
+ * @author Libor Kramolis
  */
 public class FavoritesDbAdapter {
 
-	public static final String TAG = "FavoritesDbAdapter";
-
 	static final String TABLE = "favorites";
-
-	public static final String ID = "_id";
-	public static final String MESSAGE = "message";
-	public static final String UPDATED_WHEN = "updated_when";
+	static final String ID = "_id";
+	static final String MESSAGE = "message";
+	static final String UPDATED_WHEN = "updated_when";
 
 	private static final String GET_ALL_ORDER_BY = UPDATED_WHEN + " ASC";
 
+	private static final String TAG = "FavoritesDbAdapter";
+
 	private Context context;
 	private SQLiteDatabase db;
-	FavoritesDbHelper dbHelper;
+	private FavoritesDbHelper dbHelper;
 
+	//
+	// init
+	//
 
 	public FavoritesDbAdapter(Context context) {
 		this.context = context;
 	}
+
+	//
+	// business
+	//
 
 	public FavoritesDbAdapter open() {
 		dbHelper = new FavoritesDbHelper(context);
@@ -47,6 +54,7 @@ public class FavoritesDbAdapter {
 		}
 	}
 
+	/*
 	public void insertOrIgnore(ContentValues values) {
 		Log.d(TAG, "insertOrIgnore on " + values);
 		db.insert(TABLE, null, values);
@@ -115,5 +123,6 @@ public class FavoritesDbAdapter {
 		//SQLiteDatabase db = this.dbHelper.getWritableDatabase();
 		insertOrIgnore(values);
 	}
+	*/
 
 }

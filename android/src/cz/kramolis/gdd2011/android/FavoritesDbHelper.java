@@ -7,6 +7,7 @@ import android.util.Log;
 
 /**
  * @author Ondrej Kosatka
+ * @author Libor Kramolis
  */
 public class FavoritesDbHelper extends SQLiteOpenHelper {
 
@@ -15,7 +16,7 @@ public class FavoritesDbHelper extends SQLiteOpenHelper {
 	private static final int VERSION = 1;
 	private static final String DATABASE = "favorites.db";
 
-	private Context ctx;
+//	private Context ctx;
 
 	//
 	// init
@@ -23,7 +24,7 @@ public class FavoritesDbHelper extends SQLiteOpenHelper {
 
 	public FavoritesDbHelper(Context context) {
 		super(context, DATABASE, null, VERSION);
-		this.ctx = context;
+//		this.ctx = context;
 	}
 
 	@Override
@@ -38,8 +39,7 @@ public class FavoritesDbHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		Log.i(TAG, String.format("On upgrade (v%d -> v%d) favorites db ...",
-				oldVersion, newVersion));
+		Log.i(TAG, String.format("On upgrade (v%d -> v%d) favorites db ...", oldVersion, newVersion));
 		if (oldVersion < 1) {
 			onCreate(db);
 		}
