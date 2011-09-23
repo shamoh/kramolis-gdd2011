@@ -4,9 +4,20 @@
   - @author Libor Kramolis
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent" android:layout_height="wrap_content"
-	android:orientation="vertical" >
-	<include layout="@layout/slider" android:id="@+id/slider1"
-		android:layout_width="match_parent" android:layout_height="wrap_content" />
-</LinearLayout>
+			  android:layout_width="match_parent" android:layout_height="wrap_content"
+			  android:orientation="vertical" android:layout_weight="1">
 
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				  android:layout_width="match_parent" android:layout_height="wrap_content"
+				  android:orientation="horizontal" android:layout_weight="1">
+		<TextView android:text="Value" android:layout_height="wrap_content"
+				  android:layout_gravity="left|center_vertical" android:layout_width="40dip" android:clickable="true"/>
+		<SeekBar android:id="@+id/slider"
+				 android:layout_height="wrap_content" android:layout_width="wrap_content"
+				 android:layout_weight="1" android:layout_gravity="center"
+				android:max="255"/>
+		<TextView android:id="@+id/sliderValue"
+				  android:text="155" android:layout_width="40dip" android:layout_height="wrap_content"
+				  android:layout_gravity="center_vertical|right" android:gravity="right" android:clickable="false"/>
+	</LinearLayout>
+</LinearLayout>

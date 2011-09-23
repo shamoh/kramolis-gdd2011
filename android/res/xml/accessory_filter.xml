@@ -5,4 +5,5 @@
   -->
 <resources>
 	<usb-accessory manufacturer="ShamohSoft" model="LaPardon" version="1.0" />
+	<!--<usb-accessory manufacturer="Google, Inc." model="DemoKit" version="1.0" />-->
 </resources>

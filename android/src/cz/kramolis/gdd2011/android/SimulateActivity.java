@@ -1,11 +1,15 @@
 package cz.kramolis.gdd2011.android;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import twitter4j.Tweet;
 
 import java.util.ArrayList;
@@ -15,9 +19,13 @@ import java.util.List;
  * @author Libor Kramolis
  * @todo
  */
-public class SimulateActivity extends ListActivity {
+public class SimulateActivity extends Activity {
 
 	private static final String TAG = "SimulateActivity";
+
+	private SeekBar slider;
+	private TextView sliderValue;
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +35,8 @@ public class SimulateActivity extends ListActivity {
 
 		setContentView(R.layout.simulate);
 		setTitle(R.string.simulate);
+
+		initListeners();
 
 		//TODO
 	}
@@ -40,5 +50,36 @@ public class SimulateActivity extends ListActivity {
 				return ActivityUtils.onOptionsItemSelected(this, item);
 		}
 	}
+
+	private void initListeners() {
+		slider = (SeekBar) findViewById(R.id.slider);
+		sliderValue = (TextView) findViewById(R.id.sliderValue);
+
+		Log.d(TAG, "slider.progress " + slider.getProgress());
+		sliderValue.setText(String.valueOf(slider.getProgress()));
+
+		slider.setOnSeekBarChangeListener(new MyListener());
+	}
+
+	//
+	// class MyListener
+	//
+
+	private class MyListener implements SeekBar.OnSeekBarChangeListener {
+
+		@Override
+		public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+			Log.d(TAG, "Slider::onProgressChanged: " + i);
+			sliderValue.setText(String.valueOf(i));
+		}
+
+		@Override
+		public void onStartTrackingTouch(SeekBar seekBar) {
+		}
+
+		@Override
+		public void onStopTrackingTouch(SeekBar seekBar) {
+		}
+	} // class MyListener
 
 }

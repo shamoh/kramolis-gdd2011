@@ -12,12 +12,6 @@ public class SimulateController extends AccessoryController {
 	}
 
 	protected void onAccesssoryAttached() {
-		setupSliderController(R.id.slider1);
-	}
-
-	private void setupSliderController(int viewId) {
-		SliderController sliderController = new SliderController(mHostActivity, getResources());
-		sliderController.attachToView((ViewGroup) findViewById(viewId));
 	}
 
 }

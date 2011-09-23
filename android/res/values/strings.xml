@@ -2,7 +2,7 @@
 
 <!--
   - @author Ondrej Kosatka
-  - @todo Odstranit nepotrebne hodnotu, napr. username, password
+  - @todo Vzit vsechny texty z kodu
   -->
 <resources>
 	<string name="app_name">LaPardon</string>
