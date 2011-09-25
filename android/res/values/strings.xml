@@ -31,11 +31,15 @@
 	<string name="hashtagSummary">Twitter hashtag (ie. #lapardon)</string>
 	<string name="interval">Interval</string>
 	<string name="intervalSummary">Twitter search interval [s]</string>
-<!--
-	<string name="username">Username</string>
-	<string name="usernameSummary">Twitter account username</string>
-	<string name="password">Password</string>
-	<string name="passwordSummary">Twitter account password</string>
--->
+
+	<!-- Others -->
+	<string name="no_connection_text">There is NO internet connection.</string>
+	<string name="no_arduino_text">There is NO Arduino device connected.</string>
+	<!--
+	 <string name="username">Username</string>
+	 <string name="usernameSummary">Twitter account username</string>
+	 <string name="password">Password</string>
+	 <string name="passwordSummary">Twitter account password</string>
+ -->
 
 </resources>

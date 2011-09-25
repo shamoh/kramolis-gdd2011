@@ -1,7 +1,10 @@
 package cz.kramolis.gdd2011.android;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
@@ -35,6 +38,8 @@ public class QueueActivity extends ListActivity {
 
 		adapter = new QueueAdapter(this, R.layout.queuerow, getLastTweets());
 		setListAdapter(adapter);
+
+		checkNetwork();
 	}
 
 	@Override
@@ -43,6 +48,33 @@ public class QueueActivity extends ListActivity {
 		LaPardonApplication app = (LaPardonApplication) this.getApplication();
 		app.getQ().clear();
 		app.cancelAlarmManager();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
+	private void checkNetwork() {
+		boolean connected = false;
+		ConnectivityManager connectivityManager = (ConnectivityManager) getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+		Log.d(TAG, "ActiveNetworkInfo: " + networkInfo);
+		if (networkInfo != null) {
+			connected = networkInfo.isConnected();
+		}
+
+		Log.d(TAG, "Network connected? [ " + connected + " ]");
+		if (connected == false) {
+			startNoConnectionActivity();
+		}
+	}
+
+	private void startNoConnectionActivity() {
+		Intent i = new Intent(this, NoConnectionActivity.class);
+		i.setAction(Intent.ACTION_VIEW);
+		i.addCategory(Intent.CATEGORY_DEFAULT);
+		startActivity(i);
 	}
 
 	@Override
@@ -77,6 +109,8 @@ public class QueueActivity extends ListActivity {
 		adapter.clear();
 		adapter.addAll(getLastTweets());
 		adapter.notifyDataSetChanged();
+
+		checkNetwork();
 	}
 
 	private void removeAll() {
