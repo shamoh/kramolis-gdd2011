@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 
 /**
  * @author Libor Kramolis
@@ -52,7 +53,10 @@ public class KeyboardView extends View {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 			Log.d(TAG, "On TOUCH: [" + view + "] : " + motionEvent);
 
-			return onTouchEvent(motionEvent);
+			startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.shake));
+			return true;
+
+//			return onTouchEvent(motionEvent);
 		}
 	} // class MyListener
 
