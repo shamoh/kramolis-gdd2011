@@ -1,25 +1,16 @@
 package cz.kramolis.gdd2011.android;
 
-import android.app.Activity;
-import android.app.ListActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import twitter4j.Tweet;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Libor Kramolis
  * @todo
  */
-public class SimulateActivity extends Activity {
+public class SimulateActivity extends LaPardonActivity {
 
 	private static final String TAG = "SimulateActivity";
 

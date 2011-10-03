@@ -7,6 +7,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		  package="cz.kramolis.gdd2011.android"
 		  android:versionCode="1" android:versionName="1.0">
+
 	<uses-sdk android:minSdkVersion="10" android:targetSdkVersion="11"/>
 
 	<uses-permission android:name="android.permission.INTERNET"/>
@@ -23,33 +24,37 @@
 		</activity>
 
 		<activity android:name=".AboutActivity" android:label="@string/app_name">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-				<!-- ??? Neni toto default value? -->
-			</intent-filter>
+			<!--
+			   <intent-filter>
+				   <action android:name="android.intent.action.VIEW"/>
+				   <category android:name="android.intent.category.DEFAULT"/>
+			   </intent-filter>
+   -->
 		</activity>
 		<activity android:name=".LaPardonPreferencesActivity" android:label="@string/app_name">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-				<!-- ??? Neni toto default value? -->
-			</intent-filter>
+			<!--
+			   <intent-filter>
+				   <action android:name="android.intent.action.VIEW"/>
+				   <category android:name="android.intent.category.DEFAULT"/>
+			   </intent-filter>
+   -->
 		</activity>
 		<activity android:name=".QueueActivity" android:label="@string/app_name">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-				<!-- ??? Neni toto default value? -->
-			</intent-filter>
+			<!--
+			   <intent-filter>
+				   <action android:name="android.intent.action.VIEW"/>
+				   <category android:name="android.intent.category.DEFAULT"/>
+			   </intent-filter>
+   -->
 		</activity>
 		<activity android:name=".SimulateActivity" android:label="@string/app_name"
 				  android:screenOrientation="landscape">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-				<!-- ??? Neni toto default value? -->
-			</intent-filter>
+			<!--
+			   <intent-filter>
+				   <action android:name="android.intent.action.VIEW"/>
+				   <category android:name="android.intent.category.DEFAULT"/>
+			   </intent-filter>
+   -->
 		</activity>
 
 		<activity android:name=".NoConnectionActivity" android:label="@string/app_name"
@@ -62,10 +67,10 @@
 			<intent-filter>
 				<action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"/>
 			</intent-filter>
-
 			<meta-data android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"
 					   android:resource="@xml/accessory_filter"/>
 		</activity>
+
 		<service android:name=".TwitterService"/>
 	</application>
 

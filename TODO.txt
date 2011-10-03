@@ -1,8 +1,8 @@
 ###############
 ### Android ###
 +++ Twitter +++
-- historie spustenych melodii (treba max pocet a max dni)
-- favorites - seznam oblibenych (prednastavene i mozne vybrat ze seznamu fronta a historie)
+- history spustenych melodii (treba max pocet a max dni)
+- favorites - seznam oblibenych (prednastavene i mozne vybrat ze seznamu queue a history)
 - about
 - v queue aktivite zobrazit cas posledniho zobrazni a cas nacteni z twitteru
 

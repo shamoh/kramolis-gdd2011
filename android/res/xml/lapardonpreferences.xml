@@ -13,4 +13,8 @@
 						android:summary="@string/intervalSummary"
 						android:inputType="number"
 						android:defaultValue="30"/>
+	<EditTextPreference android:key="lastSearch"
+						android:title="@string/lastSearch"
+						android:summary="@string/lastSearchSummary"
+						android:inputType="datetime"/>
 </PreferenceScreen>

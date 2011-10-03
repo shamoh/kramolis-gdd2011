@@ -3,7 +3,6 @@ package cz.kramolis.gdd2011.android;
 import android.util.Log;
 import twitter4j.*;
 
-import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -32,7 +31,7 @@ public class TwitterAdapter {
 			List<Tweet> tweets = result.getTweets();
 			return tweets;
 		} catch (TwitterException te) {
-			Log.d(TAG, "ERROR", te);
+			Log.e(TAG, "ERROR", te);
 		}
 		return null;
 	}

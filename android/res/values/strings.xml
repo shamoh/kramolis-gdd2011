@@ -31,6 +31,8 @@
 	<string name="hashtagSummary">Twitter hashtag (ie. #lapardon)</string>
 	<string name="interval">Interval</string>
 	<string name="intervalSummary">Twitter search interval [s]</string>
+	<string name="lastSearch">Last Search</string>
+	<string name="lastSearchSummary">Last time Twitter search was performed (format yyyy-MM-dd HH:mm)</string>
 
 	<!-- Others -->
 	<string name="no_connection_text">There is NO internet connection.</string>

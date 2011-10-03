@@ -8,9 +8,9 @@ import android.view.View;
  */
 public abstract class AccessoryController {
 
-	protected MainActivity mHostActivity;
+	protected LaPardonActivity mHostActivity;
 
-	public AccessoryController(MainActivity activity) {
+	public AccessoryController(LaPardonActivity activity) {
 		mHostActivity = activity;
 	}
 

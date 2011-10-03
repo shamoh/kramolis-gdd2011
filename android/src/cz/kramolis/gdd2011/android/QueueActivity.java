@@ -46,7 +46,7 @@ public class QueueActivity extends ListActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		LaPardonApplication app = (LaPardonApplication) this.getApplication();
-		app.getQ().clear();
+		app.getQueue().clear();
 		app.cancelAlarmManager();
 	}
 
@@ -57,14 +57,16 @@ public class QueueActivity extends ListActivity {
 
 	private void checkNetwork() {
 		boolean connected = false;
+		boolean available = false;
 		ConnectivityManager connectivityManager = (ConnectivityManager) getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 		Log.d(TAG, "ActiveNetworkInfo: " + networkInfo);
 		if (networkInfo != null) {
 			connected = networkInfo.isConnected();
+			available = networkInfo.isAvailable();
 		}
 
-		Log.d(TAG, "Network connected? [ " + connected + " ]");
+		Log.d(TAG, "Network connected / available? [ " + connected + " / " + available + " ]");
 		if (connected == false) {
 			startNoConnectionActivity();
 		}
@@ -115,7 +117,7 @@ public class QueueActivity extends ListActivity {
 
 	private void removeAll() {
 		LaPardonApplication app = (LaPardonApplication) this.getApplication();
-		app.getQ().clear();
+		app.getQueue().clear();
 		adapter.clear();
 	}
 
@@ -123,8 +125,8 @@ public class QueueActivity extends ListActivity {
 		List<Tweet> lastTweets = new ArrayList<Tweet>();
 		LaPardonApplication app = (LaPardonApplication) this.getApplication();
 		int i = 0;
-		while (i < 20 && i < app.getQ().size()) {
-			lastTweets.add(app.getQ().get(i++));
+		while (i < 20 && i < app.getQueue().size()) {
+			lastTweets.add(app.getQueue().get(i++));
 		}
 		return lastTweets;
 	}

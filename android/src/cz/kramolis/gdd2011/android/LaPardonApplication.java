@@ -11,16 +11,20 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import twitter4j.Tweet;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author Ondrej Kosatka
+ * @author Libor Kramolis
  */
 public class LaPardonApplication extends Application implements OnSharedPreferenceChangeListener {
 
 	private static final String TAG = "LaPardonApplication";
+
+	final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 	private TwitterAdapter twitter = new TwitterAdapter();
 
@@ -30,7 +34,9 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 
 	private String hashtag = "";
 
-	private LinkedList<Tweet> q = new LinkedList<Tweet>();
+	private Date lastSearch = null;
+
+	private LinkedList<Tweet> queue = new LinkedList<Tweet>();
 
 	private PendingIntent pendingIntent;
 
@@ -51,9 +57,25 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 	}
 
 	private void startAlarmManager() {
-
 		interval = Integer.parseInt(prefs.getString("interval", "30"));
 		hashtag = prefs.getString("hashtag", "#lapardon");
+		{
+			String lastSearchText = prefs.getString("lastSearch", null);
+			if (lastSearchText != null) {
+				try {
+					lastSearch = dateFormat.parse(lastSearchText);
+				} catch (ParseException e) {
+					Log.e(TAG, "Wrong lastSearch format", e);
+					resetLastSearch();
+				}
+			} else {
+				resetLastSearch();
+			}
+			Map<String, ?> map = prefs.getAll();
+			for (String key : map.keySet()) {
+				Log.d(TAG, String.format("+ property %s: %s", key, map.get(key)));
+			}
+		}
 
 		Log.d(TAG, "AlarmManager is starting... " + interval);
 
@@ -71,7 +93,6 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
 				System.currentTimeMillis(), interval * 1000, pendingIntent); // <6>
 		Log.d(TAG, "AlarmManager has started");
-
 	}
 
 	public void cancelAlarmManager() {
@@ -82,11 +103,23 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 	public void fetchStatuses() {
 		Log.d(TAG, String.format("searching for tag %s", hashtag));
 		List<Tweet> tweets = getTwitter().search(hashtag);
-		if ( tweets != null ) {
+		if (tweets != null) {
 			Collections.reverse(tweets);
 			for (Tweet tweet : tweets) {
 				Log.d(TAG, "@" + tweet.getFromUser() + " - " + tweet.getText());
-				q.add(tweet);
+				queue.add(tweet);
+			}
+		}
+	}
+
+	private void resetLastSearch() {
+		lastSearch = new Date();
+		String lastSearchText = dateFormat.format(lastSearch);
+		prefs.edit().putString("lastSearch", lastSearchText).commit();
+		{
+			Map<String, ?> map = prefs.getAll();
+			for (String key : map.keySet()) {
+				Log.d(TAG, String.format("~ property %s: %s", key, map.get(key)));
 			}
 		}
 	}
@@ -96,8 +129,8 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 		startAlarmManager();
 	}
 
-	public LinkedList<Tweet> getQ() {
-		return q;
+	public LinkedList<Tweet> getQueue() {
+		return queue;
 	}
 
 }

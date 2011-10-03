@@ -80,15 +80,17 @@ public final class R {
 		public static final int hashtagSummary = 0x7f06000c;
 		public static final int interval = 0x7f06000d;
 		public static final int intervalSummary = 0x7f06000e;
+		public static final int lastSearch = 0x7f06000f;
+		public static final int lastSearchSummary = 0x7f060010;
 		/**
 		 * Main
 		 */
 		public static final int main = 0x7f060002;
-		public static final int no_arduino_text = 0x7f060010;
+		public static final int no_arduino_text = 0x7f060012;
 		/**
 		 * Others
 		 */
-		public static final int no_connection_text = 0x7f06000f;
+		public static final int no_connection_text = 0x7f060011;
 		/**
 		 * Preferences
 		 */
