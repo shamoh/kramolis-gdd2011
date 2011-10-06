@@ -2,7 +2,6 @@ package cz.kramolis.gdd2011.android;
 
 import android.app.ListActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.util.Log;
 import android.view.*;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.Toast;
 import twitter4j.Tweet;
 
 import java.util.ArrayList;
@@ -68,15 +68,17 @@ public class QueueActivity extends ListActivity {
 
 		Log.d(TAG, "Network connected / available? [ " + connected + " / " + available + " ]");
 		if (connected == false) {
-			startNoConnectionActivity();
+			showNoConnectionInfo();
 		}
 	}
 
-	private void startNoConnectionActivity() {
-		Intent i = new Intent(this, NoConnectionActivity.class);
-		i.setAction(Intent.ACTION_VIEW);
-		i.addCategory(Intent.CATEGORY_DEFAULT);
-		startActivity(i);
+	private void showNoConnectionInfo() {
+		Toast toast = Toast.makeText(this, R.string.no_connection_text, Toast.LENGTH_LONG);
+		toast.show();
+//		Intent i = new Intent(this, NoConnectionActivity.class);
+//		i.setAction(Intent.ACTION_VIEW);
+//		i.addCategory(Intent.CATEGORY_DEFAULT);
+//		startActivity(i);
 	}
 
 	@Override

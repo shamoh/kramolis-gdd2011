@@ -12,6 +12,7 @@ import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 import com.android.future.usb.UsbAccessory;
 import com.android.future.usb.UsbManager;
 
@@ -321,15 +322,17 @@ public abstract class LaPardonActivity extends Activity implements Runnable {
 	//
 
 	protected void hideControls() {
-		startNoArduinoActivity();
+		showNoArduinoInfo();
 		mInputController = null;
 	}
 
-	private void startNoArduinoActivity() {
-		Intent i = new Intent(this, NoArduinoActivity.class);
-		i.setAction(Intent.ACTION_VIEW);
-		i.addCategory(Intent.CATEGORY_DEFAULT);
-		startActivity(i);
+	private void showNoArduinoInfo() {
+		Toast toast = Toast.makeText(this, R.string.no_arduino_text, Toast.LENGTH_LONG);
+		toast.show();
+//		Intent i = new Intent(this, NoArduinoActivity.class);
+//		i.setAction(Intent.ACTION_VIEW);
+//		i.addCategory(Intent.CATEGORY_DEFAULT);
+//		startActivity(i);
 	}
 
 	protected void showControls() {
