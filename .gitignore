@@ -1,4 +1,9 @@
+/.idea
+/_others_
+/out
 /android/.classpath
 /android/.project
-/.idea
 /android/res/_bak
+/android/libs/twitter4j-core-2.2.4.jar
+/appengine/.gradle
+

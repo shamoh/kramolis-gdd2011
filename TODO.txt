@@ -1,12 +1,17 @@
 ###############
 ### Android ###
 +++ Twitter +++
-- history spustenych melodii (treba max pocet a max dni)
-- favorites - seznam oblibenych (prednastavene i mozne vybrat ze seznamu queue a history)
-- about
-- v queue aktivite zobrazit cas posledniho zobrazni a cas nacteni z twitteru
+- [P2] v DB ulozit cas posledniho cteni z twitteru a tento cas v pristim dotazu zohlednit - pokud to jde, jinak to nema cenu
+- [P2] favorites - seznam oblibenych (prednastavene i mozne vybrat ze seznamu queue a history)
+- [P3] na Twitter "logovat" prubeh behu aplikace:
+  - PLAY - LaPardon is playing melody of @username. #lapardon #play #gddcz (tagy jsou konfigurovatelne)
+  - INFO #1 - LaPardon is hungry. There is no play requests in Twitter queue to replay. #lapardon #info #gddcz (tagy jsou konfigurovatelne)
+  - ERROR#1 - LaPardon is ZIZNIVY. There is no water to play with. #lapardon #error #gddcz (tagy jsou konfigurovatelne)
+- [P3] history - seznam naposledy spustenych melodii (treba max pocet a max dni)
+- [P3] v queue aktivite zobrazit cas posledniho zobrazni a cas nacteni z twitteru
 
 +++ ADK ++
+- [P1] vydefinovat a naparsovat zpravu z Twitteru a predat Arduinu
 
 ###############
 ### Arduino ###
