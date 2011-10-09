@@ -75,22 +75,30 @@ public final class R {
 		 */
 		public static final int about = 0x7f060001;
 		public static final int app_name = 0x7f060000;
+		public static final int errorHashtag = 0x7f060017;
+		public static final int errorHashtagSummary = 0x7f060018;
 		public static final int execute = 0x7f060009;
+		public static final int gddHashtag = 0x7f06000f;
+		public static final int gddHashtagSummary = 0x7f060010;
 		public static final int hashtag = 0x7f06000b;
 		public static final int hashtagSummary = 0x7f06000c;
+		public static final int infoHashtag = 0x7f060013;
+		public static final int infoHashtagSummary = 0x7f060014;
 		public static final int interval = 0x7f06000d;
 		public static final int intervalSummary = 0x7f06000e;
-		public static final int lastSearch = 0x7f06000f;
-		public static final int lastSearchSummary = 0x7f060010;
 		/**
 		 * Main
 		 */
 		public static final int main = 0x7f060002;
-		public static final int no_arduino_text = 0x7f060012;
+		public static final int no_arduino_text = 0x7f06001a;
 		/**
+		 * <string name="lastSearch">Last Search</string>
+		 * <string name="lastSearchSummary">Last time Twitter search was performed (format yyyy-MM-dd HH:mm)</string>
 		 * Others
 		 */
-		public static final int no_connection_text = 0x7f060011;
+		public static final int no_connection_text = 0x7f060019;
+		public static final int playHashtag = 0x7f060011;
+		public static final int playHashtagSummary = 0x7f060012;
 		/**
 		 * Preferences
 		 */
@@ -110,6 +118,8 @@ public final class R {
 		 * Simulate
 		 */
 		public static final int simulate = 0x7f060003;
+		public static final int warnHashtag = 0x7f060015;
+		public static final int warnHashtagSummary = 0x7f060016;
 	}
 
 	public static final class xml {

@@ -28,11 +28,22 @@
 	<!-- Preferences -->
 	<string name="preferences">Preferences</string>
 	<string name="hashtag">Hashtag</string>
-	<string name="hashtagSummary">Twitter hashtag (ie. #lapardon)</string>
+	<string name="hashtagSummary">Twitter request hashtag searched by application (ie. #lapardon)</string>
 	<string name="interval">Interval</string>
 	<string name="intervalSummary">Twitter search interval [s]</string>
-	<string name="lastSearch">Last Search</string>
-	<string name="lastSearchSummary">Last time Twitter search was performed (format yyyy-MM-dd HH:mm)</string>
+	<string name="gddHashtag">GDD Hashtag</string>
+	<string name="gddHashtagSummary">Twitter GDD hashtag produced by application (ie. #gddcz)</string>
+	<string name="playHashtag">Play Hashtag</string>
+	<string name="playHashtagSummary">Twitter play hashtag produced by application (ie. #play)</string>
+	<string name="infoHashtag">Info Hashtag</string>
+	<string name="infoHashtagSummary">Twitter info hashtag produced by application (ie. #info)</string>
+	<string name="warnHashtag">Warn Hashtag</string>
+	<string name="warnHashtagSummary">Twitter warning hashtag produced by application (ie. #warn)</string>
+	<string name="errorHashtag">Error Hashtag</string>
+	<string name="errorHashtagSummary">Twitter error hashtag produced by application (ie. #error)</string>
+
+	<!--<string name="lastSearch">Last Search</string>-->
+	<!--<string name="lastSearchSummary">Last time Twitter search was performed (format yyyy-MM-dd HH:mm)</string>-->
 
 	<!-- Others -->
 	<string name="no_connection_text">There is NO internet connection.</string>

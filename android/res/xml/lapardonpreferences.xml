@@ -2,6 +2,7 @@
 
 <!--
   - @author Ondrej Kosatka
+  - @author Libor Kramolis
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<EditTextPreference android:key="hashtag"
@@ -13,8 +14,24 @@
 						android:summary="@string/intervalSummary"
 						android:inputType="number"
 						android:defaultValue="30"/>
-	<EditTextPreference android:key="lastSearch"
-						android:title="@string/lastSearch"
-						android:summary="@string/lastSearchSummary"
-						android:inputType="datetime"/>
+	<EditTextPreference android:key="gddHashtag"
+						android:title="@string/gddHashtag"
+						android:summary="@string/gddHashtagSummary"
+						android:defaultValue="#MYgddcz"/>
+	<EditTextPreference android:key="playHashtag"
+						android:title="@string/playHashtag"
+						android:summary="@string/playHashtagSummary"
+						android:defaultValue="#MYplay"/>
+	<EditTextPreference android:key="infoHashtag"
+						android:title="@string/infoHashtag"
+						android:summary="@string/infoHashtagSummary"
+						android:defaultValue="#MYinfo"/>
+	<EditTextPreference android:key="warnHashtag"
+						android:title="@string/warnHashtag"
+						android:summary="@string/warnHashtagSummary"
+						android:defaultValue="#MYwarn"/>
+	<EditTextPreference android:key="errorHashtag"
+						android:title="@string/errorHashtag"
+						android:summary="@string/errorHashtagSummary"
+						android:defaultValue="#MYerror"/>
 </PreferenceScreen>

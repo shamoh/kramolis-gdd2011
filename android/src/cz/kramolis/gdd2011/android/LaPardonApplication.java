@@ -12,9 +12,10 @@ import android.util.Log;
 import twitter4j.Tweet;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Ondrej Kosatka
@@ -29,12 +30,13 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 	private TwitterAdapter twitter = new TwitterAdapter();
 
 	private SharedPreferences prefs;
-
 	private int interval = 0;
-
 	private String hashtag = "";
-
-	private Date lastSearch = null;
+	private String gddHashtag = "";
+	private String playHashtag = "";
+	private String infoHashtag = "";
+	private String warnHashtag = "";
+	private String errorHashtag = "";
 
 	private LinkedList<Tweet> queue = new LinkedList<Tweet>();
 
@@ -46,8 +48,10 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
 		this.prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		this.prefs.registerOnSharedPreferenceChangeListener(this);
+		resetPrefs();
 
 		startAlarmManager();
 	}
@@ -57,26 +61,6 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 	}
 
 	private void startAlarmManager() {
-		interval = Integer.parseInt(prefs.getString("interval", "30"));
-		hashtag = prefs.getString("hashtag", "#lapardon");
-		{
-			String lastSearchText = prefs.getString("lastSearch", null);
-			if (lastSearchText != null) {
-				try {
-					lastSearch = dateFormat.parse(lastSearchText);
-				} catch (ParseException e) {
-					Log.e(TAG, "Wrong lastSearch format", e);
-					resetLastSearch();
-				}
-			} else {
-				resetLastSearch();
-			}
-			Map<String, ?> map = prefs.getAll();
-			for (String key : map.keySet()) {
-				Log.d(TAG, String.format("+ property %s: %s", key, map.get(key)));
-			}
-		}
-
 		Log.d(TAG, "AlarmManager is starting... " + interval);
 
 		// Check if we should do anything at boot at all
@@ -102,7 +86,7 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 
 	public void fetchStatuses() {
 		Log.d(TAG, String.format("searching for tag %s", hashtag));
-		List<Tweet> tweets = getTwitter().search(hashtag);
+		List<Tweet> tweets = getTwitter().search(this, hashtag);
 		if (tweets != null) {
 			Collections.reverse(tweets);
 			for (Tweet tweet : tweets) {
@@ -112,25 +96,58 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 		}
 	}
 
-	private void resetLastSearch() {
-		lastSearch = new Date();
-		String lastSearchText = dateFormat.format(lastSearch);
-		prefs.edit().putString("lastSearch", lastSearchText).commit();
-		{
-			Map<String, ?> map = prefs.getAll();
-			for (String key : map.keySet()) {
-				Log.d(TAG, String.format("~ property %s: %s", key, map.get(key)));
-			}
-		}
-	}
-
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		resetPrefs();
+
 		startAlarmManager();
 	}
 
 	public LinkedList<Tweet> getQueue() {
 		return queue;
+	}
+
+	//
+	// Preferences
+	//
+
+	private void resetPrefs() {
+		interval = Integer.parseInt(prefs.getString("interval", "30"));
+		hashtag = prefs.getString("hashtag", "#lapardon");
+
+		gddHashtag = prefs.getString("gddHashtag", "#gddcz");
+		playHashtag = prefs.getString("playHashtag", "#play");
+		infoHashtag = prefs.getString("infoHashtag", "#info");
+		warnHashtag = prefs.getString("warnHashtag", "#warn");
+		errorHashtag = prefs.getString("errorHashtag", "#error");
+	}
+
+	public Integer getPrefInterval() {
+		return interval;
+	}
+
+	public String getPrefHashtag() {
+		return hashtag;
+	}
+
+	public String getPrefGddHashtag() {
+		return gddHashtag;
+	}
+
+	public String getPrefPlayHashtag() {
+		return playHashtag;
+	}
+
+	public String getPrefInfoHashtag() {
+		return infoHashtag;
+	}
+
+	public String getPrefWarnHashtag() {
+		return warnHashtag;
+	}
+
+	public String getPrefErrorHashtag() {
+		return errorHashtag;
 	}
 
 }
