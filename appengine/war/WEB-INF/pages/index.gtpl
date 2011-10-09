@@ -1,14 +1,9 @@
 <% include '/WEB-INF/includes/header.gtpl' %>
 
-<h1>Welcome</h1>
+<h1>LaPardon</h1>
 
 <p>
-Congratulations, you've just created your first
-<a href="http://gaelyk.appspot.com">Gaelyk</a> application.
-</p>
-
-<p>
-Click <a href="/datetime">here</a> to view the current date/time.
+This is web page of Libor Kramoliš's GDD 2011 Arduino/ADK project.
 </p>
 
 <p>
@@ -17,21 +12,21 @@ Click <a href="/datetime">here</a> to view the current date/time.
 	new TWTR.Widget({
 		version: 2,
 		type: 'search',
-		search: '#lapardon',
+		search: 'lapardon',
 		interval: 30000,
-		title: 'Tag #lapardon',
-		subject: 'LaPardon Requests',
-		width: 250,
+		title: 'User @lapardon',
+		subject: 'LaPardon Runtime',
+		width: 500,
 		height: 300,
 		theme: {
 			shell: {
-				background: '#8edac1',
+				background: '#8ec1da',
 				color: '#ffffff'
 			},
 			tweets: {
 				background: '#ffffff',
 				color: '#444444',
-				links: '#19b585'
+				links: '#1985b5'
 			}
 		},
 		features: {
@@ -54,21 +49,21 @@ Click <a href="/datetime">here</a> to view the current date/time.
 	new TWTR.Widget({
 		version: 2,
 		type: 'search',
-		search: 'lapardon',
+		search: '#lapardon',
 		interval: 30000,
-		title: 'User @lapardon',
-		subject: 'LaPardon Runtime',
-		width: 250,
+		title: 'Tag #lapardon',
+		subject: 'LaPardon Requests',
+		width: 500,
 		height: 300,
 		theme: {
 			shell: {
-				background: '#8ec1da',
+				background: '#8edac1',
 				color: '#ffffff'
 			},
 			tweets: {
 				background: '#ffffff',
 				color: '#444444',
-				links: '#1985b5'
+				links: '#19b585'
 			}
 		},
 		features: {
