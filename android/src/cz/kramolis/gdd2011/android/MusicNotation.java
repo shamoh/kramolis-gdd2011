@@ -28,7 +28,6 @@ public class MusicNotation {
 		return notation;
 	}
 
-
 	//
 	// utils
 	//
@@ -47,7 +46,7 @@ public class MusicNotation {
 	 */
 	public static MusicNotation lookup(String text) throws IllegalArgumentException {
 		if (text == null) {
-			throw new IllegalArgumentException("Wrong format: text is mandatory");
+			throw new IllegalArgumentException("wrong format: text is mandatory");
 		}
 
 		int startIndex = text.indexOf('[');
@@ -57,13 +56,13 @@ public class MusicNotation {
 				return null;
 			}
 			if (startIndex > endIndex) {
-				throw new IllegalArgumentException("Wrong format: wrong order of brackets");
+				throw new IllegalArgumentException("wrong format: wrong order of brackets.");
 			}
 			if (startIndex == -1) {
-				throw new IllegalArgumentException("Wrong format: start bracket is missing.");
+				throw new IllegalArgumentException("wrong format: start bracket is missing.");
 			}
 			if (endIndex == -1) {
-				throw new IllegalArgumentException("Wrong format: end bracket is missing.");
+				throw new IllegalArgumentException("wrong format: end bracket is missing.");
 			}
 		}
 
@@ -91,7 +90,7 @@ public class MusicNotation {
 					sb.append(ch);
 					charLast = false;
 				} else {
-					throw new IllegalArgumentException("Illegal character '" + ch + "'");
+					throw new IllegalArgumentException("illegal character: '" + ch + "'.");
 				}
 			}
 		}

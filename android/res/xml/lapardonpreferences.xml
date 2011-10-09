@@ -21,17 +21,17 @@
 	<EditTextPreference android:key="playHashtag"
 						android:title="@string/playHashtag"
 						android:summary="@string/playHashtagSummary"
-						android:defaultValue="#MYplay"/>
+						android:defaultValue="#play"/>
 	<EditTextPreference android:key="infoHashtag"
 						android:title="@string/infoHashtag"
 						android:summary="@string/infoHashtagSummary"
-						android:defaultValue="#MYinfo"/>
+						android:defaultValue="#info"/>
 	<EditTextPreference android:key="warnHashtag"
 						android:title="@string/warnHashtag"
 						android:summary="@string/warnHashtagSummary"
-						android:defaultValue="#MYwarn"/>
+						android:defaultValue="#warn"/>
 	<EditTextPreference android:key="errorHashtag"
 						android:title="@string/errorHashtag"
 						android:summary="@string/errorHashtagSummary"
-						android:defaultValue="#MYerror"/>
+						android:defaultValue="#error"/>
 </PreferenceScreen>

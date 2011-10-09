@@ -7,28 +7,27 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import twitter4j.Tweet;
 
 import java.util.List;
 
 /**
  * @author Ondrej Kosatka
  */
-public class QueueAdapter extends ArrayAdapter<Tweet> {
+public class QueueAdapter extends ArrayAdapter<PlayRequest> {
 
 	int resource;
 	String response;
 	Context context;
 
 	//Initialize adapter
-	public QueueAdapter(Context context, int resource, List<Tweet> items) {
+	public QueueAdapter(Context context, int resource, List<PlayRequest> items) {
 		super(context, resource, items);
 		this.resource = resource;
 
 	}
 
-	public void addAll(List<Tweet> tweets) {
-		for (Tweet tweet : tweets) {
+	public void addAll(List<PlayRequest> tweets) {
+		for (PlayRequest tweet : tweets) {
 			this.add(tweet);
 		}
 	}
@@ -37,7 +36,7 @@ public class QueueAdapter extends ArrayAdapter<Tweet> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LinearLayout alertView;
 		//Get the current alert object
-		Tweet al = getItem(position);
+		PlayRequest al = getItem(position);
 
 		//Inflate the view
 		if (convertView == null) {
@@ -56,7 +55,7 @@ public class QueueAdapter extends ArrayAdapter<Tweet> {
 
 		//Assign the appropriate data from our alert object above
 		status.setText(al.getText());
-		username.setText("@" + al.getFromUser());
+		username.setText("@" + al.getAuthor());
 		datetime.setText(al.getCreatedAt().toLocaleString());
 
 		return alertView;

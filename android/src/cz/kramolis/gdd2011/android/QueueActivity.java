@@ -10,7 +10,6 @@ import android.view.*;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Toast;
-import twitter4j.Tweet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,8 +122,8 @@ public class QueueActivity extends ListActivity {
 		adapter.clear();
 	}
 
-	private List<Tweet> getLastTweets() {
-		List<Tweet> lastTweets = new ArrayList<Tweet>();
+	private List<PlayRequest> getLastTweets() {
+		List<PlayRequest> lastTweets = new ArrayList<PlayRequest>();
 		LaPardonApplication app = (LaPardonApplication) this.getApplication();
 		int i = 0;
 		while (i < 20 && i < app.getQueue().size()) {

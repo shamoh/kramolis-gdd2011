@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import twitter4j.Tweet;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -38,7 +37,7 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 	private String warnHashtag = "";
 	private String errorHashtag = "";
 
-	private LinkedList<Tweet> queue = new LinkedList<Tweet>();
+	private LinkedList<PlayRequest> queue = new LinkedList<PlayRequest>();
 
 	private PendingIntent pendingIntent;
 
@@ -86,13 +85,13 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 
 	public void fetchStatuses() {
 		Log.d(TAG, String.format("searching for tag %s", hashtag));
-		List<Tweet> tweets = getTwitter().search(this, hashtag);
-		if (tweets != null) {
-			Collections.reverse(tweets);
-			for (Tweet tweet : tweets) {
-				Log.d(TAG, "@" + tweet.getFromUser() + " - " + tweet.getText());
-				queue.add(tweet);
-			}
+		List<PlayRequest> requests = getTwitter().search(this, hashtag);
+		if (requests != null) {
+			Collections.reverse(requests);
+			queue.addAll(requests);
+//			for (PlayRequest request : requests) {
+//				queue.add(request);
+//			}
 		}
 	}
 
@@ -103,7 +102,7 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 		startAlarmManager();
 	}
 
-	public LinkedList<Tweet> getQueue() {
+	public LinkedList<PlayRequest> getQueue() {
 		return queue;
 	}
 
