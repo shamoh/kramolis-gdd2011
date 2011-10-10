@@ -152,6 +152,8 @@ void loop()
 		int x, y;
 		char c0;
 
+		/*
+		*/
 		if (len > 0) {
 			// assumes only one command per packet
 			if (msg[0] == 0x2) {
@@ -186,9 +188,13 @@ void loop()
 					digitalWrite(RELAY2, msg[2] ? HIGH : LOW);
 			}
 		}
+		/*
+		*/
 
 		msg[0] = 0x1;
 
+		/*
+		*/
 		b = digitalRead(BUTTON1);
 		if (b != b1) {
 			msg[1] = 0;
@@ -220,7 +226,10 @@ void loop()
 			acc.write(msg, 3);
 			b4 = b;
 		}
-
+		/*
+		*/
+		/*
+		*/
 		switch (count++ % 0x10) {
 		case 0:
 			val = analogRead(TEMP_SENSOR);
@@ -261,8 +270,12 @@ void loop()
 
 			break;
 		}
+		/*
+		*/
+		Serial.println("IF");
 	} else {
 		// reset outputs to default values on disconnect
+		Serial.println("ELSE");
 		analogWrite(LED1_RED, 255);
 		analogWrite(LED1_GREEN, 255);
 		analogWrite(LED1_BLUE, 255);
@@ -392,3 +405,4 @@ void write_joy_reg(char reg_addr, char val)
 	Wire.send(val);
 	Wire.endTransmission();
 }
+
