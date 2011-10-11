@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 public abstract class LaPardonActivity extends Activity implements Runnable {
 
-	private static final String TAG = "LaPardonActivity";
+	private static final String TAG = "LaPardon.LaPardonActivity";
 
 	public static final byte SIMULATE_COMMAND = 9;
 
@@ -51,20 +51,21 @@ public abstract class LaPardonActivity extends Activity implements Runnable {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
+			Log.d(TAG, "onReceive: action= " + action);
+
 			if (ACTION_USB_PERMISSION.equals(action)) {
 				synchronized (this) {
 					UsbAccessory accessory = UsbManager.getAccessory(intent);
-					if (intent.getBooleanExtra(
-							UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+					if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
 						openAccessory(accessory);
 					} else {
-						Log.d(TAG, "permission denied for accessory "
-								+ accessory);
+						Log.d(TAG, "permission denied for accessory " + accessory);
 					}
 					mPermissionRequestPending = false;
 				}
 			} else if (UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action)) {
 				UsbAccessory accessory = UsbManager.getAccessory(intent);
+				Log.d(TAG, "ACTION_USB_ACCESSORY_DETACHED: accessory= " + accessory);
 				if (accessory != null && accessory.equals(mAccessory)) {
 					closeAccessory();
 				}
@@ -90,8 +91,11 @@ public abstract class LaPardonActivity extends Activity implements Runnable {
 
 		if (getLastNonConfigurationInstance() != null) {
 			mAccessory = (UsbAccessory) getLastNonConfigurationInstance();
+			Log.d(TAG, "onCreate: getLastNonConfigurationInstance()/mAccessory= " + mAccessory);
 			openAccessory(mAccessory);
 		}
+
+		Log.d(TAG, "onCreate: mAccessory= " + mAccessory);
 
 		enableControls(false);
 
@@ -133,21 +137,25 @@ public abstract class LaPardonActivity extends Activity implements Runnable {
 	public void onResume() {
 		super.onResume();
 
-		Intent intent = getIntent();
+		Log.d(TAG, "onResume");
+
+//		Intent intent = getIntent();
 		if (mInputStream != null && mOutputStream != null) {
 			return;
 		}
 
 		UsbAccessory[] accessories = mUsbManager.getAccessoryList();
 		UsbAccessory accessory = (accessories == null ? null : accessories[0]);
+
+		Log.d(TAG, "onResume: accessory= " + accessory);
+
 		if (accessory != null) {
 			if (mUsbManager.hasPermission(accessory)) {
 				openAccessory(accessory);
 			} else {
 				synchronized (mUsbReceiver) {
 					if (!mPermissionRequestPending) {
-						mUsbManager.requestPermission(accessory,
-								mPermissionIntent);
+						mUsbManager.requestPermission(accessory, mPermissionIntent);
 						mPermissionRequestPending = true;
 					}
 				}
@@ -170,15 +178,17 @@ public abstract class LaPardonActivity extends Activity implements Runnable {
 	}
 
 	private void openAccessory(UsbAccessory accessory) {
+		Log.d(TAG, "openAccessory: " + accessory);
 		mFileDescriptor = mUsbManager.openAccessory(accessory);
+		Log.d(TAG, "openAccessory: mFileDescriptor= " + mFileDescriptor);
 		if (mFileDescriptor != null) {
 			mAccessory = accessory;
 			FileDescriptor fd = mFileDescriptor.getFileDescriptor();
 			mInputStream = new FileInputStream(fd);
 			mOutputStream = new FileOutputStream(fd);
-			Thread thread = new Thread(null, this, "LaPardon");
+			Thread thread = new Thread(null, this, "LaPardon Thread");
 			thread.start();
-			Log.d(TAG, "accessory opened");
+			Log.d(TAG, "accessory opened: mAccessory= " + mAccessory);
 			enableControls(true);
 		} else {
 			Log.d(TAG, "accessory open fail");
@@ -186,6 +196,8 @@ public abstract class LaPardonActivity extends Activity implements Runnable {
 	}
 
 	private void closeAccessory() {
+		Log.d(TAG, "closeAccessory", new RuntimeException());
+
 		enableControls(false);
 
 		try {
@@ -322,6 +334,7 @@ public abstract class LaPardonActivity extends Activity implements Runnable {
 	//
 
 	protected void hideControls() {
+		Log.d(TAG, "hideControls", new RuntimeException());
 		showNoArduinoInfo();
 		mInputController = null;
 	}
@@ -336,6 +349,7 @@ public abstract class LaPardonActivity extends Activity implements Runnable {
 	}
 
 	protected void showControls() {
+		Log.d(TAG, "showControls");
 		setContentView(R.layout.main);
 
 		mInputController = new InputController(this);

@@ -3,6 +3,8 @@ package cz.kramolis.gdd2011.android;
 import android.util.Log;
 import twitter4j.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,9 +14,10 @@ import java.util.List;
  */
 public class TwitterAdapter {
 
-	private static final String TAG = "TwitterAdapter";
+	private static final String TAG = "LaPardon.TwitterAdapter";
 
-	long lastId = 123136631556411392L;//-1;
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	long lastId = 123492154503995393L;//-1;
 
 	private final Twitter twitter;
 
@@ -36,6 +39,7 @@ public class TwitterAdapter {
 			if (lastId != -1) {
 				query.setSinceId(lastId);
 			}
+			query.setSince(DATE_FORMAT.format(new Date()));
 			QueryResult result = twitter.search(query);
 			lastId = result.getMaxId();
 			List<Tweet> tweets = result.getTweets();

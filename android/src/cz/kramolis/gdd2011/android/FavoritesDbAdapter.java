@@ -1,13 +1,7 @@
 package cz.kramolis.gdd2011.android;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.BaseColumns;
-import android.util.Log;
-
-import java.util.ArrayList;
 
 /**
  * @author Ondrej Kosatka
@@ -22,7 +16,7 @@ public class FavoritesDbAdapter {
 
 	private static final String GET_ALL_ORDER_BY = UPDATED_WHEN + " ASC";
 
-	private static final String TAG = "FavoritesDbAdapter";
+	private static final String TAG = "LaPardon.FavoritesDbAdapter";
 
 	private Context context;
 	private SQLiteDatabase db;

@@ -10,7 +10,7 @@ import android.view.MenuItem;
  */
 public final class ActivityUtils {
 
-	private static final String TAG = "ActivityUtils";
+	private static final String TAG = "LaPardon.ActivityUtils";
 
 	private ActivityUtils() {
 	}

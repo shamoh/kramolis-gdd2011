@@ -11,7 +11,7 @@ import android.util.Log;
  */
 public class FavoritesDbHelper extends SQLiteOpenHelper {
 
-	private static final String TAG = "FavoritesDbHelper";
+	private static final String TAG = "LaPardon.FavoritesDbHelper";
 
 	private static final int VERSION = 1;
 	private static final String DATABASE = "favorites.db";

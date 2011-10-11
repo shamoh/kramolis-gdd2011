@@ -8,7 +8,7 @@ package cz.kramolis.gdd2011.android;
  */
 public class MusicNotation {
 
-	private static final String TAG = "MusicNotation";
+	private static final String TAG = "LaPardon.MusicNotation";
 
 	private static final String SUPPORTED_CHARS = "cCdDefFgGabh";
 	private static final String SUPPORTED_NUMBERS = "12";

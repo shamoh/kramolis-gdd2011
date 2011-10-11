@@ -40,11 +40,11 @@
 #define  JOY_nINT       A10     // active low interrupt input
 #define  JOY_nRESET     A11     // active low reset output
 
-AndroidAccessory acc("Google, Inc.",
-		     "DemoKit",
-		     "DemoKit Arduino Board",
+AndroidAccessory acc("LiKra",
+		     "LaPardon",
+		     "LaPardon - GDD2011 ADK/Arduino Project",
 		     "1.0",
-		     "http://www.android.com",
+		     "http://gdd2011.kramolis.cz/",
 		     "0000000012345678");
 Servo servos[3];
 

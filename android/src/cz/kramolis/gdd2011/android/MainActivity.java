@@ -10,7 +10,7 @@ import android.view.MenuInflater;
  */
 public class MainActivity extends LaPardonActivity {
 
-	private static final String TAG = "MainActivity";
+	private static final String TAG = "LaPardon.MainActivity";
 
 	/**
 	 * Called when the activity is first created.

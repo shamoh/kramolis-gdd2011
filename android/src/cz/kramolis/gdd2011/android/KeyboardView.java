@@ -14,7 +14,7 @@ import android.view.animation.AnimationUtils;
  */
 public class KeyboardView extends View {
 
-	private static final String TAG = "KeyboardView";
+	private static final String TAG = "LaPardon.KeyboardView";
 
 	public KeyboardView(Context context) {
 		super(context);

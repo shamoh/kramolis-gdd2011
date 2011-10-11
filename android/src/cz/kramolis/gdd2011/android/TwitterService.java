@@ -12,7 +12,7 @@ import android.util.Log;
  */
 public class TwitterService extends IntentService {
 
-	private static final String TAG = "TwitterService";
+	private static final String TAG = "LaPardon.TwitterService";
 
 	public TwitterService() {
 		super("TwitterService");

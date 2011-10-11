@@ -1,21 +1,35 @@
 package cz.kramolis.gdd2011.android;
 
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
+import twitter4j.*;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TwitterUpdateStatus {
 
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
 	public static void main(String args[]) throws Exception {
+		String param = "#lapardon";
+		long lastId = 123132182104514560L;//-1;
+
+		Twitter twitter = new TwitterFactory().getInstance();
+		Query query = new Query(param);
+		query.setSinceId(lastId);
+		query.setSince(DATE_FORMAT.format(new Date()));
+		QueryResult result = twitter.search(query);
+		for (Tweet tweet : result.getTweets()) {
+			System.out.format("%s @%13s %s\n", tweet.getCreatedAt(), tweet.getFromUser(), tweet.getId());
+		}
+	}
+
+	public static void main_updateStatus2(String args[]) throws Exception {
 		Twitter twitter = new TwitterFactory().getInstance();
 		Status status = twitter.updateStatus(args[0] + " at " + new Date());
 		System.out.println("Successfully updated the status to [" + status.getText() + "].");
@@ -26,7 +40,7 @@ public class TwitterUpdateStatus {
 	 *
 	 * @param args message
 	 */
-	public static void main2(String[] args) {
+	public static void main_updateStatus1(String[] args) {
 		if (args.length < 1) {
 			System.out.println("Usage: java cz.kramolis.gdd2011.android.TwitterUpdateStatus [text]");
 			System.exit(-1);

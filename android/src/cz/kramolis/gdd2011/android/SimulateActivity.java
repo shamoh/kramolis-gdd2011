@@ -12,7 +12,7 @@ import android.widget.TextView;
  */
 public class SimulateActivity extends LaPardonActivity {
 
-	private static final String TAG = "SimulateActivity";
+	private static final String TAG = "LaPardon.SimulateActivity";
 
 	private SeekBar slider;
 	private TextView sliderValue;

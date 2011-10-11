@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class QueueActivity extends ListActivity {
 
-	private static final String TAG = "QueueActivity";
+	private static final String TAG = "LaPardon.QueueActivity";
 
 	private QueueAdapter adapter;
 
@@ -45,7 +45,7 @@ public class QueueActivity extends ListActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		LaPardonApplication app = (LaPardonApplication) this.getApplication();
-		app.getQueue().clear();
+//		app.getQueue().clear();
 		app.cancelAlarmManager();
 	}
 

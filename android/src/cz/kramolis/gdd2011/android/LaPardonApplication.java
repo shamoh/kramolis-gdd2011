@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class LaPardonApplication extends Application implements OnSharedPreferenceChangeListener {
 
-	private static final String TAG = "LaPardonApplication";
+	private static final String TAG = "LaPardon.LaPardonApplication";
 
 	final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
