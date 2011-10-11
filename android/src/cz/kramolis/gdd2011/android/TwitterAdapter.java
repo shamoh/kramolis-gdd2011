@@ -17,7 +17,6 @@ public class TwitterAdapter {
 	private static final String TAG = "LaPardon.TwitterAdapter";
 
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-	long lastId = 123492154503995393L;//-1;
 
 	private final Twitter twitter;
 
@@ -34,14 +33,24 @@ public class TwitterAdapter {
 	//
 
 	public List<PlayRequest> search(LaPardonApplication application, String param) {
+		TwitterDbAdapter dbAdapter = new TwitterDbAdapter(application);
 		try {
+			dbAdapter.open();
+			long lastId = dbAdapter.getLastTweetId();
+			Log.d(TAG, "LastTweetId from DB: " + lastId);
+
 			Query query = new Query(param);
 			if (lastId != -1) {
 				query.setSinceId(lastId);
+			} else {
+				dbAdapter.init(0, new Date());
 			}
-			query.setSince(DATE_FORMAT.format(new Date()));
+//			query.setSince(DATE_FORMAT.format(new Date()));
 			QueryResult result = twitter.search(query);
+
 			lastId = result.getMaxId();
+			dbAdapter.update(lastId, new Date());
+
 			List<Tweet> tweets = result.getTweets();
 			int readCount = tweets.size();
 
@@ -49,8 +58,6 @@ public class TwitterAdapter {
 
 			List<PlayRequest> requests = new ArrayList<PlayRequest>(readCount);
 			for (Tweet tweet : tweets) {
-				//TODO ignore older tweets!!! Asi by se dalo persistentne ukladat prave lastId.
-
 				String tweetMsg = "@" + tweet.getFromUser() + " - " + tweet.getText();
 				try {
 					MusicNotation musicNotation = MusicNotation.lookup(tweet.getText());
@@ -84,6 +91,8 @@ public class TwitterAdapter {
 			return requests;
 		} catch (TwitterException te) {
 			Log.e(TAG, "ERROR", te);
+		} finally {
+			dbAdapter.close();
 		}
 		return null;
 	}

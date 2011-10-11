@@ -6,4 +6,5 @@
 /android/res/_bak
 /android/libs/twitter4j-core-2.2.4.jar
 /appengine/.gradle
+/appengine/secret.txt
 

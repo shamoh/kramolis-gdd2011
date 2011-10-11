@@ -63,18 +63,17 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 		Log.d(TAG, "AlarmManager is starting... " + interval);
 
 		// Check if we should do anything at boot at all
-		if (interval == 0)  // <2>
+		if (interval == 0) { // <2>
 			return;
+		}
 
 		// Create the pending intent
 		Intent intent = new Intent(this, TwitterService.class);  // <3>
-		pendingIntent = PendingIntent.getService(this, -1, intent,
-				PendingIntent.FLAG_UPDATE_CURRENT); // <4>
+		pendingIntent = PendingIntent.getService(this, -1, intent, PendingIntent.FLAG_UPDATE_CURRENT); // <4>
 
 		// Setup alarm service to wake up and start service periodically
 		alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE); // <5>
-		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-				System.currentTimeMillis(), interval * 1000, pendingIntent); // <6>
+		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval * 1000, pendingIntent); // <6>
 		Log.d(TAG, "AlarmManager has started");
 	}
 

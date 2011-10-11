@@ -46,7 +46,7 @@ public class QueueActivity extends ListActivity {
 		super.onDestroy();
 		LaPardonApplication app = (LaPardonApplication) this.getApplication();
 //		app.getQueue().clear();
-		app.cancelAlarmManager();
+//		app.cancelAlarmManager();
 	}
 
 	@Override
