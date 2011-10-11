@@ -98,12 +98,6 @@ public abstract class LaPardonActivity extends Activity implements Runnable {
 		Log.d(TAG, "onCreate: mAccessory= " + mAccessory);
 
 		enableControls(false);
-
-		if (mAccessory != null) {
-			showControls();
-		} else {
-			hideControls();
-		}
 	}
 
 	//
@@ -212,6 +206,11 @@ public abstract class LaPardonActivity extends Activity implements Runnable {
 	}
 
 	protected void enableControls(boolean enable) {
+		if (enable) {
+			showControls();
+		} else {
+			hideControls();
+		}
 	}
 
 	private int composeInt(byte hi, byte lo) {
@@ -335,17 +334,11 @@ public abstract class LaPardonActivity extends Activity implements Runnable {
 
 	protected void hideControls() {
 		Log.d(TAG, "hideControls", new RuntimeException());
-		showNoArduinoInfo();
-		mInputController = null;
-	}
 
-	private void showNoArduinoInfo() {
-		Toast toast = Toast.makeText(this, R.string.no_arduino_text, Toast.LENGTH_LONG);
-		toast.show();
-//		Intent i = new Intent(this, NoArduinoActivity.class);
-//		i.setAction(Intent.ACTION_VIEW);
-//		i.addCategory(Intent.CATEGORY_DEFAULT);
-//		startActivity(i);
+		mInputController = null;
+
+//		Toast toast = Toast.makeText(this, R.string.no_arduino_text, Toast.LENGTH_LONG);
+//		toast.show();
 	}
 
 	protected void showControls() {
@@ -354,6 +347,9 @@ public abstract class LaPardonActivity extends Activity implements Runnable {
 
 		mInputController = new InputController(this);
 		mInputController.accessoryAttached();
+
+		Toast toast = Toast.makeText(this, R.string.arduino_text, Toast.LENGTH_LONG);
+		toast.show();
 	}
 
 	//

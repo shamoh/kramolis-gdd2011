@@ -40,7 +40,7 @@
 #define  JOY_nINT       A10     // active low interrupt input
 #define  JOY_nRESET     A11     // active low reset output
 
-AndroidAccessory acc("LiKra",
+AndroidAccessory acc("shamoh",
 		     "LaPardon",
 		     "LaPardon - GDD2011 ADK/Arduino Project",
 		     "1.0",

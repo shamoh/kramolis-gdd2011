@@ -10,18 +10,21 @@ public class PlayRequest {
 	private static long ID_SEQUENCE = 0;
 
 	private long id;
-	private String text;
-	private String author;
-	private Date createdAt;
-	private MusicNotation musicNotation;
+
+	private final Long tweetId;
+	private final String text;
+	private final String author;
+	private final Date createdAt;
+	private final MusicNotation musicNotation;
 
 	//
 	// init
 	//
 
-	public PlayRequest(String text, String author, Date createdAt, MusicNotation musicNotation) {
+	public PlayRequest(Long tweetId, String text, String author, Date createdAt, MusicNotation musicNotation) {
 		this.id = nextSequenceId();
 
+		this.tweetId = tweetId;
 		this.text = text;
 		this.author = author;
 		this.createdAt = createdAt;

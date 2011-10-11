@@ -4,6 +4,6 @@
   - @author Libor Kramolis
   -->
 <resources>
-	<usb-accessory manufacturer="LiKra" model="LaPardon" version="1.0"/>
+	<usb-accessory manufacturer="shamoh" model="LaPardon" version="1.0"/>
 	<!--<usb-accessory manufacturer="Google, Inc." model="DemoKit" version="1.0"/>-->
 </resources>

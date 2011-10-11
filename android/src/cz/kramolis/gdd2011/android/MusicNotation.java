@@ -56,7 +56,7 @@ public class MusicNotation {
 				return null;
 			}
 			if (startIndex > endIndex) {
-				throw new IllegalArgumentException("wrong format: wrong order of brackets.");
+				throw new IllegalArgumentException("wrong format: order of brackets.");
 			}
 			if (startIndex == -1) {
 				throw new IllegalArgumentException("wrong format: start bracket is missing.");

@@ -48,6 +48,7 @@
 	<!-- Others -->
 	<string name="no_connection_text">There is NO internet connection.</string>
 	<string name="no_arduino_text">There is NO Arduino device connected.</string>
+	<string name="arduino_text">Arduino device already connected.</string>
 	<!--
 	 <string name="username">Username</string>
 	 <string name="usernameSummary">Twitter account username</string>
