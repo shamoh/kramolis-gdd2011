@@ -177,12 +177,24 @@ public class AccessoryCommunication implements Runnable {
 		buffer[0] = command;
 		System.arraycopy(values, 0, buffer, 1, values.length);
 
-		if (mOutputStream != null && buffer[1] != -1) {
+		{
+			StringBuilder sb = new StringBuilder("buffer[ ").append(Utilities.getHex(true, buffer)).append(']');
+//			for (byte b : buffer) {
+//				sb.append(Integer.toString(b, 16)).append(" ");
+//			}
+			sb.append("]");
+			Log.d(TAG, "sendCommand: " + sb);
+		}
+
+//		if (mOutputStream != null && buffer[1] != -1) {
+		if (mOutputStream != null) {
 			try {
 				mOutputStream.write(buffer);
 			} catch (IOException e) {
 				Log.e(TAG, "write failed", e);
 			}
+		} else {
+			Log.d(TAG, "Accessory probably not connected. Output stream is not initialized.");
 		}
 	}
 

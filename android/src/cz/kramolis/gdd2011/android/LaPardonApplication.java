@@ -213,9 +213,9 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 	//
 
 	public static enum JournalType {
-		ACCESSORY_MESSAGE(">>"),
-		ACCESSORY_COMMAND("<<"),
-		TWITTER_SEARCH("@#");
+		ACCESSORY_MESSAGE("adk message ---->"),
+		ACCESSORY_COMMAND("<---- adk command"),
+		TWITTER_SEARCH("@twitter #search");
 
 		private String displayText;
 

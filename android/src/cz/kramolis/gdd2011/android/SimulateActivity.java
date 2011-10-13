@@ -104,7 +104,7 @@ public class SimulateActivity extends LaPardonActivity {
 
 	private class MyListener implements SeekBar.OnSeekBarChangeListener {
 
-		private static final long SEND_COMMAND_INTERVAL = 200;
+		private static final long SEND_COMMAND_INTERVAL = 1000;
 
 		private long lastProgressChangedMillis = -1;
 		private int lastProgress;
@@ -118,8 +118,6 @@ public class SimulateActivity extends LaPardonActivity {
 
 				sendCommandSimulate(progress);
 			}
-
-			lastProgressChangedMillis = System.currentTimeMillis();
 		}
 
 		@Override
@@ -139,6 +137,7 @@ public class SimulateActivity extends LaPardonActivity {
 				SimulateActivity.this.sendCommandSimulate(progress);
 			}
 			lastProgress = progress;
+			lastProgressChangedMillis = System.currentTimeMillis();
 		}
 
 	} // class MyListener
