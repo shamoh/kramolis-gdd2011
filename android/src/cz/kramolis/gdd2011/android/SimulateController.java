@@ -1,7 +1,5 @@
 package cz.kramolis.gdd2011.android;
 
-import android.view.ViewGroup;
-
 /**
  * @author Libor Kramolis
  */

@@ -26,9 +26,9 @@ public class QueueActivity extends ListActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Log.d(TAG, "onCreate");
-
 		super.onCreate(savedInstanceState);
+
+		Log.d(TAG, "onCreate");
 
 		setContentView(R.layout.queue);
 		setTitle(R.string.queue);
@@ -37,21 +37,23 @@ public class QueueActivity extends ListActivity {
 
 		adapter = new QueueAdapter(this, R.layout.queuerow, getLastTweets());
 		setListAdapter(adapter);
-
-		checkNetwork();
 	}
 
+	/*
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		LaPardonApplication app = (LaPardonApplication) this.getApplication();
-//		app.getQueue().clear();
-//		app.cancelAlarmManager();
+		app.getQueue().clear();
+		app.cancelAlarmManager();
 	}
+	*/
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+
+		checkNetwork();
 	}
 
 	private void checkNetwork() {

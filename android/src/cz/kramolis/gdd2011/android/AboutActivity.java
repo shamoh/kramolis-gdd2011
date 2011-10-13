@@ -26,8 +26,8 @@ public class AboutActivity extends ListActivity {
 
 		addItems();
 		SimpleAdapter notes = new SimpleAdapter(this, list, R.layout.list_item,
-				new String[] {"title", "description", "link"},
-				new int[] {R.id.text1, R.id.text2, R.id.text3});
+				new String[]{"title", "description", "link"},
+				new int[]{R.id.text1, R.id.text2, R.id.text3});
 		setListAdapter(notes);
 		getListView().setTextFilterEnabled(true);
 	}

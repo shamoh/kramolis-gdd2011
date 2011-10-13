@@ -19,30 +19,11 @@
 				  android:text="155" android:layout_width="40dip" android:layout_height="wrap_content"
 				  android:layout_gravity="center_vertical|right" android:gravity="right" android:clickable="false"/>
 	</LinearLayout>
+	<ListView android:id="@+id/list" android:layout_height="fill_parent" android:layout_width="fill_parent"/>
+	<!--
 	<cz.kramolis.gdd2011.android.KeyboardView android:id="@+id/keyboard"
 											  android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+	-->
 	<!--android:layout_gravity="bottom|center_vertical"-->
 	<!--android:layout_width="wrap_content" android:layout_height="80dip"/>-->
 </LinearLayout>
-		<!--
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:layout_width="fill_parent" android:layout_height="fill_parent"
-				android:orientation="vertical" android:layout_weight="1">>
-
-	  <LinearLayout android:layout_gravity="top|center_vertical"
-					android:layout_width="fill_parent" android:layout_height="fill_parent"
-					android:layout_weight="1">
-		  <TextView android:text="Value" android:layout_height="wrap_content"
-					android:layout_gravity="left|center_vertical" android:layout_width="40dip" android:clickable="true"/>
-		  <SeekBar android:id="@+id/slider"
-				   android:layout_height="wrap_content" android:layout_width="wrap_content"
-				   android:layout_weight="1" android:layout_gravity="center"
-				   android:max="255"/>
-		  <TextView android:id="@+id/sliderValue"
-					android:text="155" android:layout_width="40dip" android:layout_height="wrap_content"
-					android:layout_gravity="center_vertical|right" android:gravity="right" android:clickable="false"/>
-	  </LinearLayout>
-	  <cz.kramolis.gdd2011.android.KeyboardView android:id="@+id/keyboard" android:layout_gravity="bottom|center_vertical"
-												android:layout_width="wrap_content" android:layout_height="80dip"/>
-  </LinearLayout>
-  -->

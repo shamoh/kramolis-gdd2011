@@ -12,9 +12,7 @@ import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Ondrej Kosatka
@@ -37,7 +35,8 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 	private String warnHashtag = "";
 	private String errorHashtag = "";
 
-	private LinkedList<PlayRequest> queue = new LinkedList<PlayRequest>();
+	private LinkedList<PlayRequest> queue;
+	private List<JournalItem> journal;
 
 	private PendingIntent pendingIntent;
 
@@ -47,6 +46,9 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
+		this.queue = new LinkedList<PlayRequest>();
+		this.journal = new ArrayList<JournalItem>();
 
 		this.prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		this.prefs.registerOnSharedPreferenceChangeListener(this);
@@ -105,6 +107,10 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 		return queue;
 	}
 
+	public List<JournalItem> getJournal() {
+		return journal;
+	}
+
 	//
 	// Preferences
 	//
@@ -147,5 +153,79 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 	public String getPrefErrorHashtag() {
 		return errorHashtag;
 	}
+
+
+	//
+	// journal
+	//
+
+	public void addJournalAccessoryMessage(String text) {
+		addJournal(new JournalItem(JournalType.ACCESSORY_MESSAGE, text));
+	}
+
+	public void addJournalAccessoryCommand(String text) {
+		addJournal(new JournalItem(JournalType.ACCESSORY_COMMAND, text));
+	}
+
+	public void addJournalTwitterSearch(String text) {
+		addJournal(new JournalItem(JournalType.TWITTER_SEARCH, text));
+	}
+
+	private void addJournal(JournalItem item) {
+		journal.add(0, item);
+		if (journal.size() > 333) {
+			journal.remove(journal.size() - 1);
+		}
+	}
+
+	//
+	// class JournalItem
+	//
+
+	public static class JournalItem {
+
+		private JournalType type;
+		private String text;
+		private Date createdAt;
+
+		private JournalItem(JournalType type, String text) {
+			this.type = type;
+			this.text = text;
+			this.createdAt = new Date();
+		}
+
+		public JournalType getType() {
+			return type;
+		}
+
+		public String getText() {
+			return text;
+		}
+
+		public Date getCreatedAt() {
+			return createdAt;
+		}
+
+	} // class JournalItem
+
+	//
+	// enum JournalType
+	//
+
+	public static enum JournalType {
+		ACCESSORY_MESSAGE(">>"),
+		ACCESSORY_COMMAND("<<"),
+		TWITTER_SEARCH("@#");
+
+		private String displayText;
+
+		private JournalType(String displayText) {
+			this.displayText = displayText;
+		}
+
+		public String getDisplayText() {
+			return displayText;
+		}
+	} // enum JournalType
 
 }

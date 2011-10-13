@@ -94,10 +94,9 @@ public class TwitterAdapter {
 				}
 			}
 
-			if (readCount > 1) {
-				//??? Mozna by se hodilo delat nejake pauzy, at nedojde Twitter limit
-				updateStatusSearch(application, readCount, requests.size(), lastId);
-			}
+//			if (readCount > 0) {
+			updateStatusSearch(application, readCount, requests.size(), lastId);
+//			}
 		}
 		return requests;
 	}
@@ -111,8 +110,14 @@ public class TwitterAdapter {
 	private void updateStatusSearch(LaPardonApplication application, int readCount, int okRequests, long maxId) {
 		String searchMessage = String.format("Just read %s new tweets (including %s incorrect) at %tT, last tweet Id: %s.",
 				readCount, (readCount - okRequests), new Date(), maxId);
-		Status status = updateStatus(null, searchMessage, application.getPrefInfoHashtag());
-		Log.d(TAG, "Search status [" + (status != null ? status.getText() : "<null>") + "].");
+
+		application.addJournalTwitterSearch(searchMessage);
+
+		if (readCount > 1) {
+			//??? Mozna by se hodilo delat nejake pauzy, at nedojde Twitter limit
+			Status status = updateStatus(null, searchMessage, application.getPrefInfoHashtag());
+			Log.d(TAG, "Search status [" + (status != null ? status.getText() : "<null>") + "].");
+		}
 	}
 
 	private Status updateStatus(Long replyToId, String text, String... tags) {

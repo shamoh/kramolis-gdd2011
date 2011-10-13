@@ -51,7 +51,7 @@ public class TwitterDbAdapter {
 		}
 	}
 
-	public void update (long lastTweetId, Date searchedWhen) {
+	public void update(long lastTweetId, Date searchedWhen) {
 		ContentValues values = new ContentValues();
 		values.put(LAST_TWEET_ID, lastTweetId);
 		values.put(SEARCHED_WHEN, searchedWhen.getTime());
@@ -59,7 +59,7 @@ public class TwitterDbAdapter {
 		db.update(TABLE, values, BaseColumns._ID + " = ?", new String[]{"1"});
 	}
 
-	public void init (long lastTweetId, Date searchedWhen) {
+	public void init(long lastTweetId, Date searchedWhen) {
 		ContentValues values = new ContentValues();
 		values.put(BaseColumns._ID, 1);
 		values.put(LAST_TWEET_ID, lastTweetId);
