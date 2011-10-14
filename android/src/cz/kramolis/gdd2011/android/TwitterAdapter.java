@@ -105,7 +105,7 @@ public class TwitterAdapter {
 
 	private void updateStatusUser(LaPardonApplication application, String author, long replyToId, String message, String... tags) {
 		String searchMessage = String.format("@%s %s", author, message);
-		Status status = updateStatus(replyToId, searchMessage, tags);
+		Status status = updateStatus((replyToId != -1 ? replyToId : null), searchMessage, tags);
 		Log.d(TAG, "Reply status [" + (status != null ? status.getText() : "<null>") + "].");
 	}
 

@@ -29,6 +29,19 @@ public class MusicNotation {
 	}
 
 	//
+	// object
+	//
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("MusicNotation");
+		sb.append("{notation='").append(notation).append('\'');
+		sb.append('}');
+		return sb.toString();
+	}
+
+	//
 	// utils
 	//
 

@@ -191,7 +191,7 @@ public class AccessoryCommunication implements Runnable {
 //			for (byte b : buffer) {
 //				sb.append(Integer.toString(b, 16)).append(" ");
 //			}
-			sb.append("]");
+//			sb.append("]");
 			Log.d(TAG, "sendCommand: " + sb);
 		}
 

@@ -6,15 +6,11 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Libor Kramolis
@@ -42,6 +38,7 @@ public class MainActivity extends LaPardonActivity {
 	//
 	private ListView queueContainer;
 	private QueueAdapter queueAdapter;
+	private Map<Long, PlayRequest> queueMap;
 	//
 	//
 	// about
@@ -132,12 +129,16 @@ public class MainActivity extends LaPardonActivity {
 	private void handleQuit() {
 		Log.d(TAG, "----------- QUIT -----------");
 
-		LaPardonApplication app = (LaPardonApplication) this.getApplication();
-		app.cancelAlarmManager();
-		app.getQueue().clear();
+		getLaPardonApplication().cancelAlarmManager();
+		getLaPardonApplication().getQueue().clear();
 
 		finish();
 		System.exit(0);
+	}
+
+	private LaPardonApplication getLaPardonApplication() {
+		LaPardonApplication app = (LaPardonApplication) this.getApplication();
+		return app;
 	}
 
 	private void handleRemoveAll(MenuItem item) {
@@ -198,10 +199,46 @@ public class MainActivity extends LaPardonActivity {
 
 		Log.d(TAG, "onContextItemSelected: " + item);
 		Log.d(TAG, "- itemId: " + Integer.toHexString(item.getItemId()));
+		Log.d(TAG, "- order : " + item.getOrder());
+		Log.d(TAG, "- info.id        : " + info.id);
+		Log.d(TAG, "- info.position  : " + info.position);
+		Log.d(TAG, "- info.targetView: " + info.targetView);
 
+		boolean retValue = false;
 		switch (item.getItemId()) {
+			case R.id.execute:
+				handleExecute(item);
+				retValue = true;
+				break;
 			default:
-				return super.onContextItemSelected(item);
+				retValue = super.onContextItemSelected(item);
+		}
+		return retValue;
+	}
+
+	private void handleExecute(MenuItem item) {
+		if (ViewType.QUEUE == viewType) {
+			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+			TextView idView = (TextView) info.targetView.findViewById(R.id.id);
+			long id = Long.parseLong(idView.getText().toString());
+			Log.d(TAG, "handleExecute: #" + id);
+			queueExecute(id);
+		}
+	}
+
+	public PlayRequest queueFindPlayRequest(long id) {
+		PlayRequest request = getLaPardonApplication().findPlayRequest(id);
+		if ((request == null) && (queueMap != null)) {
+			request = queueMap.get(id);
+		}
+		return request;
+	}
+
+	private void queueExecute(long id) {
+		PlayRequest request = queueFindPlayRequest(id);
+		Log.d(TAG, "PlayRequest: " + request);
+		if (request != null) {
+			MainActivity.this.sendCommandPlay(request);
 		}
 	}
 
@@ -227,7 +264,6 @@ public class MainActivity extends LaPardonActivity {
 		Log.d(TAG, "!!! sendCommandTest !!!");
 
 		MainActivity.this.sendCommandSimulate(222);
-//		sendCommand((byte)2, (byte)23, 222);
 	}
 
 	private void checkNetwork() {
@@ -322,18 +358,40 @@ public class MainActivity extends LaPardonActivity {
 	}
 
 	private List<PlayRequest> getQueueLastTweets() {
+		final int MAX = 20;
 		List<PlayRequest> lastTweets = new ArrayList<PlayRequest>();
 		LaPardonApplication app = (LaPardonApplication) this.getApplication();
 		int i = 0;
-		while (i < 20 && i < app.getQueue().size()) {
+		while (i < MAX && i < app.getQueue().size()) {
 			lastTweets.add(app.getQueue().get(i++));
 		}
+		{
+			this.queueMap = new HashMap<Long, PlayRequest>();
+			{
+				String text = "Test request - octave 1 [cCdDefFgGabh] #lapardon";
+				PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", new Date(), MusicNotation.lookup(text));
+				lastTweets.add(testRequest);
+				queueMap.put(testRequest.getId(), testRequest);
+			}
+			{
+				String text = "Test request - octave 2 [c2C2d2D2e2f2F2g2G2a2b2h2] #lapardon";
+				PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", new Date(), MusicNotation.lookup(text));
+				lastTweets.add(testRequest);
+				queueMap.put(testRequest.getId(), testRequest);
+			}
+			{
+				String text = "Test request - both octaves [cCdDefFgGabh|c2C2d2D2e2f2F2g2G2a2b2h2] #lapardon";
+				PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", new Date(), MusicNotation.lookup(text));
+				lastTweets.add(testRequest);
+				queueMap.put(testRequest.getId(), testRequest);
+			}
+		}
+
 		return lastTweets;
 	}
 
 	private void queueRemoveAll() {
-		LaPardonApplication app = (LaPardonApplication) this.getApplication();
-		app.getQueue().clear();
+		getLaPardonApplication().getQueue().clear();
 		queueAdapter.clear();
 	}
 

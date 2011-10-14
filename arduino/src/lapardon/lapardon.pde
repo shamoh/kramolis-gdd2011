@@ -138,14 +138,15 @@ void setup()
 
 void loop()
 {
+	byte MAX_BYTES = 280;
 	byte err;
 	byte idle;
 	static byte count = 0;
-	byte msg[2];
+	byte msg[MAX_BYTES];
 	long touchcount;
 
 	if (acc.isConnected()) {
-		int len = acc.read(msg, sizeof(msg), 2);
+		int len = acc.read(msg, sizeof(msg), MAX_BYTES);
 		int i;
 		byte b;
 		uint16_t val;
@@ -153,6 +154,10 @@ void loop()
 		char c0;
 
 		if (len > 0) {
+			//TODO:
+			//1) vypsat typ commandu
+			//2) cely obsah zpravy
+
 			Serial.print("Length: ");
 			Serial.println(len);
 			Serial.print("  array: ");

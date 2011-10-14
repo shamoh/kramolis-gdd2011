@@ -35,7 +35,8 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 	private String warnHashtag = "";
 	private String errorHashtag = "";
 
-	private LinkedList<PlayRequest> queue;
+	private List<PlayRequest> queue;
+	private Map<Long, PlayRequest> queueMap;
 	private List<JournalItem> journal;
 
 	private PendingIntent pendingIntent;
@@ -48,6 +49,7 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 		super.onCreate();
 
 		this.queue = new LinkedList<PlayRequest>();
+		this.queueMap = new HashMap<Long, PlayRequest>();
 		this.journal = new ArrayList<JournalItem>();
 
 		this.prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -89,10 +91,11 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 		List<PlayRequest> requests = getTwitter().search(this, hashtag);
 		if (requests != null) {
 			Collections.reverse(requests);
-			queue.addAll(requests);
-//			for (PlayRequest request : requests) {
-//				queue.add(request);
-//			}
+//			queue.addAll(requests);
+			for (PlayRequest request : requests) {
+				queue.add(request);
+				queueMap.put(request.getId(), request);
+			}
 		}
 	}
 
@@ -103,8 +106,12 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 		startAlarmManager();
 	}
 
-	public LinkedList<PlayRequest> getQueue() {
+	public List<PlayRequest> getQueue() {
 		return queue;
+	}
+
+	public PlayRequest findPlayRequest(long id) {
+		return queueMap.get(id);
 	}
 
 	public List<JournalItem> getJournal() {

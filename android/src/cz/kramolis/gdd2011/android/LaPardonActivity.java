@@ -129,4 +129,8 @@ public abstract class LaPardonActivity extends Activity {
 		accessoryAdapter.sendCommandSimulate(value);
 	}
 
+	protected void sendCommandPlay(PlayRequest request) {
+		accessoryAdapter.sendCommandPlay(request);
+	}
+
 }

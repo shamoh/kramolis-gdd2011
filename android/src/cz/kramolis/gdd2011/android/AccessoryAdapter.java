@@ -59,9 +59,18 @@ public class AccessoryAdapter {
 						mPermissionRequestPending = false;
 					}
 				} else if (UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action)) {
-					UsbAccessory accessory = UsbManager.getAccessory(intent);
-					Log.d(TAG, "ACTION_USB_ACCESSORY_DETACHED: accessory= " + accessory);
-					accessoryCommunication.closeAccessory(accessory);
+					{ // prvni varianta
+						UsbAccessory accessory = UsbManager.getAccessory(intent);
+						Log.d(TAG, "ACTION_USB_ACCESSORY_DETACHED: accessory= " + accessory);
+						accessoryCommunication.closeAccessory(accessory);
+					}
+					{ // druha varianta (http://developer.android.com/guide/topics/usb/accessory.html#terminating-a)
+						UsbAccessory accessory = (UsbAccessory) intent.getParcelableExtra("accessory" /*UsbManager.EXTRA_ACCESSORY*/);
+						Log.d(TAG, "#2 UsbManager.EXTRA_ACCESSORY: accessory= " + accessory);
+						if (accessory != null) {
+							accessoryCommunication.closeAccessory(accessory);
+						}
+					}
 				}
 			}
 		};
@@ -157,7 +166,16 @@ public class AccessoryAdapter {
 	protected void sendCommandSimulate(int value) {
 		accessoryCommunication.sendCommand(AccessoryCommunication.COMMAND_SIMULATE, (byte) value);
 
-		String journalText = String.format("Simulate: %s", value);
+		String journalText = String.format("Simulate: %s (0x%s)", value, Utilities.getHex(false, (byte) value));
+		addJournalAccessoryCommand(journalText);
+	}
+
+	protected void sendCommandPlay(PlayRequest request) {
+		String notation = request.getMusicNotation().getNotation();
+		byte[] values = notation.getBytes();
+		accessoryCommunication.sendCommand(AccessoryCommunication.COMMAND_PLAY, values);
+
+		String journalText = String.format("Play: %s", notation);
 		addJournalAccessoryCommand(journalText);
 	}
 

@@ -33,33 +33,35 @@ public class QueueAdapter extends ArrayAdapter<PlayRequest> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LinearLayout alertView;
+		LinearLayout layout;
 		//Get the current alert object
-		PlayRequest al = getItem(position);
+		PlayRequest playRequest = getItem(position);
 
 		//Inflate the view
 		if (convertView == null) {
-			alertView = new LinearLayout(getContext());
+			layout = new LinearLayout(getContext());
 			String inflater = Context.LAYOUT_INFLATER_SERVICE;
 			LayoutInflater vi;
 			vi = (LayoutInflater) getContext().getSystemService(inflater);
-			vi.inflate(resource, alertView, true);
+			vi.inflate(resource, layout, true);
 		} else {
-			alertView = (LinearLayout) convertView;
+			layout = (LinearLayout) convertView;
 		}
 		//Get the text boxes from the listitem.xml file
-		TextView status = (TextView) alertView.findViewById(R.id.status);
-		TextView username = (TextView) alertView.findViewById(R.id.username);
-		TextView datetime = (TextView) alertView.findViewById(R.id.datetime);
+		TextView id = (TextView) layout.findViewById(R.id.id);
+		TextView status = (TextView) layout.findViewById(R.id.status);
+		TextView username = (TextView) layout.findViewById(R.id.username);
+		TextView datetime = (TextView) layout.findViewById(R.id.datetime);
 
 		//Assign the appropriate data from our alert object above
-		status.setText(al.getText());
-		username.setText("@" + al.getAuthor());
-		datetime.setText(al.getCreatedAt().toLocaleString());
+		id.setText(String.valueOf(playRequest.getId()));
+		status.setText(playRequest.getText());
+		username.setText("@" + playRequest.getAuthor());
+		datetime.setText(playRequest.getCreatedAt().toLocaleString());
 
-		alertView.setOnCreateContextMenuListener(mainActivity);
+		layout.setOnCreateContextMenuListener(mainActivity);
 
-		return alertView;
+		return layout;
 	}
 
 }

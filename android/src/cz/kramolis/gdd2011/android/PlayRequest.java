@@ -64,4 +64,22 @@ public class PlayRequest {
 		return ID_SEQUENCE;
 	}
 
+	//
+	// object
+	//
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("PlayRequest");
+		sb.append("{id=").append(id);
+		sb.append(", tweetId=").append(tweetId);
+		sb.append(", text='").append(text).append('\'');
+		sb.append(", author='").append(author).append('\'');
+		sb.append(", createdAt=").append(createdAt);
+		sb.append(", musicNotation=").append(musicNotation);
+		sb.append('}');
+		return sb.toString();
+	}
+
 }
