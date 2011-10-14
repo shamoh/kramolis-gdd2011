@@ -153,18 +153,22 @@ void loop()
 		int x, y;
 		char c0;
 
-		if (len > 0) {
-			//TODO:
-			//1) vypsat typ commandu
-			//2) cely obsah zpravy
-
-			Serial.print("Length: ");
-			Serial.println(len);
-			Serial.print("  array: ");
-			Serial.print(msg[0], HEX);
-                        Serial.print("|");
-			Serial.print(msg[1], HEX);
-                        Serial.println("|");
+		if (len > 0x0) {
+			if (0x1 == msg[0]) {
+				Serial.print("PLAY [ 1 + ");
+				Serial.print((len -1));
+				Serial.print(" ]: ");
+			} else if (0x2 == msg[0]) {
+				Serial.print("SIMULATE [ 1 + 1 ]: ");
+			}
+			for(int iii = 1; iii < len; iii++) {
+				Serial.print(msg[iii], HEX);
+			}
+			if (0x1 == msg[0]) {
+//				handle_play(msg);
+			} else if (0x2 == msg[0]) {
+//				handle_simulate(msg[1]);
+			}
 		}
 
 		/*
@@ -208,7 +212,7 @@ void loop()
 
 		/*
 		b = digitalRead(BUTTON1);
-		if (b != b1) {
+		if (b != b1) {`
 			msg[1] = 0;
 			msg[2] = b ? 0 : 1;
 			acc.write(msg, 3);
