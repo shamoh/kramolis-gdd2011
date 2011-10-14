@@ -19,7 +19,7 @@ public final class ActivityUtils {
 	// start activity
 	//
 
-	public static boolean onOptionsItemSelected(Activity activity, MenuItem item) {
+	static boolean onOptionsItemSelected(Activity activity, MenuItem item) {
 		Log.d(TAG, "onOptionsItemSelected - " + item.getItemId());
 		// Handle item selection
 		boolean retValue = false;
@@ -28,22 +28,22 @@ public final class ActivityUtils {
 				startPreferencesActivity(activity);
 				retValue = true;
 				break;
-			case R.id.queue:
-				startQueueActivity(activity);
-				retValue = true;
-				break;
-			case R.id.simulate:
-				startSimulateActivity(activity);
-				retValue = true;
-				break;
-			case R.id.about:
-				startAboutActivity(activity);
-				retValue = true;
-				break;
-			case R.id.main:
-				startMainActivity(activity);
-				retValue = true;
-				break;
+//			case R.id.queue:
+//				startQueueActivity(activity);
+//				retValue = true;
+//				break;
+//			case R.id.simulate:
+//				startSimulateActivity(activity);
+//				retValue = true;
+//				break;
+//			case R.id.about:
+//				startAboutActivity(activity);
+//				retValue = true;
+//				break;
+//			case R.id.runtime:
+//				startMainActivity(activity);
+//				retValue = true;
+//				break;
 			default:
 				retValue = activity.onOptionsItemSelected(item);
 		}

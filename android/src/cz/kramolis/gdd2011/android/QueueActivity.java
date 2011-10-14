@@ -35,8 +35,8 @@ public class QueueActivity extends ListActivity {
 
 		registerForContextMenu(getListView());
 
-		adapter = new QueueAdapter(this, R.layout.queuerow, getLastTweets());
-		setListAdapter(adapter);
+//		adapter = new QueueAdapter(this, R.layout.queuerow, getLastTweets());
+//		setListAdapter(adapter);
 	}
 
 	/*

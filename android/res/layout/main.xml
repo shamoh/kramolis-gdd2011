@@ -11,8 +11,18 @@
 			  android:layout_gravity="center_horizontal"
 			  android:layout_weight="1">
 
-	<ListView android:layout_height="fill_parent"
-			  android:layout_width="fill_parent"
-			  android:id="@android:id/list"/>
+	<FrameLayout android:layout_width="match_parent"
+				 android:layout_height="wrap_content" android:orientation="vertical"
+				 android:paddingLeft="10dip" android:paddingRight="10dip">
+		<include layout="@layout/runtime" android:id="@+id/runtimeContainer"
+				 android:layout_width="match_parent" android:layout_height="wrap_content"/>
+		<include layout="@layout/queue" android:id="@+id/queueContainer"
+				 android:layout_width="match_parent" android:layout_height="wrap_content"/>
+		<include layout="@layout/simulate" android:id="@+id/simulateContainer"
+				 android:layout_width="match_parent" android:layout_height="wrap_content"/>
+		<include layout="@layout/about" android:id="@+id/aboutContainer"
+				 android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+	</FrameLayout>
 
 </LinearLayout>

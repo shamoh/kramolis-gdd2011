@@ -19,24 +19,20 @@
 		<uses-library android:name="com.android.future.usb.accessory"/>
 
 		<activity android:name="MainActivity" android:label="@string/app_name">
-			<!--
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
-			-->
 		</activity>
 
-		<activity android:name=".AboutActivity" android:label="@string/app_name"/>
 		<activity android:name=".LaPardonPreferencesActivity" android:label="@string/app_name"/>
+		<!--
+		<activity android:name=".AboutActivity" android:label="@string/app_name"/>
 		<activity android:name=".QueueActivity" android:label="@string/app_name"/>
 		<activity android:name=".SimulateActivity" android:label="@string/app_name"
 				  android:screenOrientation="landscape">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
 		</activity>
+		-->
 
 		<activity android:name=".UsbAccessoryActivity" android:label="@string/app_name"
 				  android:taskAffinity="" android:launchMode="singleInstance">

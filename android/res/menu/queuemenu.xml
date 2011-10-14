@@ -6,13 +6,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:id="@+id/refresh"
 		  android:icon="@android:drawable/ic_menu_rotate"
-		  android:title="@string/refresh"/> <!-- ic_menu_refresh NENI public :-( Zatim davam rotate! -->
+		  android:title="@string/refresh"/>
+	<!-- ic_menu_refresh NENI public :-( Zatim davam rotate! -->
 	<item android:id="@+id/removeAll"
 		  android:icon="@android:drawable/ic_notification_clear_all"
 		  android:title="@string/removeAll"/>
-	<item android:id="@+id/main"
+	<item android:id="@+id/runtime"
 		  android:icon="@android:drawable/ic_menu_agenda"
-		  android:title="@string/main"/> <!-- ic_menu_home NENI public :-( Zatim davam agenda! -->
+		  android:title="@string/runtime"/>
+	<!-- ic_menu_home NENI public :-( Zatim davam agenda! -->
 	<item android:id="@+id/preferences"
 		  android:icon="@android:drawable/ic_menu_preferences"
 		  android:title="@string/preferences"/>

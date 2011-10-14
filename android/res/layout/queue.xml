@@ -3,12 +3,6 @@
 <!--
   - @author Ondrej Kosatka
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:layout_width="fill_parent"
-			  android:layout_height="fill_parent">
-
-	<ListView android:layout_height="fill_parent"
-			  android:layout_width="fill_parent"
-			  android:id="@android:id/list"/>
-
-</LinearLayout>
+<ListView android:layout_width="fill_parent" android:layout_height="fill_parent"
+		  xmlns:android="http://schemas.android.com/apk/res/android">
+</ListView>

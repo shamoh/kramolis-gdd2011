@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
-import android.widget.Toast;
 import com.android.future.usb.UsbAccessory;
 import com.android.future.usb.UsbManager;
 
@@ -145,8 +144,10 @@ public class AccessoryAdapter {
 		LaPardonApplication app = (LaPardonApplication) laPardonActivity.getApplication();
 		app.addJournalAccessoryCommand(text);
 
-		Toast toast = Toast.makeText(laPardonActivity, "[journal] " + text, Toast.LENGTH_SHORT);
-		toast.show();
+		text = "[journal] " + text;
+		Log.d(TAG, text);
+//		Toast toast = Toast.makeText(laPardonActivity, text, Toast.LENGTH_SHORT);
+//		toast.show();
 	}
 
 	//

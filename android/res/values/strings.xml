@@ -9,12 +9,9 @@
 
 	<!-- Menu -->
 	<string name="about">About</string>
-
-	<!-- Main -->
-	<string name="main">Main</string>
-
-	<!-- Simulate -->
+	<string name="runtime">Runtime</string>
 	<string name="simulate">Simulate</string>
+	<string name="quit">Quit</string>
 
 	<!-- Queue -->
 	<string name="queue">Queue</string>

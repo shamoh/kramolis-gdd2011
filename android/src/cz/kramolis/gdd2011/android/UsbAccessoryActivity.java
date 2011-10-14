@@ -17,8 +17,8 @@ public final class UsbAccessoryActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-//		Intent intent = new Intent(this, MainActivity.class);
-		Intent intent = new Intent(this, SimulateActivity.class);
+		Intent intent = new Intent(this, MainActivity.class);
+//		Intent intent = new Intent(this, SimulateActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		try {
 			Log.d(TAG, "Start Activity Intent: " + intent);
