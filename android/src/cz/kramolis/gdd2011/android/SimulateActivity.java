@@ -14,7 +14,6 @@ import java.util.List;
 
 /**
  * @author Libor Kramolis
- * @todo
  */
 public class SimulateActivity extends LaPardonActivity {
 
@@ -38,7 +37,7 @@ public class SimulateActivity extends LaPardonActivity {
 		initListeners();
 
 		journalAdapter = new JournalAdapter(this, R.layout.journalrow, getLastJournalItems());
-		journalList = (ListView) findViewById(R.id.list);
+		journalList = (ListView) findViewById(R.id.journalList);
 		journalList.setAdapter(journalAdapter);
 	}
 

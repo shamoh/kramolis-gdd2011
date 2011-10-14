@@ -15,15 +15,14 @@ import java.util.List;
  */
 public class QueueAdapter extends ArrayAdapter<PlayRequest> {
 
-	int resource;
-	String response;
-	Context context;
+	private MainActivity mainActivity;
+	private int resource;
+//	private String response;
 
 	//Initialize adapter
-	public QueueAdapter(Context context, int resource, List<PlayRequest> items) {
-		super(context, resource, items);
+	public QueueAdapter(MainActivity mainActivity, int resource, List<PlayRequest> items) {
+		super(mainActivity, resource, items);
 		this.resource = resource;
-
 	}
 
 	public void addAll(List<PlayRequest> tweets) {
@@ -57,6 +56,8 @@ public class QueueAdapter extends ArrayAdapter<PlayRequest> {
 		status.setText(al.getText());
 		username.setText("@" + al.getAuthor());
 		datetime.setText(al.getCreatedAt().toLocaleString());
+
+		alertView.setOnCreateContextMenuListener(mainActivity);
 
 		return alertView;
 	}

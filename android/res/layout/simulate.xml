@@ -19,7 +19,7 @@
 				  android:text="155" android:layout_width="40dip" android:layout_height="wrap_content"
 				  android:layout_gravity="center_vertical|right" android:gravity="right" android:clickable="false"/>
 	</LinearLayout>
-	<ListView android:id="@+id/list" android:layout_height="fill_parent" android:layout_width="fill_parent"/>
+	<ListView android:id="@+id/journalList" android:layout_height="fill_parent" android:layout_width="fill_parent"/>
 	<!--
 	<cz.kramolis.gdd2011.android.KeyboardView android:id="@+id/keyboard"
 											  android:layout_width="fill_parent" android:layout_height="wrap_content"/>

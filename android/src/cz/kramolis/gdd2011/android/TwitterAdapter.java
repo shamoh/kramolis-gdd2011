@@ -47,6 +47,8 @@ public class TwitterAdapter {
 			if (lastId != -1) {
 				query.setSinceId(lastId);
 			} else {
+				lastId = 123789339489615872L;
+				query.setSinceId(lastId);
 				dbAdapter.init(0, new Date());
 			}
 			result = twitter.search(query);

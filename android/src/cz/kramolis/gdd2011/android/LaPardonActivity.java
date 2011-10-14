@@ -112,7 +112,7 @@ public abstract class LaPardonActivity extends Activity {
 
 	protected void showControls() {
 		Log.d(TAG, "showControls");
-		setContentView(R.layout.main);
+//		setContentView(R.layout.main);
 
 //		mInputController = new InputController(this);
 //		mInputController.accessoryAttached();
