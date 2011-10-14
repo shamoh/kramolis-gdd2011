@@ -24,7 +24,7 @@ public abstract class LaPardonActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Log.d(TAG, "onCreate");
+		Log.d(TAG, "*** onCreate");
 
 		this.accessoryAdapter = new AccessoryAdapter(this);
 		{
@@ -66,7 +66,7 @@ public abstract class LaPardonActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 
-		Log.d(TAG, "onResume");
+		Log.d(TAG, "*** onResume");
 
 		accessoryAdapter.onResume();
 	}
@@ -74,12 +74,18 @@ public abstract class LaPardonActivity extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();
+
+		Log.d(TAG, "*** onPause");
+
 		accessoryAdapter.onPause();
 	}
 
 	@Override
 	public void onDestroy() {
+		Log.d(TAG, "*** onDestroy");
+
 		accessoryAdapter.onDestroy();
+
 		super.onDestroy();
 	}
 
@@ -96,7 +102,7 @@ public abstract class LaPardonActivity extends Activity {
 	//
 
 	protected void hideControls() {
-		Log.d(TAG, "hideControls", new RuntimeException());
+		Log.d(TAG, "hideControls");
 
 //		mInputController = null;
 

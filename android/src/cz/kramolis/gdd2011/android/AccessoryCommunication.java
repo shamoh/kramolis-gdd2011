@@ -50,6 +50,8 @@ public class AccessoryCommunication implements Runnable {
 	//
 
 	public AccessoryCommunication(LaPardonActivity laPardonActivity, UsbManager usbManager) {
+		Log.d(TAG, String.format("*** init *** Activity: %s;\nUsb: %s", laPardonActivity, usbManager));
+
 		this.laPardonActivity = laPardonActivity;
 		this.mUsbManager = usbManager;
 
@@ -83,6 +85,7 @@ public class AccessoryCommunication implements Runnable {
 
 	public boolean ready() {
 		boolean ready = (mInputStream != null && mOutputStream != null);
+		Log.d(TAG, "*** ready: " + ready);
 		return ready;
 	}
 
@@ -91,17 +94,21 @@ public class AccessoryCommunication implements Runnable {
 	}
 
 	public boolean openAccessory(UsbAccessory accessory) {
-		Log.d(TAG, "openAccessory: " + accessory);
+		Log.d(TAG, "*** openAccessory: [ " + System.identityHashCode(accessory.hashCode()) + " ] " + accessory);
 
 		mFileDescriptor = mUsbManager.openAccessory(accessory);
-		Log.d(TAG, "openAccessory: mFileDescriptor= " + mFileDescriptor);
+		Log.d(TAG, "*** openAccessory: mFileDescriptor= " + mFileDescriptor);
 
 		boolean opened = false;
 		if (mFileDescriptor != null) {
 			mAccessory = accessory;
 			FileDescriptor fd = mFileDescriptor.getFileDescriptor();
 			mInputStream = new FileInputStream(fd);
+			Log.d(TAG, "*** mInputStream= " + mInputStream);
+
 			mOutputStream = new FileOutputStream(fd);
+			Log.d(TAG, "*** mOutputStream= " + mOutputStream);
+
 			Thread thread = new Thread(null, this, "LaPardon Thread");
 			thread.start();
 			Log.d(TAG, "accessory opened: mAccessory= " + mAccessory);
@@ -114,7 +121,7 @@ public class AccessoryCommunication implements Runnable {
 	}
 
 	public void closeAccessory(UsbAccessory accessory) {
-		Log.d(TAG, "closeAccessory", new RuntimeException());
+		Log.d(TAG, "*** closeAccessory: " + accessory);
 
 		if (accessory != null && accessory.equals(mAccessory)) {
 			closeAccessory();
@@ -124,6 +131,8 @@ public class AccessoryCommunication implements Runnable {
 	}
 
 	public void closeAccessory() {
+		Log.d(TAG, "*** closeAccessory");
+
 		try {
 			if (mFileDescriptor != null) {
 				mFileDescriptor.close();
@@ -194,7 +203,7 @@ public class AccessoryCommunication implements Runnable {
 				Log.e(TAG, "write failed", e);
 			}
 		} else {
-			Log.d(TAG, "Accessory probably not connected. Output stream is not initialized.");
+			Log.e(TAG, "Accessory probably not connected. Output stream is not initialized.");
 		}
 	}
 

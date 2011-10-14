@@ -5,7 +5,7 @@ package cz.kramolis.gdd2011.android;
  */
 public class SimulateController extends AccessoryController {
 
-	SimulateController(MainActivity hostActivity) {
+	SimulateController(SimulateActivity hostActivity) {
 		super(hostActivity);
 	}
 

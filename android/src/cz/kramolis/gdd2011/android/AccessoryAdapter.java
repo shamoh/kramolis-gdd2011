@@ -35,6 +35,8 @@ public class AccessoryAdapter {
 	//
 
 	public AccessoryAdapter(LaPardonActivity laPardonActivity) {
+		Log.d(TAG, "*** init ***");
+
 		this.laPardonActivity = laPardonActivity;
 		this.mUsbManager = UsbManager.getInstance(laPardonActivity);
 		this.mPermissionIntent = PendingIntent.getBroadcast(laPardonActivity, 0, new Intent(ACTION_USB_PERMISSION), 0);
@@ -45,7 +47,7 @@ public class AccessoryAdapter {
 			@Override
 			public void onReceive(Context context, Intent intent) {
 				String action = intent.getAction();
-				Log.d(TAG, "onReceive: action= " + action);
+				Log.d(TAG, "*** onReceive: action= " + action);
 
 				if (ACTION_USB_PERMISSION.equals(action)) {
 					synchronized (this) {
@@ -79,7 +81,7 @@ public class AccessoryAdapter {
 	//
 
 	public void onCreate(UsbAccessory accessory) {
-		Log.d(TAG, "onCreate");
+		Log.d(TAG, "*** onCreate: " + accessory);
 
 		IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
 		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
@@ -91,15 +93,24 @@ public class AccessoryAdapter {
 	}
 
 	public void onPause() {
+		Log.d(TAG, "*** onPause");
+
 		accessoryCommunication.closeAccessory();
 	}
 
 	public void onResume() {
+		Log.d(TAG, "*** onResume");
+
 		if (accessoryCommunication.ready()) {
 			return;
 		}
 
 		UsbAccessory[] accessories = mUsbManager.getAccessoryList();
+		if (accessories != null) {
+			for (UsbAccessory acc : accessories) {
+				Log.d(TAG, "- next Accessory: " + acc);
+			}
+		}
 		UsbAccessory accessory = (accessories == null ? null : accessories[0]);
 
 		Log.d(TAG, "onResume: accessory= " + accessory);
@@ -121,6 +132,8 @@ public class AccessoryAdapter {
 	}
 
 	public void onDestroy() {
+		Log.d(TAG, "*** onDestroy");
+
 		laPardonActivity.unregisterReceiver(mUsbReceiver);
 	}
 

@@ -109,7 +109,7 @@ byte b1, b2, b3, b4, c;
 void setup()
 {
 	Serial.begin(115200);
-	Serial.print("\r\nStart");
+	Serial.println("\r\nStart");
 
 	init_leds();
 	init_relays();
@@ -141,19 +141,28 @@ void loop()
 	byte err;
 	byte idle;
 	static byte count = 0;
-	byte msg[3];
+	byte msg[2];
 	long touchcount;
 
 	if (acc.isConnected()) {
-		int len = acc.read(msg, sizeof(msg), 1);
+		int len = acc.read(msg, sizeof(msg), 2);
 		int i;
 		byte b;
 		uint16_t val;
 		int x, y;
 		char c0;
 
+		if (len > 0) {
+			Serial.print("Length: ");
+			Serial.println(len);
+			Serial.print("  array: ");
+			Serial.print(msg[0], HEX);
+                        Serial.print("|");
+			Serial.print(msg[1], HEX);
+                        Serial.println("|");
+		}
+
 		/*
-		*/
 		if (len > 0) {
 			// assumes only one command per packet
 			if (msg[0] == 0x2) {
@@ -188,13 +197,11 @@ void loop()
 					digitalWrite(RELAY2, msg[2] ? HIGH : LOW);
 			}
 		}
-		/*
 		*/
 
 		msg[0] = 0x1;
 
 		/*
-		*/
 		b = digitalRead(BUTTON1);
 		if (b != b1) {
 			msg[1] = 0;
@@ -226,10 +233,8 @@ void loop()
 			acc.write(msg, 3);
 			b4 = b;
 		}
-		/*
 		*/
 		/*
-		*/
 		switch (count++ % 0x10) {
 		case 0:
 			val = analogRead(TEMP_SENSOR);
@@ -270,12 +275,12 @@ void loop()
 
 			break;
 		}
-		/*
 		*/
-		Serial.println("IF");
+//		Serial.println("IF");
 	} else {
 		// reset outputs to default values on disconnect
 		Serial.println("ELSE");
+		/*
 		analogWrite(LED1_RED, 255);
 		analogWrite(LED1_GREEN, 255);
 		analogWrite(LED1_BLUE, 255);
@@ -290,9 +295,11 @@ void loop()
 		servos[0].write(90);
 		digitalWrite(RELAY1, LOW);
 		digitalWrite(RELAY2, LOW);
+		*/
 	}
 
-	delay(10);
+//	delay(10);
+	delay(50);
 }
 
 // ==============================================================================

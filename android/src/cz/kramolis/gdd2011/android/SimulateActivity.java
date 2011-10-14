@@ -28,9 +28,9 @@ public class SimulateActivity extends LaPardonActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Log.d(TAG, "onCreate");
-
 		super.onCreate(savedInstanceState);
+
+		Log.d(TAG, "*** onCreate");
 
 		setContentView(R.layout.simulate);
 		setTitle(R.string.simulate);
@@ -104,7 +104,7 @@ public class SimulateActivity extends LaPardonActivity {
 
 	private class MyListener implements SeekBar.OnSeekBarChangeListener {
 
-		private static final long SEND_COMMAND_INTERVAL = 1000;
+		private static final long SEND_COMMAND_INTERVAL = 200;
 
 		private long lastProgressChangedMillis = -1;
 		private int lastProgress;

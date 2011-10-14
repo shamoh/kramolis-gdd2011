@@ -17,7 +17,7 @@ public class MainActivity extends LaPardonActivity {
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Log.d(TAG, "onCreate");
+		Log.d(TAG, "*** onCreate");
 
 		super.onCreate(savedInstanceState);
 
