@@ -24,7 +24,7 @@ public final class ActivityUtils {
 		// Handle item selection
 		boolean retValue = false;
 		switch (item.getItemId()) {
-			case R.id.preferences:
+			case R.id.menuPreferences:
 				startPreferencesActivity(activity);
 				retValue = true;
 				break;

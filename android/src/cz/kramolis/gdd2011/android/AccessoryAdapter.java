@@ -64,13 +64,15 @@ public class AccessoryAdapter {
 						Log.d(TAG, "ACTION_USB_ACCESSORY_DETACHED: accessory= " + accessory);
 						accessoryCommunication.closeAccessory(accessory);
 					}
+					/*
 					{ // druha varianta (http://developer.android.com/guide/topics/usb/accessory.html#terminating-a)
-						UsbAccessory accessory = (UsbAccessory) intent.getParcelableExtra("accessory" /*UsbManager.EXTRA_ACCESSORY*/);
+						UsbAccessory accessory = (UsbAccessory) intent.getParcelableExtra("accessory" / *UsbManager.EXTRA_ACCESSORY* /);
 						Log.d(TAG, "#2 UsbManager.EXTRA_ACCESSORY: accessory= " + accessory);
 						if (accessory != null) {
 							accessoryCommunication.closeAccessory(accessory);
 						}
 					}
+					*/
 				}
 			}
 		};

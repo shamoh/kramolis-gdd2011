@@ -26,6 +26,7 @@ public class MainActivity extends LaPardonActivity {
 	//
 	private LinearLayout runtimeContainer;
 	private TextView runtimeInputLabel;
+	private MenuItem runtimeMenu;
 	//
 	// simulate
 	//
@@ -33,16 +34,19 @@ public class MainActivity extends LaPardonActivity {
 	private TextView simulateSliderValue;
 	private JournalAdapter journalAdapter;
 	private ListView journalList;
+	private MenuItem simulateMenu;
 	//
 	// queue
 	//
 	private ListView queueContainer;
 	private QueueAdapter queueAdapter;
 	private Map<Long, PlayRequest> queueMap;
+	private MenuItem queueMenu;
 	//
 	//
 	// about
 	private ListView aboutContainer;
+	private MenuItem aboutMenu;
 
 	public MainActivity() {
 		this.viewType = ViewType.RUNTIME;
@@ -83,8 +87,21 @@ public class MainActivity extends LaPardonActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		Log.d(TAG, "onCreateOptionsMenu: " + menu);
+
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.mainmenu, menu);
+
+		{
+			runtimeMenu = menu.findItem(R.id.menuRuntime);
+			queueMenu = menu.findItem(R.id.menuQueue);
+			simulateMenu = menu.findItem(R.id.menuSimulate);
+			aboutMenu = menu.findItem(R.id.menuAbout);
+		}
+		{
+			runtimeMenu.setEnabled(false); //??? jiste by se naslo lepsi misto, ale co ...
+		}
+
 		return true;
 	}
 
@@ -93,35 +110,35 @@ public class MainActivity extends LaPardonActivity {
 		Log.d(TAG, "onOptionsItemSelected - " + item.getItemId());
 		boolean retValue = false;
 		switch (item.getItemId()) {
-			case R.id.runtime:
+			case R.id.menuRuntime:
 				setViewType(ViewType.RUNTIME);
 				retValue = true;
 				break;
-			case R.id.queue:
+			case R.id.menuQueue:
 				setViewType(ViewType.QUEUE);
 				retValue = true;
 				break;
-			case R.id.simulate:
+			case R.id.menuSimulate:
 				setViewType(ViewType.SIMULATE);
 				retValue = true;
 				break;
-			case R.id.preferences:
+			case R.id.menuPreferences:
 				startActivity(LaPardonPreferencesActivity.class);
 				retValue = true;
 				break;
-			case R.id.about:
+			case R.id.menuAbout:
 				setViewType(ViewType.ABOUT);
 				retValue = true;
 				break;
-			case R.id.refresh:
+			case R.id.menuRefresh:
 				handleRefresh(item);
 				retValue = true;
 				break;
-			case R.id.removeAll:
+			case R.id.menuRemoveAll:
 				handleRemoveAll(item);
 				retValue = true;
 				break;
-			case R.id.quit:
+			case R.id.menuQuit:
 				handleQuit();
 				retValue = true;
 				break;
@@ -167,15 +184,21 @@ public class MainActivity extends LaPardonActivity {
 	//
 
 	void setViewType(ViewType viewType) {
+		Log.d(TAG, "viewType: " + viewType);
+
 		this.viewType = viewType;
 		runtimeContainer.setVisibility(findVisibility(ViewType.RUNTIME == viewType));
 		queueContainer.setVisibility(findVisibility(ViewType.QUEUE == viewType));
 		simulateContainer.setVisibility(findVisibility(ViewType.SIMULATE == viewType));
 		aboutContainer.setVisibility(findVisibility(ViewType.ABOUT == viewType));
 
-		// TODO - zneviditelnit nektere menu
+		if (runtimeMenu != null) {
+			runtimeMenu.setEnabled(ViewType.RUNTIME != viewType);
+			queueMenu.setEnabled(ViewType.QUEUE != viewType);
+			simulateMenu.setEnabled(ViewType.SIMULATE != viewType);
+			aboutMenu.setEnabled(ViewType.ABOUT != viewType);
+		}
 
-		// TODO - zmenit titulek
 		setTitle(viewType.name());
 
 		//

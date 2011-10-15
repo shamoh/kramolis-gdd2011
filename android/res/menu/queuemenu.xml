@@ -4,18 +4,18 @@
   - @author Ondrej Kosatka
   -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/refresh"
+	<item android:id="@+id/menuRefresh"
 		  android:icon="@android:drawable/ic_menu_rotate"
 		  android:title="@string/refresh"/>
 	<!-- ic_menu_refresh NENI public :-( Zatim davam rotate! -->
-	<item android:id="@+id/removeAll"
+	<item android:id="@+id/menuRemoveAll"
 		  android:icon="@android:drawable/ic_notification_clear_all"
 		  android:title="@string/removeAll"/>
-	<item android:id="@+id/runtime"
+	<item android:id="@+id/menuRuntime"
 		  android:icon="@android:drawable/ic_menu_agenda"
 		  android:title="@string/runtime"/>
 	<!-- ic_menu_home NENI public :-( Zatim davam agenda! -->
-	<item android:id="@+id/preferences"
+	<item android:id="@+id/menuPreferences"
 		  android:icon="@android:drawable/ic_menu_preferences"
 		  android:title="@string/preferences"/>
 </menu>

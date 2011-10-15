@@ -21,7 +21,6 @@ public final class R {
 	}
 
 	public static final class id {
-		public static final int about = 0x7f08001f;
 		public static final int aboutContainer = 0x7f080010;
 		public static final int bottom_pane = 0x7f080006;
 		public static final int center_pane = 0x7f080004;
@@ -32,22 +31,23 @@ public final class R {
 		public static final int id = 0x7f080015;
 		public static final int journalList = 0x7f08001a;
 		public static final int left_pane = 0x7f080003;
+		public static final int menuAbout = 0x7f08001f;
+		public static final int menuPreferences = 0x7f08001e;
+		public static final int menuQueue = 0x7f08001c;
+		public static final int menuQuit = 0x7f080022;
+		public static final int menuRefresh = 0x7f080020;
+		public static final int menuRemoveAll = 0x7f080021;
+		public static final int menuRuntime = 0x7f08001b;
+		public static final int menuSimulate = 0x7f08001d;
 		public static final int middle_container = 0x7f080002;
 		public static final int no_arduino_content = 0x7f080011;
 		public static final int no_connection_content = 0x7f080012;
-		public static final int preferences = 0x7f08001e;
 		public static final int prioritize = 0x7f080023;
-		public static final int queue = 0x7f08001c;
 		public static final int queueContainer = 0x7f08000e;
-		public static final int quit = 0x7f080022;
-		public static final int refresh = 0x7f080020;
 		public static final int remove = 0x7f080024;
-		public static final int removeAll = 0x7f080021;
 		public static final int right_pane = 0x7f080005;
-		public static final int runtime = 0x7f08001b;
 		public static final int runtimeContainer = 0x7f08000d;
 		public static final int runtimeInputLabel = 0x7f080017;
-		public static final int simulate = 0x7f08001d;
 		public static final int simulateContainer = 0x7f08000f;
 		public static final int slider = 0x7f080018;
 		public static final int sliderValue = 0x7f080019;

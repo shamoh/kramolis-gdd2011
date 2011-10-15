@@ -75,10 +75,10 @@ public class SimulateActivity extends LaPardonActivity {
 		Log.d(TAG, "onOptionsItemSelected - " + item.getItemId());
 		// Handle item selection
 		switch (item.getItemId()) {
-			case R.id.refresh:
+			case R.id.menuRefresh:
 				refresh();
 				return true;
-			case R.id.removeAll:
+			case R.id.menuRemoveAll:
 				removeAll();
 				return true;
 			default:
