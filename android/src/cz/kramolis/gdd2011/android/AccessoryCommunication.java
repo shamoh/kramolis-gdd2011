@@ -182,28 +182,52 @@ public class AccessoryCommunication implements Runnable {
 	//
 
 	public void sendCommand(byte command, byte... values) {
-		byte[] buffer = new byte[1 + values.length];
-		buffer[0] = command;
-		System.arraycopy(values, 0, buffer, 1, values.length);
-
-		{
-			StringBuilder sb = new StringBuilder("buffer[ ").append(Utilities.getHex(true, buffer)).append(']');
-//			for (byte b : buffer) {
-//				sb.append(Integer.toString(b, 16)).append(" ");
-//			}
-//			sb.append("]");
-			Log.d(TAG, "sendCommand: " + sb);
-		}
-
-//		if (mOutputStream != null && buffer[1] != -1) {
 		if (mOutputStream != null) {
 			try {
-				mOutputStream.write(buffer);
+/*
+				{
+					byte[] buffer = new byte[2 + values.length];
+					buffer[0] = command;
+					buffer[1] = (byte) values.length;
+					System.arraycopy(values, 0, buffer, 2, values.length);
+					{
+						StringBuilder sb = new StringBuilder("buffer[ ").append(Utilities.getHex(true, buffer)).append(']');
+						Log.d(TAG, "sendCommand: " + sb);
+					}
+
+					mOutputStream.write(buffer);
+				}
+*/
+				{
+					byte[] buffer = new byte[2];
+					buffer[0] = command;
+					buffer[1] = (byte) values.length;
+
+					{
+						StringBuilder sb = new StringBuilder("buffer[ ").append(Utilities.getHex(true, buffer)).append(']');
+						Log.d(TAG, "sendCommand: META " + sb);
+					}
+
+					mOutputStream.write(buffer);
+				}
+				{
+					byte[] buffer = new byte[values.length];
+					System.arraycopy(values, 0, buffer, 0, values.length);
+
+					{
+						StringBuilder sb = new StringBuilder("buffer[ ").append(Utilities.getHex(true, buffer)).append(']');
+						Log.d(TAG, "sendCommand: DATA " + sb);
+					}
+
+					mOutputStream.write(buffer);
+				}
 			} catch (IOException e) {
 				Log.e(TAG, "write failed", e);
 			}
 		} else {
 			Log.e(TAG, "Accessory probably not connected. Output stream is not initialized.");
+			Toast toast = Toast.makeText(laPardonActivity, "ADK not connected!", Toast.LENGTH_SHORT);
+			toast.show();
 		}
 	}
 

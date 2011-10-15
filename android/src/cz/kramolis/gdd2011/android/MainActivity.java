@@ -72,6 +72,11 @@ public class MainActivity extends LaPardonActivity {
 		checkNetwork();
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+	}
+
 	//
 	// options
 	//
