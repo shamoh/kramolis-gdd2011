@@ -34,4 +34,14 @@
 						android:title="@string/errorHashtag"
 						android:summary="@string/errorHashtagSummary"
 						android:defaultValue="#error"/>
+	<EditTextPreference android:key="pumpMin"
+						android:title="@string/pumpMin"
+						android:summary="@string/pumpMinSummary"
+						android:inputType="number"
+						android:defaultValue="0"/>
+	<EditTextPreference android:key="pumpMax"
+						android:title="@string/pumpMax"
+						android:summary="@string/pumpMaxSummary"
+						android:inputType="number"
+						android:defaultValue="255"/>
 </PreferenceScreen>

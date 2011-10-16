@@ -234,6 +234,14 @@ public class MainActivity extends LaPardonActivity {
 
 		boolean retValue = false;
 		switch (item.getItemId()) {
+			case R.id.prioritize:
+				handlePrioritize(item);
+				retValue = true;
+				break;
+			case R.id.remove:
+				handleRemove(item);
+				retValue = true;
+				break;
 			case R.id.execute:
 				handleExecute(item);
 				retValue = true;
@@ -242,6 +250,52 @@ public class MainActivity extends LaPardonActivity {
 				retValue = super.onContextItemSelected(item);
 		}
 		return retValue;
+	}
+
+	private void handlePrioritize(MenuItem item) {
+		if (ViewType.QUEUE == viewType) {
+			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+			TextView idView = (TextView) info.targetView.findViewById(R.id.id);
+			long id = Long.parseLong(idView.getText().toString());
+			Log.d(TAG, "handleExecute: #" + id);
+			queuePrioritize(id);
+		}
+	}
+
+	private void queuePrioritize(long id) {
+		PlayRequest request = getLaPardonApplication().findPlayRequest(id);
+		Log.d(TAG, "PlayRequest: " + request);
+		if (request != null) {
+			getLaPardonApplication().prioritizePlayRequest(id);
+
+			queueRefresh();
+		} else {
+			Toast toast = Toast.makeText(this, "Can not prioritize test request. Sorry. ;-)", Toast.LENGTH_LONG);
+			toast.show();
+		}
+	}
+
+	private void handleRemove(MenuItem item) {
+		if (ViewType.QUEUE == viewType) {
+			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+			TextView idView = (TextView) info.targetView.findViewById(R.id.id);
+			long id = Long.parseLong(idView.getText().toString());
+			Log.d(TAG, "handleExecute: #" + id);
+			queueRemove(id);
+		}
+	}
+
+	private void queueRemove(long id) {
+		PlayRequest request = getLaPardonApplication().findPlayRequest(id);
+		Log.d(TAG, "PlayRequest: " + request);
+		if (request != null) {
+			getLaPardonApplication().removePlayRequest(id);
+
+			queueRefresh();
+		} else {
+			Toast toast = Toast.makeText(this, "Can not remove test request. Sorry. ;-)", Toast.LENGTH_LONG);
+			toast.show();
+		}
 	}
 
 	private void handleExecute(MenuItem item) {
@@ -254,20 +308,20 @@ public class MainActivity extends LaPardonActivity {
 		}
 	}
 
-	public PlayRequest queueFindPlayRequest(long id) {
-		PlayRequest request = getLaPardonApplication().findPlayRequest(id);
-		if ((request == null) && (queueMap != null)) {
-			request = queueMap.get(id);
-		}
-		return request;
-	}
-
 	private void queueExecute(long id) {
 		PlayRequest request = queueFindPlayRequest(id);
 		Log.d(TAG, "PlayRequest: " + request);
 		if (request != null) {
 			MainActivity.this.sendCommandPlay(request);
 		}
+	}
+
+	private PlayRequest queueFindPlayRequest(long id) {
+		PlayRequest request = getLaPardonApplication().findPlayRequest(id);
+		if ((request == null) && (queueMap != null)) {
+			request = queueMap.get(id);
+		}
+		return request;
 	}
 
 	@Override
@@ -333,6 +387,8 @@ public class MainActivity extends LaPardonActivity {
 	//
 
 	private void initSimulateContainer() {
+		LaPardonApplication app = (LaPardonApplication) this.getApplication();
+
 		simulateContainer = (LinearLayout) findViewById(R.id.simulateContainer);
 
 		journalAdapter = new JournalAdapter(this, R.layout.journalrow, getSimulateLastJournalItems());
@@ -340,10 +396,15 @@ public class MainActivity extends LaPardonActivity {
 		journalList.setAdapter(journalAdapter);
 
 		SeekBar slider = (SeekBar) findViewById(R.id.slider);
+		{
+			int max = app.getPumpMax() - app.getPumpMin();
+			slider.setMax(max);
+		}
 		simulateSliderValue = (TextView) findViewById(R.id.sliderValue);
-
-		Log.d(TAG, "slider.progress " + slider.getProgress());
-		simulateSliderValue.setText(String.valueOf(slider.getProgress()));
+		{
+			Log.d(TAG, "slider.progress " + slider.getProgress());
+			simulateSliderValue.setText(String.valueOf(app.getPumpMin()));
+		}
 
 		slider.setOnSeekBarChangeListener(myListener);
 	}
@@ -515,9 +576,15 @@ public class MainActivity extends LaPardonActivity {
 		// SeekBar.OnSeekBarChangeListener
 		//
 
+		private int transformProgress(int progress) {
+			LaPardonApplication app = (LaPardonApplication) MainActivity.this.getApplication();
+			progress = progress + app.getPumpMin();
+			return progress;
+		}
+
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-			MainActivity.this.simulateSliderValue.setText(String.valueOf(progress));
+			MainActivity.this.simulateSliderValue.setText(String.valueOf(transformProgress(progress)));
 
 			if (System.currentTimeMillis() > (lastProgressChangedMillis + SEND_COMMAND_INTERVAL)) {
 				Log.d(TAG, "Slider::onProgressChanged: " + progress + " - " + System.currentTimeMillis());
@@ -539,6 +606,7 @@ public class MainActivity extends LaPardonActivity {
 		}
 
 		private void sendCommandSimulate(int progress) {
+			progress = transformProgress(progress);
 			if (lastProgress != progress) {
 				MainActivity.this.sendCommandSimulate(progress);
 				MainActivity.this.simulateRefresh();

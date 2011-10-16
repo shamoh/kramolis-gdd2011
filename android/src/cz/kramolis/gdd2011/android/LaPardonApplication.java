@@ -34,8 +34,10 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 	private String infoHashtag = "";
 	private String warnHashtag = "";
 	private String errorHashtag = "";
+	private int pumpMin = 0;
+	private int pumpMax = 255;
 
-	private List<PlayRequest> queue;
+	private LinkedList<PlayRequest> queue;
 	private Map<Long, PlayRequest> queueMap;
 	private List<JournalItem> journal;
 
@@ -50,6 +52,26 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 
 		this.queue = new LinkedList<PlayRequest>();
 		this.queueMap = new HashMap<Long, PlayRequest>();
+		{
+			{
+				String text = "Ccc [ccC] #lapardon";
+				PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", new Date(), MusicNotation.lookup(text));
+				queue.add(testRequest);
+				queueMap.put(testRequest.getId(), testRequest);
+			}
+			{
+				String text = "Ddd [ddD] #lapardon";
+				PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", new Date(), MusicNotation.lookup(text));
+				queue.add(testRequest);
+				queueMap.put(testRequest.getId(), testRequest);
+			}
+			{
+				String text = "Ggg [ggG] #lapardon";
+				PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", new Date(), MusicNotation.lookup(text));
+				queue.add(testRequest);
+				queueMap.put(testRequest.getId(), testRequest);
+			}
+		}
 		this.journal = new ArrayList<JournalItem>();
 
 		this.prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -114,6 +136,22 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 		return queueMap.get(id);
 	}
 
+	public void removePlayRequest(long id) {
+		PlayRequest request = queueMap.get(id);
+		if (request != null) {
+			queue.remove(request);
+			queueMap.remove(id);
+		}
+	}
+
+	public void prioritizePlayRequest(long id) {
+		PlayRequest request = queueMap.get(id);
+		if (request != null) {
+			queue.remove(request);
+			queue.add(0, request);
+		}
+	}
+
 	public List<JournalItem> getJournal() {
 		return journal;
 	}
@@ -131,6 +169,9 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 		infoHashtag = prefs.getString("infoHashtag", "#info");
 		warnHashtag = prefs.getString("warnHashtag", "#warn");
 		errorHashtag = prefs.getString("errorHashtag", "#error");
+
+		pumpMin = Integer.parseInt(prefs.getString("pumpMin", "0"));
+		pumpMax = Integer.parseInt(prefs.getString("pumpMax", "255"));
 	}
 
 	public Integer getPrefInterval() {
@@ -159,6 +200,14 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 
 	public String getPrefErrorHashtag() {
 		return errorHashtag;
+	}
+
+	public Integer getPumpMin() {
+		return pumpMin;
+	}
+
+	public Integer getPumpMax() {
+		return pumpMax;
 	}
 
 

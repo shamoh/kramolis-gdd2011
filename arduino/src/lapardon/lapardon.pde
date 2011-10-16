@@ -23,7 +23,7 @@ byte pumpMap2[255];
 
 byte currentCommand = COMMAND_NONE;
 int transistorValue = 0; // value written to the transistor : 0-255
-long iterace = 0;
+//long iterace = 0;
 
 void setup()
 {
@@ -33,7 +33,7 @@ void setup()
     initConversionMaps();
 
     // set  the transistor pin as output:
-    pinMode(TRANSISTOR_PIN, OUTPUT);
+//    pinMode(TRANSISTOR_PIN, OUTPUT);
 
     acc.powerOn();
 }
@@ -161,9 +161,9 @@ void loop()
         //TODO nebo bychom tady mohli delat nejake paradicky - s vodou, se zvukem, s diodami
     }
 
-//    delay(10);
+    delay(10);
 //    delay(50);
-    delay(200);
+//    delay(200);
 }
 
 void resetOutputs() {
@@ -212,3 +212,9 @@ void initConversionMaps()
 }
 
 
+/*
+Data packet error: 5
+Device addressed... Requesting device descriptor.
+Setup packet error: D
+Device descriptor cannot be retrieved. Trying again
+*/

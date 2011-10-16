@@ -88,7 +88,7 @@ public final class R {
 		 */
 		public static final int about = 0x7f060001;
 		public static final int app_name = 0x7f060000;
-		public static final int arduino_text = 0x7f06001c;
+		public static final int arduino_text = 0x7f060020;
 		public static final int errorHashtag = 0x7f060018;
 		public static final int errorHashtagSummary = 0x7f060019;
 		public static final int execute = 0x7f06000a;
@@ -100,13 +100,13 @@ public final class R {
 		public static final int infoHashtagSummary = 0x7f060015;
 		public static final int interval = 0x7f06000e;
 		public static final int intervalSummary = 0x7f06000f;
-		public static final int no_arduino_text = 0x7f06001b;
+		public static final int no_arduino_text = 0x7f06001f;
 		/**
 		 * <string name="lastSearch">Last Search</string>
 		 * <string name="lastSearchSummary">Last time Twitter search was performed (format yyyy-MM-dd HH:mm)</string>
 		 * Others
 		 */
-		public static final int no_connection_text = 0x7f06001a;
+		public static final int no_connection_text = 0x7f06001e;
 		public static final int playHashtag = 0x7f060012;
 		public static final int playHashtagSummary = 0x7f060013;
 		/**
@@ -114,6 +114,10 @@ public final class R {
 		 */
 		public static final int preferences = 0x7f06000b;
 		public static final int prioritize = 0x7f060009;
+		public static final int pumpMax = 0x7f06001c;
+		public static final int pumpMaxSummary = 0x7f06001d;
+		public static final int pumpMin = 0x7f06001a;
+		public static final int pumpMinSummary = 0x7f06001b;
 		/**
 		 * Queue
 		 */
