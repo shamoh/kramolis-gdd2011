@@ -32,16 +32,16 @@ public class AccessoryCommunication implements Runnable {
 	public static final byte COMMAND_SIMULATE = 2;
 
 	private static final int MESSAGE_ERROR = 1;
-	private static final int MESSAGE_ERROR_LENGTH = 2;
+//	private static final int MESSAGE_ERROR_LENGTH = 2;
 
 	private static final int MESSAGE_KNOCK = 2;
-	private static final int MESSAGE_KNOCK_LENGTH = 1;
+//	private static final int MESSAGE_KNOCK_LENGTH = 1;
 
 	private static final int MESSAGE_MIC = 3;
-	private static final int MESSAGE_MIC_LENGTH = 3;
+//	private static final int MESSAGE_MIC_LENGTH = 3;
 
 	private static final int MESSAGE_MISSION_COMPLETED = 4;
-	private static final int MESSAGE_MISSION_COMPLETED_LENGTH = 1;
+//	private static final int MESSAGE_MISSION_COMPLETED_LENGTH = 1;
 
 	private final Handler mHandler;
 
@@ -247,48 +247,54 @@ public class AccessoryCommunication implements Runnable {
 			try {
 				ret = mInputStream.read(buffer);
 			} catch (IOException e) {
+				Log.e(TAG, "write failed", e);
 				break;
 			}
+
+			Log.d(TAG, "Read length: " + ret);
 
 			i = 0;
 			while (i < ret) {
 				int len = ret - i;
 
+				Log.d(TAG, "Read bytes: " + Utilities.getHex(true, buffer[i], buffer[i + 1]));
+
 				switch (buffer[i]) {
 					case MESSAGE_ERROR:
-						if (len >= MESSAGE_ERROR_LENGTH) {
+						if (len >= 2) {
 							Message m = Message.obtain(mHandler, MESSAGE_ERROR);
 							m.obj = new ErrorMsg(buffer[i + 1]);
 							mHandler.sendMessage(m);
 						}
-						i += MESSAGE_ERROR_LENGTH;
+						i += 2;
 						break;
 
 					case MESSAGE_KNOCK:
-						if (len >= MESSAGE_KNOCK_LENGTH) {
+						if (len >= 2) {
 							Message m = Message.obtain(mHandler, MESSAGE_KNOCK);
 							m.obj = new KnockMsg();
 							mHandler.sendMessage(m);
 						}
-						i += MESSAGE_KNOCK_LENGTH;
+						i += 2;
 						break;
 
 					case MESSAGE_MIC:
-						if (len >= MESSAGE_MIC_LENGTH) {
+						if (len >= 2) {
 							Message m = Message.obtain(mHandler, MESSAGE_MIC);
-							m.obj = new MicMsg(composeInt(buffer[i + 1], buffer[i + 2]));
+//							m.obj = new MicMsg(composeInt(buffer[i + 1], buffer[i + 2]));
+							m.obj = new MicMsg(buffer[i + 1]);
 							mHandler.sendMessage(m);
 						}
-						i += MESSAGE_MIC_LENGTH;
+						i += 2;
 						break;
 
 					case MESSAGE_MISSION_COMPLETED:
-						if (len >= MESSAGE_MISSION_COMPLETED_LENGTH) {
+						if (len >= 2) {
 							Message m = Message.obtain(mHandler, MESSAGE_MISSION_COMPLETED);
 							m.obj = new MissionCompletedMsg();
 							mHandler.sendMessage(m);
 						}
-						i += MESSAGE_MISSION_COMPLETED_LENGTH;
+						i += 2;
 						break;
 
 					default:

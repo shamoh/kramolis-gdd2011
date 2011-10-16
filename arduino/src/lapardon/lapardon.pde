@@ -17,7 +17,11 @@
 #define PUMP_START_DELAY  1000
 
 // connected to the base of the transistor
-#define TRANSISTOR_PIN    12
+#define TRANSISTOR_PIN 12
+
+#define OK_LED_PIN     13
+#define ERROR_LED_PIN  2
+
 
 #define TRACE  false
 #define DEBUG  true
@@ -45,6 +49,7 @@ int transistorValue = 0; // value written to the transistor : 0-255
 //long iterace = 0;
 //unsigned long statusTime = 0;
 int okLed = 0;
+int errorLed = 1;
 
 
 void setup()
@@ -56,6 +61,9 @@ void setup()
 
     // set  the transistor pin as output:
     pinMode(TRANSISTOR_PIN, OUTPUT);
+    // led
+    pinMode(OK_LED_PIN, OUTPUT);
+    pinMode(ERROR_LED_PIN, OUTPUT);
 
     acc.powerOn();
 }
@@ -79,6 +87,9 @@ void loop()
     Serial.println(" --");
 */
     if (acc.isConnected()) {
+        okLedOn();
+        errorLedOff();
+
         int len = acc.read(msg, 2, 1);
 //        int i;
 //        byte b;
@@ -194,20 +205,29 @@ void loop()
         // 3) WRITE MESSAGE BACK
         //
         if (transistorValue == 255) {
-            message = MESSAGE_MISSION_COMPLETED;
+            message = MESSAGE_KNOCK;
+            currentCommand = COMMAND_NONE;
         }
         if (message != MESSAGE_NONE) {
             Serial.print("> message: ");
-            Serial.println(message);
+            Serial.println(message, DEC);
         }
         if ( message == MESSAGE_MISSION_COMPLETED ) {
             msg[0] = message;
             msg[1] = 0;
             acc.write(msg, 2);
             message = MESSAGE_NONE;
+        } else if ( message == MESSAGE_KNOCK ) {
+            msg[0] = message;
+            msg[1] = 0; //TODO mozna vracet nejakou hodnotu z pieza!
+            acc.write(msg, 2);
+            message = MESSAGE_NONE;
         }
 
     } else {
+        okLedOff();
+        errorLedOn();
+
         // reset outputs to default values on disconnect
         if (INFO) Serial.println("Phone NOT connected!!!");
         resetOutputs();
@@ -247,9 +267,6 @@ void resetOutputs() {
 //    }
 //    return lastCall;
 //}
-
-void play() {
-}
 
 //
 // ConversionMaps
@@ -296,8 +313,9 @@ void okLedOn()
 {
     okLed = 1;
 
-    //TODO Write do OK led pinu
-    Serial.println("* [led] [OK] * ON *");
+    digitalWrite(OK_LED_PIN, HIGH);
+
+    if (TRACE) Serial.println("* [led] [OK] * ON *");
 }
 
 void switchOkLed()
@@ -313,8 +331,36 @@ void okLedOff()
 {
     okLed = 0;
 
-    //TODO Write do OK led pinu
-    Serial.println("* [led] [OK] - off -");
+    digitalWrite(OK_LED_PIN, LOW);
+
+    if (TRACE) Serial.println("* [led] [OK] - off -");
+}
+
+void errorLedOn()
+{
+    errorLed = 1;
+
+    digitalWrite(ERROR_LED_PIN, HIGH);
+
+    if (TRACE) Serial.println("* [led] [ERROR] * ON *");
+}
+
+void switchErrorLed()
+{
+    if ( errorLed == 0 ) {
+        errorLedOn();
+    } else {
+        errorLedOff();
+    }
+}
+
+void errorLedOff()
+{
+    errorLed = 0;
+
+    digitalWrite(ERROR_LED_PIN, LOW);
+
+    if (TRACE) Serial.println("* [led] [ERROR] - off -");
 }
 
 /*
