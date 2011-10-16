@@ -44,6 +44,7 @@ public class TwitterAdapter {
 			Log.d(TAG, "LastTweetId from DB: " + lastId);
 
 			Query query = new Query(param);
+			query.setSince(DATE_FORMAT.format(new Date()));
 			if (lastId != -1) {
 				query.setSinceId(lastId);
 			} else {
@@ -120,6 +121,13 @@ public class TwitterAdapter {
 			Status status = updateStatus(null, searchMessage, application.getPrefInfoHashtag());
 			Log.d(TAG, "Search status [" + (status != null ? status.getText() : "<null>") + "].");
 		}
+	}
+
+	public void updateStatusPlay(LaPardonApplication application, String author, long replyToId, Date createdAt) {
+		String searchMessage = String.format("@%s Just playing your request from %tT. Thanks.", author, createdAt);
+
+		Status status = updateStatus((replyToId != -1 ? replyToId : null), searchMessage, application.getPrefPlayHashtag(), application.getPrefGddHashtag());
+		Log.d(TAG, "Play status [" + (status != null ? status.getText() : "<null>") + "].");
 	}
 
 	private Status updateStatus(Long replyToId, String text, String... tags) {

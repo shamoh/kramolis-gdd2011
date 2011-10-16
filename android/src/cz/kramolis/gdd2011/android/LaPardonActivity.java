@@ -130,6 +130,8 @@ public abstract class LaPardonActivity extends Activity {
 	}
 
 	protected void sendCommandPlay(PlayRequest request) {
+		LaPardonApplication app = (LaPardonApplication) this.getApplication();
+		app.getTwitter().updateStatusPlay(app, request.getAuthor(), request.getTweetId(), request.getCreatedAt());
 		accessoryAdapter.sendCommandPlay(request);
 	}
 

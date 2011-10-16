@@ -39,6 +39,10 @@ public class PlayRequest {
 		return id;
 	}
 
+	public Long getTweetId() {
+		return tweetId;
+	}
+
 	public String getText() {
 		return text;
 	}
