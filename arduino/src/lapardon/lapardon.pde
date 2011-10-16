@@ -16,12 +16,13 @@
 #define PUMP_START_VALUE  150
 #define PUMP_START_DELAY  1000
 
+#define KNOCK_THRESHOLD   100
+
 // connected to the base of the transistor
 #define TRANSISTOR_PIN 12
-
 #define OK_LED_PIN     13
 #define ERROR_LED_PIN  2
-
+#define KNOCK_PIN      A15
 
 #define TRACE  false
 #define DEBUG  true
@@ -51,6 +52,7 @@ int transistorValue = 0; // value written to the transistor : 0-255
 int okLed = 0;
 int errorLed = 1;
 
+int knockReading = 0;
 
 void setup()
 {
@@ -200,6 +202,10 @@ void loop()
 
             resetOutputs();
         }
+//if (DEBUG) Serial.print(".............. ");
+//if (DEBUG) Serial.println(transistorValue);
+//if (DEBUG) Serial.print("message: ");
+//if (DEBUG) Serial.println(message, DEC);
 
         //
         // 3) WRITE MESSAGE BACK
@@ -217,13 +223,26 @@ void loop()
             msg[1] = 0;
             acc.write(msg, 2);
             message = MESSAGE_NONE;
-        } else if ( message == MESSAGE_KNOCK ) {
-            msg[0] = message;
-            msg[1] = 0; //TODO mozna vracet nejakou hodnotu z pieza!
-            acc.write(msg, 2);
-            message = MESSAGE_NONE;
-        }
+        } else {
+            //
+            // 3) READ SENSORS
+            //
+            {
+                knockReading = analogRead(KNOCK_PIN);
+                if (knockReading >= KNOCK_THRESHOLD) {
+                    if (DEBUG) Serial.print("=== KNOCK === ");
+                    if (DEBUG) Serial.println(knockReading);
+                    message = MESSAGE_KNOCK;
+                }
+            }
 
+            if ( message == MESSAGE_KNOCK ) {
+                msg[0] = message;
+                msg[1] = 0; //TODO knockReading/4;
+                acc.write(msg, 2);
+                message = MESSAGE_NONE;
+            }
+        }
     } else {
         okLedOff();
         errorLedOn();

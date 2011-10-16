@@ -163,7 +163,7 @@ public class AccessoryCommunication implements Runnable {
 	}
 
 	protected void handleKnockMessage(KnockMsg m) {
-		String journalText = "Knock, knock!";
+		String journalText = String.format("Knock, knock! [%s]", m.getValue());
 		addJournalAccessoryMessage(journalText);
 	}
 
@@ -223,6 +223,8 @@ public class AccessoryCommunication implements Runnable {
 				}
 			} catch (IOException e) {
 				Log.e(TAG, "write failed", e);
+				Toast toast = Toast.makeText(laPardonActivity, "ADK write failed!", Toast.LENGTH_SHORT);
+				toast.show();
 			}
 		} else {
 			Log.e(TAG, "Accessory probably not connected. Output stream is not initialized.");
@@ -247,7 +249,7 @@ public class AccessoryCommunication implements Runnable {
 			try {
 				ret = mInputStream.read(buffer);
 			} catch (IOException e) {
-				Log.e(TAG, "write failed", e);
+				Log.e(TAG, "read failed", e);
 				break;
 			}
 
@@ -272,7 +274,7 @@ public class AccessoryCommunication implements Runnable {
 					case MESSAGE_KNOCK:
 						if (len >= 2) {
 							Message m = Message.obtain(mHandler, MESSAGE_KNOCK);
-							m.obj = new KnockMsg();
+							m.obj = new KnockMsg(buffer[i + 1]);
 							mHandler.sendMessage(m);
 						}
 						i += 2;
@@ -304,6 +306,7 @@ public class AccessoryCommunication implements Runnable {
 				}
 			}
 		}
+		Log.e(TAG, "*run* finished: ret= " + ret);
 	}
 
 	//
@@ -333,7 +336,14 @@ public class AccessoryCommunication implements Runnable {
 
 	protected class KnockMsg {
 
-		public KnockMsg() {
+		private byte value;
+
+		public KnockMsg(byte value) {
+			this.value = value;
+		}
+
+		public byte getValue() {
+			return value;
 		}
 
 	} // class KnockMsg
@@ -343,13 +353,13 @@ public class AccessoryCommunication implements Runnable {
 	//
 
 	protected class MicMsg {
-		private int value;
+		private byte value;
 
-		public MicMsg(int value) {
+		public MicMsg(byte value) {
 			this.value = value;
 		}
 
-		public int getValue() {
+		public byte getValue() {
 			return value;
 		}
 	} // class MicMsg
