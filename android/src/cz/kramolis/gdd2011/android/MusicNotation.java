@@ -11,7 +11,8 @@ public class MusicNotation {
 	private static final String TAG = "LaPardon.MusicNotation";
 
 	private static final String SUPPORTED_CHARS = "cCdDefFgGabh";
-	private static final String SUPPORTED_NUMBERS = "12";
+	private static final String SUPPORTED_NUMBERS = "1";
+	//	private static final String SUPPORTED_NUMBERS = "12";
 	private static final char REST_CHAR = '|';
 
 	private final String notation;

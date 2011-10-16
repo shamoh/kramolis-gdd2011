@@ -5,8 +5,25 @@
 #define COMMAND_PLAY      1
 #define COMMAND_SIMULATE  2
 
+#define MESSAGE_NONE      0
+#define MESSAGE_ERROR     1
+#define MESSAGE_KNOCK     2
+#define MESSAGE_MIC       3
+#define MESSAGE_MISSION_COMPLETED  4
+
+#define TONE_DELAY        1000
+
+#define PUMP_START_VALUE  150
+#define PUMP_START_DELAY  1000
+
 // connected to the base of the transistor
 #define TRANSISTOR_PIN    12
+
+#define TRACE  false
+#define DEBUG  true
+#define INFO   true
+#define WARN   true
+#define ERROR  true
 
 AndroidAccessory acc("shamoh",
     "LaPardon",
@@ -22,18 +39,23 @@ byte pumpMap1[255];
 byte pumpMap2[255];
 
 byte currentCommand = COMMAND_NONE;
+byte message = MESSAGE_NONE;
+
 int transistorValue = 0; // value written to the transistor : 0-255
 //long iterace = 0;
+//unsigned long statusTime = 0;
+int okLed = 0;
+
 
 void setup()
 {
     Serial.begin(115200);
-    Serial.println("\r\nStart\n");
+    Serial.println("\r\n***** Start *****\n*****************\n");
 
     initConversionMaps();
 
     // set  the transistor pin as output:
-//    pinMode(TRANSISTOR_PIN, OUTPUT);
+    pinMode(TRANSISTOR_PIN, OUTPUT);
 
     acc.powerOn();
 }
@@ -90,8 +112,17 @@ void loop()
                         Serial.print(dataLen);
                         Serial.print(" ] : ");
 
+                        okLedOn();
+                        analogWrite(TRANSISTOR_PIN, PUMP_START_VALUE);
+                        {
+                            int max = 8;
+                            for (int iii = 0; iii < max; iii++) {
+                                delay(PUMP_START_DELAY/max);
+                                switchOkLed();
+                            }
+                        }
+                        okLedOn();
                         for(int iii = 0; iii < dataLen-1; iii+=2) {
-                            //TODO - cist po dvojicich a prevadet na pumpu a zvuk - zacit pumpou
                             if ( data[iii] < 16 ) {
                                 Serial.print("0");
                             }
@@ -101,7 +132,7 @@ void loop()
 //                                Serial.print("0");
 //                            }
                             Serial.print(data[iii+1]);
-                            byte pump;
+                            int pump;
                             if ( '1' == data[iii+1] ) {
                                 pump = pumpMap1[data[iii]];
                             } else {
@@ -110,8 +141,17 @@ void loop()
                             Serial.print(" [");
                             Serial.print(pump, DEC);
                             Serial.print("] ");
+
+                            analogWrite(TRANSISTOR_PIN, transistorValue);
+                            delay(TONE_DELAY);
+                            switchOkLed();
                         }
                         Serial.println(".");
+                        analogWrite(TRANSISTOR_PIN, 0);
+                        okLedOff();
+
+                        message = MESSAGE_MISSION_COMPLETED;
+                        currentCommand = COMMAND_NONE;
                     } else if (command == COMMAND_SIMULATE) {
                         currentCommand = COMMAND_SIMULATE;
                         transistorValue = data[0];
@@ -137,15 +177,15 @@ void loop()
         // 2) PROCESS COMMAND
         //
         if (currentCommand == COMMAND_PLAY) {
-            Serial.println("~~~ PLAY ~~~");
+            if (DEBUG) Serial.println("~~~ PLAY ~~~");
 
         } else if (currentCommand == COMMAND_SIMULATE) {
-            Serial.print("### SIMULATE ### ");
-            Serial.println(transistorValue);
+            if (DEBUG) Serial.print("### SIMULATE ### ");
+            if (DEBUG) Serial.println(transistorValue);
 
-//            analogWrite(TRANSISTOR_PIN, transistorValue);
+            analogWrite(TRANSISTOR_PIN, transistorValue);
         } else if (currentCommand == COMMAND_NONE) {
-            Serial.println("--- NONE ---");
+            if (TRACE) Serial.println("--- NONE ---");
 
             resetOutputs();
         }
@@ -153,22 +193,62 @@ void loop()
         //
         // 3) WRITE MESSAGE BACK
         //
+        if (transistorValue == 255) {
+            message = MESSAGE_MISSION_COMPLETED;
+        }
+        if (message != MESSAGE_NONE) {
+            Serial.print("> message: ");
+            Serial.println(message);
+        }
+        if ( message == MESSAGE_MISSION_COMPLETED ) {
+            msg[0] = message;
+            msg[1] = 0;
+            acc.write(msg, 2);
+            message = MESSAGE_NONE;
+        }
+
     } else {
         // reset outputs to default values on disconnect
-        Serial.println("Phone NOT connected!!!");
+        if (INFO) Serial.println("Phone NOT connected!!!");
         resetOutputs();
 
         //TODO nebo bychom tady mohli delat nejake paradicky - s vodou, se zvukem, s diodami
     }
 
+    if (TRACE) Serial.print(currentCommand, DEC);
+    if (TRACE) Serial.print(".");
     delay(10);
 //    delay(50);
 //    delay(200);
 }
 
 void resetOutputs() {
-//    analogWrite(TRANSISTOR_PIN, 0);
+    transistorValue = 0;
+    analogWrite(TRANSISTOR_PIN, 0);
 
+}
+
+//int printSome (char text[], unsigned long lastCall) {
+//    unsigned long current = millis();
+//
+//    if ( (lastCall + 1000) < current ) {
+//        Serial.println(text);
+//        lastCall = current;
+//    }
+//    return lastCall;
+//}
+//
+//int printSome (int value, unsigned long lastCall) {
+//    unsigned long current = millis();
+//
+//    if ( (lastCall + 1000) < current ) {
+//        Serial.println(value);
+//        lastCall = current;
+//    }
+//    return lastCall;
+//}
+
+void play() {
 }
 
 //
@@ -183,34 +263,59 @@ void initConversionMaps()
     }
     //supported chars: cCdDefFgGabh
     //rest char: |
-    pumpMap1['|'] = 1;
-    pumpMap2['|'] = 2;
-    pumpMap1['c'] = 10;
-    pumpMap2['c'] = 130;
-    pumpMap1['C'] = 20;
-    pumpMap2['C'] = 140;
-    pumpMap1['d'] = 30;
-    pumpMap2['d'] = 150;
-    pumpMap1['D'] = 40;
-    pumpMap2['D'] = 160;
-    pumpMap1['e'] = 50;
-    pumpMap2['e'] = 170;
-    pumpMap1['f'] = 60;
-    pumpMap2['f'] = 180;
-    pumpMap1['F'] = 70;
-    pumpMap2['F'] = 190;
-    pumpMap1['g'] = 80;
-    pumpMap2['g'] = 200;
-    pumpMap1['G'] = 90;
-    pumpMap2['G'] = 210;
-    pumpMap1['a'] = 100;
-    pumpMap2['a'] = 220;
-    pumpMap1['b'] = 110;
-    pumpMap2['b'] = 230;
-    pumpMap1['h'] = 120;
-    pumpMap2['h'] = 240;
+    pumpMap1['|'] = PUMP_START_VALUE;
+    pumpMap2['|'] = PUMP_START_VALUE;
+    pumpMap1['c'] = 167;
+    pumpMap2['c'] = 167;
+    pumpMap1['C'] = 175;
+    pumpMap2['C'] = 175;
+    pumpMap1['d'] = 183;
+    pumpMap2['d'] = 183;
+    pumpMap1['D'] = 191;
+    pumpMap2['D'] = 191;
+    pumpMap1['e'] = 199;
+    pumpMap2['e'] = 199;
+    pumpMap1['f'] = 207;
+    pumpMap2['f'] = 207;
+    pumpMap1['F'] = 215;
+    pumpMap2['F'] = 215;
+    pumpMap1['g'] = 223;
+    pumpMap2['g'] = 223;
+    pumpMap1['G'] = 231;
+    pumpMap2['G'] = 231;
+    pumpMap1['a'] = 239;
+    pumpMap2['a'] = 239;
+    pumpMap1['b'] = 247;
+    pumpMap2['b'] = 247;
+    pumpMap1['h'] = 255;
+    pumpMap2['h'] = 255;
 }
 
+
+void okLedOn()
+{
+    okLed = 1;
+
+    //TODO Write do OK led pinu
+    Serial.println("* [led] [OK] * ON *");
+}
+
+void switchOkLed()
+{
+    if ( okLed == 0 ) {
+        okLedOn();
+    } else {
+        okLedOff();
+    }
+}
+
+void okLedOff()
+{
+    okLed = 0;
+
+    //TODO Write do OK led pinu
+    Serial.println("* [led] [OK] - off -");
+}
 
 /*
 Data packet error: 5
@@ -218,3 +323,4 @@ Device addressed... Requesting device descriptor.
 Setup packet error: D
 Device descriptor cannot be retrieved. Trying again
 */
+

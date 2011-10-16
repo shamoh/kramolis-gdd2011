@@ -462,18 +462,18 @@ public class MainActivity extends LaPardonActivity {
 				lastTweets.add(testRequest);
 				queueMap.put(testRequest.getId(), testRequest);
 			}
-			{
-				String text = "Test request - octave 2 [c2C2d2D2e2f2F2g2G2a2b2h2] #lapardon";
-				PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", new Date(), MusicNotation.lookup(text));
-				lastTweets.add(testRequest);
-				queueMap.put(testRequest.getId(), testRequest);
-			}
-			{
-				String text = "Test request - both octaves [cCdDefFgGabh|c2C2d2D2e2f2F2g2G2a2b2h2] #lapardon";
-				PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", new Date(), MusicNotation.lookup(text));
-				lastTweets.add(testRequest);
-				queueMap.put(testRequest.getId(), testRequest);
-			}
+//			{
+//				String text = "Test request - octave 2 [c2C2d2D2e2f2F2g2G2a2b2h2] #lapardon";
+//				PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", new Date(), MusicNotation.lookup(text));
+//				lastTweets.add(testRequest);
+//				queueMap.put(testRequest.getId(), testRequest);
+//			}
+//			{
+//				String text = "Test request - both octaves [cCdDefFgGabh|c2C2d2D2e2f2F2g2G2a2b2h2] #lapardon";
+//				PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", new Date(), MusicNotation.lookup(text));
+//				lastTweets.add(testRequest);
+//				queueMap.put(testRequest.getId(), testRequest);
+//			}
 		}
 
 		return lastTweets;
