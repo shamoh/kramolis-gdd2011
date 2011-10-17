@@ -14,12 +14,12 @@
 #define MESSAGE_MISSION_COMPLETED  4
 #define MESSAGE_PONG      5
 
-#define TONE_DELAY        1000
+#define TONE_DELAY        700
 
-#define PUMP_START_VALUE  150
+#define PUMP_START_VALUE  222
 #define PUMP_START_DELAY  1000
 
-#define KNOCK_THRESHOLD   100
+#define KNOCK_THRESHOLD   300
 
 // connected to the base of the transistor
 #define TRANSISTOR_PIN 12
@@ -46,7 +46,7 @@ AndroidAccessory acc("shamoh",
 
 byte pumpMap1[255];
 byte pumpMap2[255];
-byte toneMap1[255];
+int  toneMap1[255];
 
 byte currentCommand = COMMAND_NONE;
 byte message = MESSAGE_NONE;
@@ -168,7 +168,11 @@ void loop()
                             Serial.print("] ");
 
                             analogWrite(TRANSISTOR_PIN, pump);
-                            tone(TONE_PIN, toneMap1[data[iii]]);
+                            if ( toneMap1[data[iii]] > 0 ) {
+                                tone(TONE_PIN, toneMap1[data[iii]]);
+                            } else {
+                                noTone(TONE_PIN);
+                            }
 
                             delay(TONE_DELAY);
                             switchOkLed();
@@ -326,28 +330,28 @@ void initPumpMaps()
     //rest char: |
     pumpMap1['|'] = PUMP_START_VALUE;
     pumpMap2['|'] = PUMP_START_VALUE;
-    pumpMap1['c'] = 167;
-    pumpMap2['c'] = 167;
-    pumpMap1['C'] = 175;
-    pumpMap2['C'] = 175;
-    pumpMap1['d'] = 183;
-    pumpMap2['d'] = 183;
-    pumpMap1['D'] = 191;
-    pumpMap2['D'] = 191;
-    pumpMap1['e'] = 199;
-    pumpMap2['e'] = 199;
-    pumpMap1['f'] = 207;
-    pumpMap2['f'] = 207;
-    pumpMap1['F'] = 215;
-    pumpMap2['F'] = 215;
-    pumpMap1['g'] = 223;
-    pumpMap2['g'] = 223;
-    pumpMap1['G'] = 231;
-    pumpMap2['G'] = 231;
-    pumpMap1['a'] = 239;
-    pumpMap2['a'] = 239;
-    pumpMap1['b'] = 247;
-    pumpMap2['b'] = 247;
+    pumpMap1['c'] = 156;
+    pumpMap2['c'] = 156;
+    pumpMap1['C'] = 165;
+    pumpMap2['C'] = 165;
+    pumpMap1['d'] = 174;
+    pumpMap2['d'] = 174;
+    pumpMap1['D'] = 183;
+    pumpMap2['D'] = 183;
+    pumpMap1['e'] = 192;
+    pumpMap2['e'] = 192;
+    pumpMap1['f'] = 201;
+    pumpMap2['f'] = 201;
+    pumpMap1['F'] = 210;
+    pumpMap2['F'] = 210;
+    pumpMap1['g'] = 219;
+    pumpMap2['g'] = 219;
+    pumpMap1['G'] = 228;
+    pumpMap2['G'] = 228;
+    pumpMap1['a'] = 237;
+    pumpMap2['a'] = 237;
+    pumpMap1['b'] = 246;
+    pumpMap2['b'] = 246;
     pumpMap1['h'] = 255;
     pumpMap2['h'] = 255;
 }
