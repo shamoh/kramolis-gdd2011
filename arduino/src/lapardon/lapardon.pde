@@ -1,5 +1,7 @@
 #include <Usb.h>
 #include <AndroidAccessory.h>
+#include "pitches.h"
+
 
 #define COMMAND_NONE      0
 #define COMMAND_PLAY      1
@@ -24,6 +26,7 @@
 #define OK_LED_PIN     13
 #define ERROR_LED_PIN  2
 #define KNOCK_PIN      A15
+#define TONE_PIN       8
 
 #define TRACE  false
 #define DEBUG  true
@@ -43,6 +46,7 @@ AndroidAccessory acc("shamoh",
 
 byte pumpMap1[255];
 byte pumpMap2[255];
+byte toneMap1[255];
 
 byte currentCommand = COMMAND_NONE;
 byte message = MESSAGE_NONE;
@@ -60,7 +64,8 @@ void setup()
     Serial.begin(115200);
     Serial.println("\r\n***** Start *****\n*****************\n");
 
-    initConversionMaps();
+    initPumpMaps();
+    initToneMaps();
 
     // set  the transistor pin as output:
     pinMode(TRANSISTOR_PIN, OUTPUT);
@@ -162,13 +167,17 @@ void loop()
                             Serial.print(pump, DEC);
                             Serial.print("] ");
 
-                            analogWrite(TRANSISTOR_PIN, transistorValue);
+                            analogWrite(TRANSISTOR_PIN, pump);
+                            tone(TONE_PIN, toneMap1[data[iii]]);
+
                             delay(TONE_DELAY);
                             switchOkLed();
                         }
-                        Serial.println(".");
                         analogWrite(TRANSISTOR_PIN, 0);
+                        noTone(TONE_PIN);
                         okLedOff();
+
+                        Serial.println(".");
 
                         message = MESSAGE_MISSION_COMPLETED;
                         currentCommand = COMMAND_NONE;
@@ -304,10 +313,10 @@ void resetOutputs() {
 //}
 
 //
-// ConversionMaps
+// PumpMaps
 //
 
-void initConversionMaps()
+void initPumpMaps()
 {
     for(int iii = 0; iii < 255; iii++) {
         pumpMap1[iii] = 0;
@@ -341,6 +350,32 @@ void initConversionMaps()
     pumpMap2['b'] = 247;
     pumpMap1['h'] = 255;
     pumpMap2['h'] = 255;
+}
+
+//
+// ToneMaps
+//
+
+void initToneMaps()
+{
+    for(int iii = 0; iii < 255; iii++) {
+        toneMap1[iii] = 0;
+    }
+    //supported chars: cCdDefFgGabh
+    //rest char: |
+    toneMap1['|'] = 0;
+    toneMap1['c'] = NOTE_C3;
+    toneMap1['C'] = NOTE_CS3;
+    toneMap1['d'] = NOTE_D3;
+    toneMap1['D'] = NOTE_DS3;
+    toneMap1['e'] = NOTE_E3;
+    toneMap1['f'] = NOTE_F3;
+    toneMap1['F'] = NOTE_FS3;
+    toneMap1['g'] = NOTE_G3;
+    toneMap1['G'] = NOTE_GS3;
+    toneMap1['a'] = NOTE_A3;
+    toneMap1['b'] = NOTE_AS3;
+    toneMap1['h'] = NOTE_B3;
 }
 
 
