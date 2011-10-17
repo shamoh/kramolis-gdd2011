@@ -237,10 +237,18 @@ void loop()
             }
 
             if ( message == MESSAGE_KNOCK ) {
+                switchOkLed(8, 80);
+
+                if (DEBUG) Serial.println("=== BEFORE ===");
+
                 msg[0] = message;
-                msg[1] = 0; //TODO knockReading/4;
-                acc.write(msg, 2);
+                msg[1] = knockReading/4;
+//                acc.write(msg, 2);
                 message = MESSAGE_NONE;
+
+                if (DEBUG) Serial.println("=== AFTER ===");
+
+                switchOkLed(8, 80);
             }
         }
     } else {
@@ -248,7 +256,8 @@ void loop()
         errorLedOn();
 
         // reset outputs to default values on disconnect
-        if (INFO) Serial.println("Phone NOT connected!!!");
+//        if (DEBUG) Serial.println("Phone NOT connected!!!");
+        if (DEBUG) Serial.print(".");
         resetOutputs();
 
         //TODO nebo bychom tady mohli delat nejake paradicky - s vodou, se zvukem, s diodami
@@ -353,6 +362,14 @@ void okLedOff()
     digitalWrite(OK_LED_PIN, LOW);
 
     if (TRACE) Serial.println("* [led] [OK] - off -");
+}
+
+void switchOkLed(int times, int millis)
+{
+    for(int iii = 0; iii < times; iii++) {
+        switchOkLed();
+        delay(millis);
+    }
 }
 
 void errorLedOn()
