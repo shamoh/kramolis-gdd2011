@@ -13,7 +13,7 @@ import java.util.Map;
  * @author Libor Kramolis
  * @todo
  */
-public class AboutActivity extends ListActivity {
+public abstract class AboutActivity extends ListActivity {
 
 	private List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 

@@ -124,6 +124,9 @@ public class TwitterAdapter {
 	}
 
 	public void updateStatusPlay(LaPardonApplication application, String author, long replyToId, Date createdAt) {
+		if (createdAt == null) {
+			createdAt = new Date();
+		}
 		String searchMessage = String.format("@%s Just playing your request from %tT. Thanks.", author, createdAt);
 
 		Status status = updateStatus((replyToId != -1 ? replyToId : null), searchMessage, application.getPrefPlayHashtag(), application.getPrefGddHashtag());

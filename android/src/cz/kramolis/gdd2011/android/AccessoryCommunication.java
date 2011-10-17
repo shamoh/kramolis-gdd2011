@@ -20,7 +20,7 @@ public class AccessoryCommunication implements Runnable {
 
 	private static final String TAG = "LaPardon.AccessoryCommunication";
 
-	private LaPardonActivity laPardonActivity;
+	private MainActivity mainActivity;
 	private UsbManager mUsbManager;
 
 	private UsbAccessory mAccessory;
@@ -32,16 +32,10 @@ public class AccessoryCommunication implements Runnable {
 	public static final byte COMMAND_SIMULATE = 2;
 
 	private static final int MESSAGE_ERROR = 1;
-//	private static final int MESSAGE_ERROR_LENGTH = 2;
-
 	private static final int MESSAGE_KNOCK = 2;
-//	private static final int MESSAGE_KNOCK_LENGTH = 1;
-
 	private static final int MESSAGE_MIC = 3;
-//	private static final int MESSAGE_MIC_LENGTH = 3;
-
 	private static final int MESSAGE_MISSION_COMPLETED = 4;
-//	private static final int MESSAGE_MISSION_COMPLETED_LENGTH = 1;
+	private static final int MESSAGE_PONG = 5;
 
 	private final Handler mHandler;
 
@@ -49,10 +43,10 @@ public class AccessoryCommunication implements Runnable {
 	// init
 	//
 
-	public AccessoryCommunication(LaPardonActivity laPardonActivity, UsbManager usbManager) {
-		Log.d(TAG, String.format("*** init *** Activity: %s;\nUsb: %s", laPardonActivity, usbManager));
+	public AccessoryCommunication(MainActivity mainActivity, UsbManager usbManager) {
+		Log.d(TAG, String.format("*** init *** Activity: %s;\nUsb: %s", mainActivity, usbManager));
 
-		this.laPardonActivity = laPardonActivity;
+		this.mainActivity = mainActivity;
 		this.mUsbManager = usbManager;
 
 		this.mHandler = new Handler() {
@@ -77,6 +71,11 @@ public class AccessoryCommunication implements Runnable {
 					case MESSAGE_MISSION_COMPLETED:
 						MissionCompletedMsg missionCompletedMsg = (MissionCompletedMsg) msg.obj;
 						handleMissionCompletedMessage(missionCompletedMsg);
+						break;
+
+					case MESSAGE_PONG:
+						PongMsg pongMsg = (PongMsg) msg.obj;
+						handlePongMessage(pongMsg);
 						break;
 				}
 			}
@@ -146,10 +145,10 @@ public class AccessoryCommunication implements Runnable {
 	}
 
 	private void addJournalAccessoryMessage(String text) {
-		LaPardonApplication app = (LaPardonApplication) laPardonActivity.getApplication();
+		LaPardonApplication app = (LaPardonApplication) mainActivity.getApplication();
 		app.addJournalAccessoryMessage(text);
 
-		Toast toast = Toast.makeText(laPardonActivity, "[journal] " + text, Toast.LENGTH_LONG);
+		Toast toast = Toast.makeText(mainActivity, "[journal] " + text, Toast.LENGTH_LONG);
 		toast.show();
 	}
 
@@ -165,6 +164,8 @@ public class AccessoryCommunication implements Runnable {
 	protected void handleKnockMessage(KnockMsg m) {
 		String journalText = String.format("Knock, knock! [%s]", m.getValue());
 		addJournalAccessoryMessage(journalText);
+
+		mainActivity.sendCommandPlayFirst();
 	}
 
 	protected void handleMicMessage(MicMsg m) {
@@ -175,6 +176,11 @@ public class AccessoryCommunication implements Runnable {
 	protected void handleMissionCompletedMessage(MissionCompletedMsg m) {
 		String journalText = "Mission completed!";
 		addJournalAccessoryMessage(journalText);
+	}
+
+	protected void handlePongMessage(PongMsg m) {
+		String journalText = String.format("Pong: %s - Arduino still plays requested music.", m.getValue());
+		Log.d(TAG, journalText);
 	}
 
 	//
@@ -223,12 +229,12 @@ public class AccessoryCommunication implements Runnable {
 				}
 			} catch (IOException e) {
 				Log.e(TAG, "write failed", e);
-				Toast toast = Toast.makeText(laPardonActivity, "ADK write failed!", Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(mainActivity, "ADK write failed!", Toast.LENGTH_SHORT);
 				toast.show();
 			}
 		} else {
 			Log.e(TAG, "Accessory probably not connected. Output stream is not initialized.");
-			Toast toast = Toast.makeText(laPardonActivity, "ADK not connected!", Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(mainActivity, "ADK not connected!", Toast.LENGTH_SHORT);
 			toast.show();
 		}
 	}
@@ -294,6 +300,15 @@ public class AccessoryCommunication implements Runnable {
 						if (len >= 2) {
 							Message m = Message.obtain(mHandler, MESSAGE_MISSION_COMPLETED);
 							m.obj = new MissionCompletedMsg();
+							mHandler.sendMessage(m);
+						}
+						i += 2;
+						break;
+
+					case MESSAGE_PONG:
+						if (len >= 2) {
+							Message m = Message.obtain(mHandler, MESSAGE_PONG);
+							m.obj = new PongMsg(buffer[i + 1]);
 							mHandler.sendMessage(m);
 						}
 						i += 2;
@@ -374,5 +389,23 @@ public class AccessoryCommunication implements Runnable {
 		}
 
 	} // class MissionCompletedMsg
+
+	//
+	// class PongMsg
+	//
+
+	protected class PongMsg {
+
+		private byte value;
+
+		public PongMsg(byte value) {
+			this.value = value;
+		}
+
+		public byte getValue() {
+			return value;
+		}
+
+	} // class PongMsg
 
 }

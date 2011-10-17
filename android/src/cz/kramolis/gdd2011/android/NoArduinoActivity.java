@@ -6,7 +6,7 @@ import android.os.Bundle;
 /**
  * @author Libor Kramolis
  */
-public class NoArduinoActivity extends Activity {
+public abstract class NoArduinoActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle icicle) {

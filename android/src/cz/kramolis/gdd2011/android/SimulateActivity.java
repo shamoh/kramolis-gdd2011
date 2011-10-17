@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Libor Kramolis
  */
-public class SimulateActivity extends LaPardonActivity {
+public abstract class SimulateActivity extends LaPardonActivity {
 
 	private static final String TAG = "LaPardon.SimulateActivity";
 

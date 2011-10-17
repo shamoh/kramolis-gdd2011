@@ -6,7 +6,7 @@ import android.os.Bundle;
 /**
  * @author Libor Kramolis
  */
-public class NoConnectionActivity extends Activity {
+public abstract class NoConnectionActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle icicle) {

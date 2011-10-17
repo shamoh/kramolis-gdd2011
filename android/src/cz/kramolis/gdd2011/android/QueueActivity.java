@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * @author Ondrej Kosatka
  */
-public class QueueActivity extends ListActivity {
+public abstract class QueueActivity extends ListActivity {
 
 	private static final String TAG = "LaPardon.QueueActivity";
 

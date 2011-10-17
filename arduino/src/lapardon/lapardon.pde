@@ -10,6 +10,7 @@
 #define MESSAGE_KNOCK     2
 #define MESSAGE_MIC       3
 #define MESSAGE_MISSION_COMPLETED  4
+#define MESSAGE_PONG      5
 
 #define TONE_DELAY        1000
 
@@ -125,6 +126,7 @@ void loop()
                         Serial.print(dataLen);
                         Serial.print(" ] : ");
 
+                        // prepare watter
                         okLedOn();
                         analogWrite(TRANSISTOR_PIN, PUMP_START_VALUE);
                         {
@@ -136,6 +138,11 @@ void loop()
                         }
                         okLedOn();
                         for(int iii = 0; iii < dataLen-1; iii+=2) {
+                            // pong message
+                            msg[0] = MESSAGE_PONG;
+                            msg[1] = iii;
+                            acc.write(msg, 2);
+                            // do the business
                             if ( data[iii] < 16 ) {
                                 Serial.print("0");
                             }
@@ -239,14 +246,14 @@ void loop()
             if ( message == MESSAGE_KNOCK ) {
                 switchOkLed(8, 80);
 
-                if (DEBUG) Serial.println("=== BEFORE ===");
+                if (TRACE) Serial.println("=== BEFORE ===");
 
                 msg[0] = message;
                 msg[1] = knockReading/4;
-//                acc.write(msg, 2);
+                acc.write(msg, 2);
                 message = MESSAGE_NONE;
 
-                if (DEBUG) Serial.println("=== AFTER ===");
+                if (TRACE) Serial.println("=== AFTER ===");
 
                 switchOkLed(8, 80);
             }

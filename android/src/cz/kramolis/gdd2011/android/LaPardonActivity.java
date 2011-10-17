@@ -26,7 +26,7 @@ public abstract class LaPardonActivity extends Activity {
 
 		Log.d(TAG, "*** onCreate");
 
-		this.accessoryAdapter = new AccessoryAdapter(this);
+		this.accessoryAdapter = createAccessoryAdapter();
 		{
 			UsbAccessory accessory = (UsbAccessory) getLastNonConfigurationInstance();
 			accessoryAdapter.onCreate(accessory);
@@ -34,6 +34,8 @@ public abstract class LaPardonActivity extends Activity {
 			enableControls(false);
 		}
 	}
+
+	abstract protected AccessoryAdapter createAccessoryAdapter();
 
 	//
 	// options

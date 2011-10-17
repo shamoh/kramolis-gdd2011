@@ -57,7 +57,15 @@ public class QueueAdapter extends ArrayAdapter<PlayRequest> {
 		id.setText(String.valueOf(playRequest.getId()));
 		status.setText(playRequest.getText());
 		username.setText("@" + playRequest.getAuthor());
-		datetime.setText(playRequest.getCreatedAt().toLocaleString());
+		{
+			String datetimeText = null;
+			if (playRequest.getCreatedAt() != null) {
+				datetimeText = playRequest.getCreatedAt().toLocaleString();
+			} else {
+				datetimeText = "(any)";
+			}
+			datetime.setText(datetimeText);
+		}
 
 		layout.setOnCreateContextMenuListener(mainActivity);
 

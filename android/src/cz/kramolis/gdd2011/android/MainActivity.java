@@ -26,7 +26,7 @@ public class MainActivity extends LaPardonActivity {
 	//
 	private LinearLayout runtimeContainer;
 	private TextView runtimeInputLabel;
-	private MenuItem runtimeMenu;
+	//	private MenuItem runtimeMenu;
 	//
 	// simulate
 	//
@@ -40,16 +40,19 @@ public class MainActivity extends LaPardonActivity {
 	//
 	private ListView queueContainer;
 	private QueueAdapter queueAdapter;
-	private Map<Long, PlayRequest> queueMap;
 	private MenuItem queueMenu;
-	//
+	private LinkedList<PlayRequest> sampleQueue;
+	private Map<Long, PlayRequest> sampleQueueMap;
+	private int lastSamplePlayed = -1;
 	//
 	// about
+	//
 	private ListView aboutContainer;
 	private MenuItem aboutMenu;
 
+
 	public MainActivity() {
-		this.viewType = ViewType.RUNTIME;
+		this.viewType = ViewType.QUEUE;
 	}
 
 	/**
@@ -76,6 +79,10 @@ public class MainActivity extends LaPardonActivity {
 		checkNetwork();
 	}
 
+	protected AccessoryAdapter createAccessoryAdapter() {
+		return new AccessoryAdapter(this);
+	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -93,13 +100,13 @@ public class MainActivity extends LaPardonActivity {
 		inflater.inflate(R.menu.mainmenu, menu);
 
 		{
-			runtimeMenu = menu.findItem(R.id.menuRuntime);
+//			runtimeMenu = menu.findItem(R.id.menuRuntime);
 			queueMenu = menu.findItem(R.id.menuQueue);
 			simulateMenu = menu.findItem(R.id.menuSimulate);
 			aboutMenu = menu.findItem(R.id.menuAbout);
 		}
 		{
-			runtimeMenu.setEnabled(false); //??? jiste by se naslo lepsi misto, ale co ...
+			queueMenu.setEnabled(false); //??? jiste by se naslo lepsi misto, ale co ...
 		}
 
 		return true;
@@ -192,8 +199,8 @@ public class MainActivity extends LaPardonActivity {
 		simulateContainer.setVisibility(findVisibility(ViewType.SIMULATE == viewType));
 		aboutContainer.setVisibility(findVisibility(ViewType.ABOUT == viewType));
 
-		if (runtimeMenu != null) {
-			runtimeMenu.setEnabled(ViewType.RUNTIME != viewType);
+		if (queueMenu != null) { //??? jiste by se naslo lepsi misto, ale co ...
+//			runtimeMenu.setEnabled(ViewType.RUNTIME != viewType);
 			queueMenu.setEnabled(ViewType.QUEUE != viewType);
 			simulateMenu.setEnabled(ViewType.SIMULATE != viewType);
 			aboutMenu.setEnabled(ViewType.ABOUT != viewType);
@@ -318,8 +325,8 @@ public class MainActivity extends LaPardonActivity {
 
 	private PlayRequest queueFindPlayRequest(long id) {
 		PlayRequest request = getLaPardonApplication().findPlayRequest(id);
-		if ((request == null) && (queueMap != null)) {
-			request = queueMap.get(id);
+		if ((request == null) && (sampleQueueMap != null)) {
+			request = sampleQueueMap.get(id);
 		}
 		return request;
 	}
@@ -342,12 +349,6 @@ public class MainActivity extends LaPardonActivity {
 		}
 	}
 
-	private void sendCommandTest() {
-		Log.d(TAG, "!!! sendCommandTest !!!");
-
-		MainActivity.this.sendCommandSimulate(222);
-	}
-
 	private void checkNetwork() {
 		boolean connected = false;
 		boolean available = false;
@@ -368,6 +369,37 @@ public class MainActivity extends LaPardonActivity {
 	private void showNoConnectionInfo() {
 		Toast toast = Toast.makeText(this, R.string.no_connection_text, Toast.LENGTH_LONG);
 		toast.show();
+	}
+
+	private PlayRequest findPlayFirst() {
+		LaPardonApplication app = (LaPardonApplication) this.getApplication();
+
+		PlayRequest request = app.getFirstPlayRequest();
+		if (request != null) {
+			app.removePlayRequest(request.getId());
+			Log.d(TAG, "Removing request from queue: " + request);
+		} else {
+			lastSamplePlayed++;
+			if (lastSamplePlayed >= sampleQueue.size()) {
+				lastSamplePlayed = 0;
+			}
+			request = sampleQueue.get(lastSamplePlayed);
+
+			Log.d(TAG, "There is NO playing request in queue. Returning prepared sample request: " + request);
+		}
+		return request;
+	}
+
+	public void sendCommandPlayFirst() {
+		PlayRequest firstRequest = findPlayFirst();
+		Log.d(TAG, "Send command PLAY request: " + firstRequest);
+		MainActivity.this.sendCommandPlay(firstRequest);
+	}
+
+	private void sendCommandTest() {
+		Log.d(TAG, "!!! sendCommandTest !!!");
+
+		MainActivity.this.sendCommandSimulate(222);
 	}
 
 	//
@@ -438,6 +470,8 @@ public class MainActivity extends LaPardonActivity {
 	private void initQueueContainer() {
 		queueContainer = (ListView) findViewById(R.id.queueContainer);
 
+		initSampleQueue();
+
 		List<PlayRequest> lastTweets = getQueueLastTweets();
 
 		queueAdapter = new QueueAdapter(this, R.layout.queuerow, lastTweets);
@@ -446,34 +480,34 @@ public class MainActivity extends LaPardonActivity {
 //		queueContainer.setTextFilterEnabled(true);
 	}
 
+	private void initSampleQueue() {
+		this.sampleQueue = new LinkedList<PlayRequest>();
+		this.sampleQueueMap = new HashMap<Long, PlayRequest>();
+		{
+			String text = "Sample #1 (one octave) [cCdDefFgGabh] #lapardon";
+			PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", null, MusicNotation.lookup(text));
+			sampleQueue.add(testRequest);
+			sampleQueueMap.put(testRequest.getId(), testRequest);
+		}
+		{
+			String text = "Sample #2 (up and down) [cCdDefFgGabh | hbaGgFfeDdCc] #lapardon";
+			PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", null, MusicNotation.lookup(text));
+			sampleQueue.add(testRequest);
+			sampleQueueMap.put(testRequest.getId(), testRequest);
+		}
+	}
+
 	private List<PlayRequest> getQueueLastTweets() {
 		final int MAX = 20;
 		List<PlayRequest> lastTweets = new ArrayList<PlayRequest>();
 		LaPardonApplication app = (LaPardonApplication) this.getApplication();
+
 		int i = 0;
 		while (i < MAX && i < app.getQueue().size()) {
 			lastTweets.add(app.getQueue().get(i++));
 		}
-		{
-			this.queueMap = new HashMap<Long, PlayRequest>();
-			{
-				String text = "Test request - octave 1 [cCdDefFgGabh] #lapardon";
-				PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", new Date(), MusicNotation.lookup(text));
-				lastTweets.add(testRequest);
-				queueMap.put(testRequest.getId(), testRequest);
-			}
-//			{
-//				String text = "Test request - octave 2 [c2C2d2D2e2f2F2g2G2a2b2h2] #lapardon";
-//				PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", new Date(), MusicNotation.lookup(text));
-//				lastTweets.add(testRequest);
-//				queueMap.put(testRequest.getId(), testRequest);
-//			}
-//			{
-//				String text = "Test request - both octaves [cCdDefFgGabh|c2C2d2D2e2f2F2g2G2a2b2h2] #lapardon";
-//				PlayRequest testRequest = new PlayRequest(-1L, text, "lapardon", new Date(), MusicNotation.lookup(text));
-//				lastTweets.add(testRequest);
-//				queueMap.put(testRequest.getId(), testRequest);
-//			}
+		for (i = 0; i < sampleQueue.size(); i++) {
+			lastTweets.add(sampleQueue.get(i));
 		}
 
 		return lastTweets;
@@ -482,6 +516,8 @@ public class MainActivity extends LaPardonActivity {
 	private void queueRemoveAll() {
 		getLaPardonApplication().getQueue().clear();
 		queueAdapter.clear();
+		queueAdapter.addAll(getQueueLastTweets());
+		queueAdapter.notifyDataSetChanged();
 	}
 
 	private void queueRefresh() {
@@ -504,36 +540,45 @@ public class MainActivity extends LaPardonActivity {
 			{
 				Map<String, String> item = new HashMap<String, String>();
 				item.put("title", "About");
-				item.put("description", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+				item.put("description", "This is Libor Kramoliš's GDD 2011 Arduino/ADK project. It is small fountain. It reproduces music by water. " +
+						"Music is requested via Twitter. Tweet has to contain #lapardon tag and music notation placed between brackets [ and ]. " +
+						"Supported note characters are 'cCdDefFgGabh' and rest (pause) character is '|'.");
 				item.put("link", "http://gdd2011.kramolis.cz");
 				list.add(item);
 			}
 			{
 				Map<String, String> item = new HashMap<String, String>();
-				item.put("title", "Libor Kramolis");
-				item.put("description", "TODO");
+				item.put("title", "Libor Kramoliš");
+				item.put("description", "Author of whole project.");
 				item.put("link", "https://plus.google.com/115270016494231681069/about");
 				list.add(item);
 			}
 			{
 				Map<String, String> item = new HashMap<String, String>();
-				item.put("title", "Ondrej Kosatka");
-				item.put("description", "TODO");
+				item.put("title", "Ondřej Košatka");
+				item.put("description", "Android project setup, Twitter communication implemented. Moral and technical support.");
 				item.put("link", "https://plus.google.com/117246369712480977490/about");
 				list.add(item);
 			}
 			{
 				Map<String, String> item = new HashMap<String, String>();
-				item.put("title", "Martin Mares");
-				item.put("description", "TODO");
+				item.put("title", "Petr Blažek");
+				item.put("description", "We both got ADK to create GDD project. Moral and technical support.");
+				item.put("link", "https://plus.google.com/100342760152037874082/about");
+				list.add(item);
+			}
+			{
+				Map<String, String> item = new HashMap<String, String>();
+				item.put("title", "Martin Mareš");
+				item.put("description", "Author of idea to connect water pump with ADK. Thank you, really thanks. ;-)");
 				item.put("link", "https://plus.google.com/117017068727290273829/about");
 				list.add(item);
 			}
 			{
 				Map<String, String> item = new HashMap<String, String>();
-				item.put("title", "Petr Blazek");
-				item.put("description", "TODO");
-				item.put("link", "https://plus.google.com/100342760152037874082/about");
+				item.put("title", "My Family");
+				item.put("description", "This project is dedicated to my family because they lost my time I spend on LaPardon activity. They also created LaPardon house.");
+				item.put("link", "http://kramolis.cz/");
 				list.add(item);
 			}
 		}
@@ -578,7 +623,9 @@ public class MainActivity extends LaPardonActivity {
 
 		private int transformProgress(int progress) {
 			LaPardonApplication app = (LaPardonApplication) MainActivity.this.getApplication();
-			progress = progress + app.getPumpMin();
+			if (progress != 0) {
+				progress = progress + app.getPumpMin();
+			}
 			return progress;
 		}
 

@@ -52,6 +52,7 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 
 		this.queue = new LinkedList<PlayRequest>();
 		this.queueMap = new HashMap<Long, PlayRequest>();
+		/*
 		{
 			{
 				String text = "Ccc [ccC] #lapardon";
@@ -72,6 +73,7 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 				queueMap.put(testRequest.getId(), testRequest);
 			}
 		}
+		*/
 		this.journal = new ArrayList<JournalItem>();
 
 		this.prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -130,6 +132,14 @@ public class LaPardonApplication extends Application implements OnSharedPreferen
 
 	public List<PlayRequest> getQueue() {
 		return queue;
+	}
+
+	public PlayRequest getFirstPlayRequest() {
+		PlayRequest playRequest = null;
+		if (queue.isEmpty() == false) {
+			playRequest = queue.getFirst();
+		}
+		return playRequest;
 	}
 
 	public PlayRequest findPlayRequest(long id) {

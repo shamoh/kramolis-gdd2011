@@ -16,7 +16,7 @@ public class AccessoryAdapter {
 
 	private static final String TAG = "LaPardon.AccessoryAdapter";
 
-	private LaPardonActivity laPardonActivity;
+	private MainActivity mainActivity;
 
 	private final AccessoryCommunication accessoryCommunication;
 
@@ -33,14 +33,14 @@ public class AccessoryAdapter {
 	// init
 	//
 
-	public AccessoryAdapter(LaPardonActivity laPardonActivity) {
+	public AccessoryAdapter(MainActivity mainActivity) {
 		Log.d(TAG, "*** init ***");
 
-		this.laPardonActivity = laPardonActivity;
-		this.mUsbManager = UsbManager.getInstance(laPardonActivity);
-		this.mPermissionIntent = PendingIntent.getBroadcast(laPardonActivity, 0, new Intent(ACTION_USB_PERMISSION), 0);
+		this.mainActivity = mainActivity;
+		this.mUsbManager = UsbManager.getInstance(mainActivity);
+		this.mPermissionIntent = PendingIntent.getBroadcast(mainActivity, 0, new Intent(ACTION_USB_PERMISSION), 0);
 
-		this.accessoryCommunication = new AccessoryCommunication(laPardonActivity, mUsbManager);
+		this.accessoryCommunication = new AccessoryCommunication(mainActivity, mUsbManager);
 
 		this.mUsbReceiver = new BroadcastReceiver() {
 			@Override
@@ -95,7 +95,7 @@ public class AccessoryAdapter {
 
 		IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
 		filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
-		laPardonActivity.registerReceiver(mUsbReceiver, filter);
+		mainActivity.registerReceiver(mUsbReceiver, filter);
 
 		if (accessory != null) {
 			accessoryCommunication.openAccessory(accessory);
@@ -144,7 +144,7 @@ public class AccessoryAdapter {
 	public void onDestroy() {
 		Log.d(TAG, "*** onDestroy");
 
-		laPardonActivity.unregisterReceiver(mUsbReceiver);
+		mainActivity.unregisterReceiver(mUsbReceiver);
 	}
 
 	//
@@ -152,12 +152,12 @@ public class AccessoryAdapter {
 	//
 
 	private void addJournalAccessoryCommand(String text) {
-		LaPardonApplication app = (LaPardonApplication) laPardonActivity.getApplication();
+		LaPardonApplication app = (LaPardonApplication) mainActivity.getApplication();
 		app.addJournalAccessoryCommand(text);
 
 		text = "[journal] " + text;
 		Log.d(TAG, text);
-//		Toast toast = Toast.makeText(laPardonActivity, text, Toast.LENGTH_SHORT);
+//		Toast toast = Toast.makeText(mainActivity, text, Toast.LENGTH_SHORT);
 //		toast.show();
 	}
 
