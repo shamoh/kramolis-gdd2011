@@ -67,6 +67,20 @@
         Just touch big <b>G</b> on the house and first playing request from a queue is processed. ;-)
         See green LED that blinks during playing.
 
+        <h2>Download</h2>
+
+        <h3>Sources</h3>
+
+        <p>
+            Sources for Android, Arduino and also for AppEngine (AAA sources ;-) ) are available on GitHub -
+            <a href="https://github.com/shamoh/kramolis-gdd2011">https://github.com/shamoh/kramolis-gdd2011</a>.
+        </p>
+
+        <h3>Binary</h3>
+
+        <p>
+            Build of Android application is available <a href="download/lapardon.apk">here</a>.
+        </p>
 
         <h2>Apology</h2>
 
@@ -182,6 +196,5 @@
     </td>
 </tr>
 
-<
-% include '/WEB-INF/includes/footer.gtpl' %>
+<% include '/WEB-INF/includes/footer.gtpl' %>
 

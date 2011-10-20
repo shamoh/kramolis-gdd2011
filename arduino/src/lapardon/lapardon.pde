@@ -230,13 +230,15 @@ void loop()
         //
         // 3) WRITE MESSAGE BACK
         //
+        /*
         if (transistorValue == 255) {
             message = MESSAGE_KNOCK;
             currentCommand = COMMAND_NONE;
         }
+        */
         if (message != MESSAGE_NONE) {
-            Serial.print("> message: ");
-            Serial.println(message, DEC);
+            if (TRACE) Serial.print("> message: ");
+            if (TRACE) Serial.println(message, DEC);
         }
         if ( message == MESSAGE_MISSION_COMPLETED ) {
             msg[0] = message;
